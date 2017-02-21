@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+		<script>
+			
+			console.log("Attention ! Un monstre attque le village, tue le pour nous sauver ! \n"+
+						"Ecris sur \"attaquer()\" pour attaquer \n"+
+						"|  \/  |\n"+
+						"| |\/| |\n"+
+						"| |  | |\n"+
+						"|_|  |_|"
+					);
+					
+			
+			// Correction buggée !!!!!
+			/*
+			
+				Plante si izi devient trop grand à l'attaque suivante.
+				
+				Par exemple :
+				
+					PV = 15
+					IZI = 3
+					
+					Nouveau PV : 15 - 13 = 2
+					
+					-> Pas de messages sur les nouveaux pv
+					-> Pas de message d'épitaphe
+			
+			*/
+			
+			
+			var pv = 100;
+			
+			function attaquer() {
+				
+				if(pv > 0){							
+					//IZI WIN
+					var izi =  Math.floor(Math.random() * 6 );
+					var force = 10 + izi;
+					pv -= force;
+				
+					
+					console.log("- " + force + " HP")
+						if(pv > izi){
+						console.log("HHHHAAAIII, il me reste " + pv + " point de vie, arreter stp, laisse moi tuer les femmes et les enfants");
+						}
+						if(pv <= 0){
+							console.log("FATALITY \nHHAAAIII ADIEU MONDE CRUEL");
+						}
+					}
+				else{
+					console.log("BRAVO IL EST DEJA MORT");
+				}
+					
+					
+				
+			}
+			
+			
+		</script>
+	</body>
+</html>
