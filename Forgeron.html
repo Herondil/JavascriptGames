@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+		<script>
+		
+		var Inventaire = [];
+		
+		function Forger(nb_generique, nb_haches ) {
+			if(nb_haches > 0 && nb_haches < nb_generique) {
+				for(var j = 0 ; j < nb_haches ; j++) {
+					var Haches = {
+						name : "Hache" + j,
+						id : j
+					};
+					Inventaire.push(Haches);
+				};
+				if(nb_generique - nb_haches > 0) {
+					for(var i = j, k = 0; i < nb_generique ; i++) {
+						var Arme = {
+							name : "Arme" + k,
+							id : i
+						};
+						Inventaire.push(Arme);
+						k++
+					};
+				}
+			} else {
+				console.log("Une erreur est survenue.");
+			}
+		};
+		
+		
+		</script>
+		
+	</body>
+</html>
