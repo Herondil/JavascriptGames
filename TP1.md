@@ -15,6 +15,6 @@ Soit une carte d'un univers fictif :
 	["M","_","_","M","_","M","A","M"]
 	["M","M","M","M","M","M","M","M"]
   
-   "M" : Une montagne
-   "_" : une prairie
-   "A" : Un aventurier qui se promène sur les prairies
+ -  "M" : Une montagne
+ -  "_" : une prairie
+ -  "A" : Un aventurier qui se promène sur les prairies
