@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+		<script>
+		
+		var map = [
+		["M","_","M","_","M","M","M","M","M","M","_","M","_","M","M","M","M","M","_"],
+		["M","_","M","_","M","M","_","M","M","_","_","M","_","M","M","M","M","M","_"],
+		["M","_","M","_","M","_","M","_","M","_","_","M","_","_","M","M","M","M","_"],
+		["M","_","_","_","M","M","M","M","_","_","_","M","_","M","M","M","M","M","_"],
+		["M","_","C","_","_","_","M","_","_","_","_","M","_","M","M","M","M","M","_"],
+		["M","_","_","_","M","M","M","_","M","_","_","M","_","M","M","M","M","M","_"],
+		["M","_","_","_","M","_","_","_","M","_","_","M","_","M","M","M","M","M","_"],
+		["M","_","M","_","M","_","M","M","M","_","_","M","_","M","M","M","M","M","_"],
+		["M","_","M","_","_","_","_","M","M","_","_","M","_","M","M","_","M","M","_"],
+		["M","_","_","M","M","M","M","_","_","_","A","_","_","M","M","_","M","M","_"],
+		["M","_","M","_","M","M","M","M","M","_","_","_","_","M","_","_","M","M","_"],
+		["M","_","M","_","M","M","_","M","M","_","_","M","_","M","_","M","M","M","_"],
+		["M","_","M","_","M","_","M","_","M","_","_","M","_","_","_","M","M","M","_"],
+		["M","_","_","_","M","M","M","M","_","_","_","M","_","M","_","M","M","M","_"],
+		["M","_","_","_","_","_","M","_","_","_","_","M","_","M","M","_","M","M","_"],
+		["M","_","_","_","M","M","M","_","M","_","_","M","_","M","M","M","M","M","_"]
+		];
+		
+		
+		
+		function AfficheMap(map){
+			//vérifier map
+			if(Array.isArray(map) == false){
+				console.error("crash de la fonction");
+			}else{
+			//afficher les couleurs
+				var Chaine = "";
+				var map_couleur = [];
+				for (var i = 0; i < map.length; i++){
+					for(var j = 0; j < map[i].length; j++){
+						if(map[i][j] == "M"){
+							map_couleur.push("background: black");
+						}else if(map[i][j] == "_"){
+							map_couleur.push("background: #00ff00");
+						}else if(map[i][j] == "A"){
+							map_couleur.push("background: blue");
+						}else if(map[i][j] == "C"){
+							map_couleur.push("background: #A29");
+						}else{
+							console.error("crash de la fonction");
+							return 0;
+						}
+						Chaine += '%c   ';
+					}
+					Chaine += '\n';					
+				}
+				console.log(Chaine, ...map_couleur);
+				return "La map a été affichée correctement";
+			}
+			
+		}
+		
+		function Avancer() {
+			for (var i = 0; i < map.length; i++){
+				if (map[i].indexOf("A")== -1) {		
+				}else if(i != 0){
+					var save = map[i].indexOf("A");
+					map[i][save] = "_";
+					map[i -1][save] = "A";
+				}else {
+						console.log("Bordure de la map")
+				}
+			}
+			AfficheMap(map);
+		}
+		
+		/*
+		function Reculer() {
+			for (var i = 0; i < map.length; i++){
+				if (map[i].indexOf("A")== -1) {		
+				}else if(i != 0){
+					var save = map[i].indexOf("A");
+					console.log(map[i +1][save]);
+					map[i][save] = "_";
+					map[i +1][save] = "A";
+				}else {
+						console.log("Bordure de la map")
+				}
+			}
+			AfficheMap(map);
+		}
+		*/
+
+		</script>
+		
+	</body>
+</html>
