@@ -30,6 +30,23 @@
 			}
 		};
 		
+		  
+		
+		function Enchanter(Inventaire2){
+			if(Array.isArray(Inventaire2)){
+				for(var i = 0; i < Inventaire2.length; i++){
+					if(typeof Inventaire2[i] == 'object'){
+						Inventaire2[i].enchantement = function LancerBDF(){
+							console.log(Math.round(Math.random()*100));
+						};
+					} else {
+						console.log("Impossibilité d'enchanter  "+Inventaire2[i]);
+					}
+				}
+			} else {
+				console.log("Erreur d'enchantement");
+			}
+		}
 		
 		</script>
 		
