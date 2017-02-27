@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>JS : MapColor</title>
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script>
+
+
+
+var map= [
+	["M","L","M"],
+	["M","_","M"],
+	["M","_","M"],
+	["M","_","M"],
+	["M","_","M"],
+	["M","_","M"],
+	["M","_","M"],
+	["M","_","M"],
+	["M","_","M"],
+	["M","_","M"],
+	["M","_","M"],
+	["M","_","M"],
+	["M","_","M","M","M","M","M","P","M","M","M","M","M","M","M","M","M"],
+	["M","_","M","_","M","_","_","_","_","_","M","_","_","_","M","X","M"],
+	["M","_","M","_","M","_","M","_","_","_","_","X","M","_","M","_","M"],
+	["M","_","M","_","M","M","M","_","M","M","M","M","M","M","M","_","M"],
+	["M","_","M","_","_","_","_","_","M","_","_","_","_","M","W","_","M"],
+	["M","_","M","_","_","M","_","_","M","_","M","M","_","M","_","M","M"],
+	["M","_","M","M","_","M","M","M","M","M","M","_","_","M","_","_","M"],
+	["M","_","M","_","_","_","_","_","M","_","M","M","_","_","_","_","M"],
+	["M","_","M","I","M","_","Z","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","M","M","M","_","M","M","M","_","M","M","M","M","M","_","M"],
+	["M","_","M","_","_","_","M","_","M","_","_","_","_","_","M","_","M"],
+	["M","_","M","_","M","M","M","_","M","M","M","M","M","_","M","_","M"],
+	["M","_","M","Z","M","F","_","_","_","_","_","_","_","_","_","A","M"],
+	["M","O","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M"]
+]
+
+var affiche = "";
+var tbl = [];
+var x = 15;
+var y = 24;
+var ox = 6;
+var oy = 18;
+
+console.log("Bonjours dans le jeu qui verifie t'as logique !");
+console.log("Le but est simple : trouver un moyen d'acceder a la case bleu, avant que la case jaune tombe sur la case rouge !");
+console.log("En utilisant les fleches pour ce diriger ");
+console.log("%c  ", "background : #500", "Héros");
+console.log("%c  ", "background : blue", "Sortie");
+console.log("%c  ", "background : white", "Téléportation");
+console.log("%c  ", "background : purple", "Téléportation");
+console.log("%c  ", "background : orange", "Bombes");
+console.log("%c  ", "background : grey", "Ouvre un murs");
+console.log("%c  ", "background : #69EBFF", "Gele les murs");
+
+window.document.onkeydown = function(evt){
+
+if (Array.isArray(map) == false) {
+                console.error("Bug MAP?!");
+            }
+            else {
+	
+	if(evt.keyCode == 40 && map[y+1][x] != 'M' && map[y+1][x] != 'U') {
+		if (map[y+1][x] == 'P') {alert('WINNER')}
+		else if (map[y+1][x] == '_') {
+		map[y][x] = '_';
+		y++;
+		map[y][x] = 'A';
+		} else if (map[y+1][x] == 'X') {
+		map[y][x] = '_';
+		x-=4;
+		map[y][x] = 'A';
+		}else if (map[y+1][x] == 'Z') {
+		map[y][x] = '_';
+		y+=4;
+		x-=4;
+		map[y][x] = 'A';
+		}else if (map[y+1][x] == 'I') {
+		map[y][x] = '_';
+		y++;
+		map[y][x] = 'A';
+		map[oy][ox] = '_';
+		}else if (map[y+1][x] == 'W') {
+			alert('UNE REFLEXION SUPLEMETAIRE SERAIT MIEUX !')
+		}
+	}
+	else if(evt.keyCode == 40 && map[y+1][x] == 'M' && map[y+1][x] != 'U') {console.log('Ne foncez pas sur un mur...')}
+	
+	else if(evt.keyCode == 38 && map[y-1][x] != 'M' && map[y-1][x] != 'U') {
+		if (map[y-1][x] == 'P') {alert('WINNER')}
+		else if (map[y-1][x] == '_') {
+		map[y][x] = '_';
+		y--;
+		map[y][x] = 'A';
+		}else if (map[y-1][x] == 'X') {
+		map[y][x] = '_';
+		x-=4;
+		map[y][x] = 'A';
+		}else if (map[y-1][x] == 'Z') {
+		map[y][x] = '_';
+		y+=4;
+		x-=4;
+		map[y][x] = 'A';
+		}else if (map[y-1][x] == 'W') {
+			alert('UNE REFLEXION SUPLEMETAIRE SERAIT MIEUX !')
+		}
+	}
+	else if(evt.keyCode == 38 && map[y-1][x] == 'M' && map[y-1][x] != 'U') {console.log('Ne foncez pas sur un mur...')}
+	
+	else if(evt.keyCode == 39 && map[y][x+1] != 'M' && map[y][x+1] != 'U') {
+		if (map[y][x+1] == 'P') {alert('WINNER')}
+		else if (map[y][x+1] == '_'){
+		map[y][x] = '_';
+		x++;
+		map[y][x] = 'A';
+		}else if (map[y][x+1] == 'X') {
+		map[y][x] = '_';
+		x-=4;
+		map[y][x] = 'A';
+		}else if (map[y][x+1] == 'Z') {
+		map[y][x] = '_';
+		y+=4;
+		x-=4;
+		map[y][x] = 'A';
+		}else if (map[y][x+1] == 'W') {
+			alert('UNE REFLEXION SUPLEMETAIRE SERAIT MIEUX !')
+		}
+	}
+	else if(evt.keyCode == 39 && map[y][x+1] == 'M' && map[y][x+1] != 'U') {console.log('Ne foncez pas sur un mur...')}
+	
+	else if(evt.keyCode == 37 && map[y][x-1] != 'M' && map[y][x-1] != 'U') {
+		if (map[y][x-1] == 'P') {alert('WINNER')}
+		else if (map[y][x-1] == '_'){
+		map[y][x] = '_';
+		x--;
+		map[y][x] = 'A';
+		}else if (map[y][x-1] == 'X') {
+		map[y][x] = '_';
+		x-=4;
+		map[y][x] = 'A';
+		}else if (map[y][x-1] == 'Z') {
+		map[y][x] = '_';
+		y+=4;
+		x-=4;
+		map[y][x] = 'A';
+		}else if (map[y][x-1] == 'F') {
+		map[y][x] = '_';
+		x--;
+		map[y][x] = 'A';
+		Bombe();
+		}
+		else if (map[y][x-1] == 'W' && map[y][x-1] != 'U') {
+			alert('UNE REFLEXION SUPLEMETAIRE SERAIT MIEUX !')
+		}
+	}
+	
+	else if(evt.keyCode == 37 && map[y][x] == 'M') {console.log('Ne foncez pas sur un mur...')}
+
+	else{
+		console.log("Merci d'utiliser bas, haut, gauche ou droite.")
+	};
+
+	Map();
+	Timer();
+	Piege();
+}
+}
+
+var t1y = 0;
+var t1x = 1;
+
+function Timer(){
+		if (map[t1y+1][t1x] == '_'){
+		map[t1y][t1x] = '_';
+		t1y++;
+		map[t1y][t1x] = 'L';
+		}
+		else {
+			alert('UNE REFLEXION SUPLEMETAIRE SERAIT MIEUX !');
+		}
+}
+
+function Bombe(){
+		var prairie = 0;
+		var g = 0;
+
+				for(var i = 0; i < map.length; i++){
+					for (var j = 0; j <map[i].length; j++) {
+						if(map[i][j] == '_'){
+						prairie++;
+						
+						}
+					}
+				}
+				g = Math.round(Math.random()*prairie);
+
+				
+				for(var i = 0; i < map.length; i++){
+					for (var j = 0; j <map[i].length; j++) {
+						if(map[i][j] == 'M'){
+						prairie--;
+						prairie == g;
+							map[i][j] = "U";
+						
+						
+					}
+				}
+
+		}		
+}
+
+var p1y = 16;
+var p1x = 14;
+
+function Piege(){
+		if (map[p1y][p1x] == 'W'){
+		map[p1y][p1x] = '_';
+		map[p1y+1][p1x] = 'W';
+		}
+		else if (map[p1y+1][p1x] == 'W'){
+		map[p1y+1][p1x] = '_';
+		map[p1y+2][p1x] = 'W';
+		}
+		else if (map[p1y+2][p1x] == 'W'){
+		map[p1y+2][p1x] = '_';
+		map[p1y+3][p1x] = 'W';
+		}
+		else if (map[p1y+3][p1x] == 'W'){
+		map[p1y+3][p1x] = '_';
+		map[p1y+4][p1x] = 'W';
+		}else if (map[p1y+4][p1x] == 'W'){
+		map[p1y+4][p1x] = '_';
+		map[p1y+4][p1x-1] = 'W';
+		}else if (map[p1y+4][p1x-1] == 'W'){
+		map[p1y+4][p1x] = '_';
+		map[p1y+4][p1x-1] = 'W';
+		}
+}
+
+
+
+function Map(){
+	tbl = [];
+	for (var j = 0; j <= map.length - 1; j++) {
+		for (var i = 0; i <= map[j].length - 1; i++) {
+			affiche += "%c  ";
+			if (map[j][i] == 'M') {
+				tbl.push("background : #000");
+			}else if(map[j][i] == 'A'){
+				tbl.push("background : #500");
+			}else if(map[j][i] == 'C'){
+				tbl.push("background : #F5A");
+			}else if(map[j][i] == '_'){
+				tbl.push("background : green");
+			}else if(map[j][i] == 'O'){
+				tbl.push("background : red");
+			}else if(map[j][i] == 'P'){
+				tbl.push("background : blue");
+			}else if(map[j][i] == 'L'){
+				tbl.push("background : yellow");
+			}else if(map[j][i] == 'X'){
+				tbl.push("background : white");
+			}else if(map[j][i] == 'Z'){
+				tbl.push("background : purple");
+			}else if(map[j][i] == 'W'){
+				tbl.push("background : orange");
+			}else if(map[j][i] == 'I'){
+				tbl.push("background : grey");
+			}else if(map[j][i] == 'U'){
+				tbl.push("background : #69EBFF");
+			}else if(map[j][i] == 'F'){
+				tbl.push("background : #69EBFF");
+			}
+		}
+		affiche += "\n"
+	}
+	console.log(affiche, ...tbl);
+	affiche = "";
+}
+Map();
+
+	</script>
+</body>
+</html>

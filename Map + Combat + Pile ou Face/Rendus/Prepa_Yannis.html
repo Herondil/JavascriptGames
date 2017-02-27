@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>Prépa Game Weeks</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+
+		/****************************************** LES DIALOGUES ******************************************/
+		/***************************************************************************************************/
+		/***************************************************************************************************/
+
+		/****************************************** INTRODUCTION ******************************************/
+		/***************************************************************************************************/
+
+			var css = "text-shadow: -1px -1px hsl(0,100%,50%), 1px 1px hsl(5.4, 100%, 50%), 3px 2px hsl(10.8, 100%, 50%), 5px 3px hsl(16.2, 100%, 50%); font-size: 45px;";
+			console.log("\n\n%cCodeur Quest : %s", css, "la quête du développeur \n\n");
+			console.log(
+				"Bonjour à toi jeune développeur, bienvenue à toi dans le monde fantastique de Codetopia, ici, le Code fait tout et vaut tout, un codeur de haut niveau est respecté de tous, il obtient alors la Gloire, l'Argent et les Femmes... \n\n" + 
+				"Tu souhaites toi aussi obtenir Gloire, Argent et Femmes ? Pas de problème, tu es libre d'essayer la quête du Grand Développeur ! \n\n" + 
+				"Pour ce faire, tu vas entrer plusieurs commandes, la première est toute simple : Jouer('Map'), pour afficher la map, rien de bien compliqué en soit.\n" +
+				"Pour te faire bouger, rien de bien compliqué pour toi, un simple 'Avancer', 'Reculer', 'Gauche' ou même 'Droite' à la place de 'Map', tu captes ? Pour la map ? Bah mets Map.\n\n" + 
+				"Maintenant que tu comprends tout ça, rentrons dans le vif du sujet, toi, le petit point réglisse devoir aller au point grosseille, si toi essayer passer par point marron, toi pas pouvoir car grandes montagnes, point vert eux, être bon ; mais attention, tu vas devoir utiliser Jouer('Coder'), tous les 3 pas et plus, et me coder un code 100% correct si tu veux réussir ! N'oublies pas de demander à 'BDD' pour voir tes codes !"
+				);
+
+		/***************************************** AFFICHER LA MAP *****************************************/
+		/***************************************************************************************************/
+
+			var map = [
+				["V","V","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","V","V"],
+				["V","M","_","_","_","_","_","_","_","_","M","_","_","_","M","M","M","M","M","M","O","M","V"],
+				["M","_","_","M","M","M","M","M","M","_","M","_","M","_","M","M","M","M","M","M","_","M","M"],
+				["M","_","M","M","M","_","_","M","M","_","M","M","M","_","M","M","M","M","M","M","_","_","M"],
+				["M","_","M","M","_","_","_","M","_","_","M","_","_","_","_","_","_","_","_","M","M","_","M"],
+				["M","_","_","M","_","M","_","M","_","M","M","M","M","M","M","M","_","M","M","M","M","_","M"],
+				["M","M","_","M","_","M","_","_","_","M","M","M","M","M","_","_","_","M","M","M","M","_","M"],
+				["M","_","_","M","M","M","_","M","M","M","M","M","M","M","_","_","_","M","_","M","M","_","M"],
+				["M","_","M","M","M","M","_","M","_","_","_","M","M","M","_","_","_","_","_","M","M","_","M"],
+				["M","_","_","M","_","M","_","M","_","M","M","M","M","_","_","M","_","M","_","M","M","_","M"],
+				["M","_","_","M","_","_","_","M","_","M","_","_","_","_","M","M","_","M","_","M","M","_","M"],
+				["M","M","_","M","_","M","_","M","_","M","_","M","M","M","M","M","M","M","_","M","M","_","M"],
+				["M","_","_","M","_","M","M","M","M","M","_","M","_","M","M","M","_","M","_","M","M","_","M"],
+				["M","_","M","M","_","_","_","M","M","M","_","M","_","M","M","M","_","M","_","M","M","_","M"],
+				["M","_","_","M","_","M","_","M","_","M","_","_","_","M","M","M","_","M","_","_","_","_","M"],
+				["M","M","_","M","M","M","_","M","_","M","M","M","_","_","_","M","_","M","M","M","M","M","M"],
+				["M","_","_","M","_","_","_","M","_","M","M","M","M","M","_","M","_","_","_","M","_","M","M"],
+				["M","_","_","M","_","M","_","M","_","_","_","_","_","_","_","M","M","M","_","M","_","M","M"],
+				["M","_","M","M","_","M","_","M","_","M","M","M","M","M","M","M","M","M","_","_","_","M","M"],
+				["M","_","M","M","_","_","M","M","_","M","M","M","M","M","M","M","M","M","_","M","_","M","M"],
+				["M","_","_","M","_","M","_","M","_","M","_","_","_","_","_","_","_","_","_","M","_","M","M"],
+				["M","_","_","M","_","_","_","M","_","M","_","M","_","_","M","M","_","M","M","M","_","M","M"],
+				["M","_","_","M","_","M","_","M","_","_","_","M","_","_","M","M","_","M","M","M","_","M","M"],
+				["M","A","M","M","M","M","_","M","M","M","M","M","_","_","M","M","_","_","_","_","_","M","M"],
+				["V","M","M","M","M","M","_","_","_","_","_","_","_","M","M","M","M","M","M","_","M","M","V"],
+				["V","V","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","V","V"]
+			];
+			var BDD = [];
+			var mouvement = 0;
+			var objectif = 0;
+			var reussi = 0;
+
+			function AfficherMap(map){
+				if(reussi == 0) {
+					if(Array.isArray(map) == false){
+					console.error("error");
+					}else{
+					//afficher les couleurs
+						var Chaine = "";
+						var map_couleur = [];
+						for (var i = 0; i < map.length; i++){
+							for(var j = 0; j < map[i].length; j++){
+								if(map[i][j] == "M"){
+									map_couleur.push("background: #582900");
+								}else if(map[i][j] == "_"){
+									map_couleur.push("background: #096A09");
+								}else if(map[i][j] == "V"){
+									map_couleur.push("background: #FFFFFF");
+								}else if(map[i][j] == "O"){
+									map_couleur.push("background: #CF0A1D");
+								}else if(map[i][j] == "A"){
+									map_couleur.push("background: #2D241E");
+								}else{
+									console.error("crash de la fonction AfficherMap : map[i][j]" + map[i][j]);
+									return 0;
+								}
+								Chaine += '%c   ';
+							}
+							Chaine += '\n';					
+						}
+						console.log(Chaine, ...map_couleur);
+						return "La map a été affichée correctement";
+					}
+				} else {
+					console.log("Tu as fini le jeu, crétin !");	
+				}		
+			}
+
+			function Avancer() {
+				if(reussi == 0) {
+					for (var i = 0; i < map.length; i++){
+						if (map[i].indexOf("A") != 0) {
+							if (map[i].indexOf("A") != -1) {
+								var save = map[i].indexOf("A");
+								if (map[i -1][save]  != "M") {
+									if (map[i -1][save]  == "O" && objectif == 0) {
+										console.log("You can't");
+									} else if (map[i -1][save]  == "O" && objectif >= 1) {
+										console.log("Te voilà maintenant Grand Développeur, Argent, Gloire et Femmes t'attendent, maintenant !");
+										reussi++;
+									}else {
+										map[i][save] = "_";
+										map[i -1][save] = "A";
+									}
+								}else{
+									console.log("Montagne en face l'aveugle !")
+								}	
+							}
+						}else{
+							console.log("Bordure de la map")
+						}
+					}
+					AfficherMap(map);
+					mouvement++;
+				} else {
+					console.log("Tu as fini le jeu, crétin !");
+				}
+			}
+		
+			function Reculer() {
+				if (reussi == 0) {
+					for (var i = 0; i < map.length; i++){
+						if (map[i].indexOf("A") != 0) {
+							if (map[i].indexOf("A") != -1) {
+								var save = map[i].indexOf("A");
+								if (map[i +1][save]  != "M") {
+									map[i][save] = "_";
+									map[i +1][save] = "A";
+									break;
+								}else{
+									console.log("Montagne en arrière l'aveugle !")
+								}	
+							}
+						}else{
+							console.log("Bordure de la map")
+						}
+					}
+					AfficherMap(map);
+					mouvement++;
+				} else {
+					console.log("Tu as fini le jeu, crétin !");
+				}
+			}
+
+			function Gauche() {
+				if(reussi == 0) {
+					for (var i = 0; i < map.length; i++){
+						if (map[i].indexOf("A") != 0) {
+							if (map[i].indexOf("A") != -1) {
+								var save = map[i].indexOf("A");
+								if (map[i][save -1]  != "M") {
+									map[i][save] = "_";
+									map[i][save -1] = "A";
+								}else{
+									console.log("Montagne à gauche l'aveugle !")
+								}	
+							}
+						}else{
+							console.log("Bordure de la map")
+						}
+					}
+					AfficherMap(map);
+					mouvement++;
+				} else {
+					console.log("Tu as fini le jeu, crétin !");
+				}
+			}
+
+			function Droite() {
+				if(reussi == 0) {
+					for (var i = 0; i < map.length; i++){
+						if (map[i].indexOf("A") != 0) {
+							if (map[i].indexOf("A") != -1) {
+								var save = map[i].indexOf("A");
+								if (map[i][save +1]  != "M") {
+									map[i][save] = "_";
+									map[i][save +1] = "A";
+								}else{
+									console.log("Montagne à droite l'aveugle !")
+								}	
+							}
+						}else{
+							console.log("Bordure de la map");
+						}
+					}
+					AfficherMap(map);
+					mouvement++;
+				} else {
+					console.log("Tu as fini le jeu, crétin !");
+				}
+			}
+
+			function Coder(code) {
+				if(reussi == 0) {
+					if(mouvement >= 3) {
+						var code = Math.round(Math.random()*100)
+						for(var j = 0 ; j < 1 ; j++) {
+							var Code = {
+								valeur : code + "%",
+								name : "Code" + j,
+								id : j
+							};
+							console.log("Ce code est correct à " + code + "% !");
+							BDD.push(Code);
+							mouvement -= 3;
+
+							if(code >= 70) {
+								objectif++;
+							}
+						}
+					} else {
+						console.log("Marche un peu glandeur !");
+					}
+				} else {
+					console.log("Tu as fini le jeu, crétin !");
+				}
+			}
+
+			function Jouer(option){
+				switch(option){
+		            case "Map":
+		                AfficherMap(map);
+		                break;
+		            case "Avancer":
+		                Avancer();
+		                break;
+		            case "Reculer":
+		                Reculer();
+		                break;
+		            case "Gauche":
+		                Gauche();
+		                break;
+		            case "Droite":
+		                Droite();
+		                break;
+		            case "Coder" : 
+		            	Coder();
+		            	break;
+		            default:
+		                console.error("Mauvais paramètre");
+		                break;
+	       		}
+			}
+
+		</script>
+	</body>
+</html>

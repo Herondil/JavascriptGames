@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+		<script>
+			console.log("Bonjour ! C'est le jeu du Pile Ou Face \n"+
+						"Tape par exemple Mise('pile',10) si tu mises 10 sur Pile");/*
+			function Pile(){
+				if (Math.random() <0.5){
+				console.log("bravo! c pile");
+				}
+				else {
+				console.log("non c face");
+				}	
+			}
+			function Face(){
+				if (Math.random() <0.5){
+				console.log("bravo! c face");
+				}
+				else {
+				console.log("non c pile dsl");
+				}
+			}
+				*/
+			var victoirePile = 0;
+			var victoireFace = 0;
+			var defaitePile = 0;
+			var defaiteFace = 0;
+			var porteMonnaie = 1000;
+			
+			function Mise(choix, mise){
+					
+				if ((choix == "pile" || choix == "face" )&& (mise <= porteMonnaie && mise > 0)) {
+					console.log("Vous avez "+porteMonnaie+" ziglion");
+					console.log("vous avez choisi " + choix);
+					if (Math.random() <0.5) {
+						console.log("la piece fait pile");
+						if (choix == "pile") {
+							console.log("gagné");
+							victoirePile++;
+							porteMonnaie += mise * 2;
+						} else {
+							console.log("perdu");
+							defaiteFace++;
+							if(porteMonnaie > 0){
+								porteMonnaie -= mise;
+							}
+						}
+					} else {
+						console.log("la piece fait face");
+						if (choix == "face") {
+							console.log("gagné");
+							victoireFace++;
+							porteMonnaie += mise * 2;
+						} else {
+							console.log("perdu");
+							defaitePile++;
+							if(porteMonnaie > 0){
+								porteMonnaie -= mise;
+							}
+						}
+					}
+					
+					console.log("Vous avez "+porteMonnaie+" ziglion");
+				} else if(porteMonnaie == 0){
+					console.log("Vous avez gagné l'héritage de vos parents décédés");
+					porteMonnaie += 1000;
+				} else {console.log("Erreur de syntaxe")}
+			}
+		</script>
+	</body>
+</html>

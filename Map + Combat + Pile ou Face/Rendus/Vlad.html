@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+		<script>
+		
+		console.log("%cBienvenue au jeu !", "color:red; font-size: 25px; padding:20px");
+  console.log("Utilisez : " + "%c Play(option)", "color:green");
+  console.log("Remplacez option par showMap pour voir la carte, top, bot, left ou right");
+
+
+		var map1 = [
+		["M","M","M","M","M","M","M","M","M","M"],
+		["M","D","M","_","_","_","_","M","M","M"],
+		["M","A","M","_","M","_","M","_","M","M"],
+		["M","_","_","_","M","_","M","M","_","M"],
+		["M","_","_","_","_","_","_","_","_","M"],
+		["M","_","_","_","_","_","_","_","_","M"],
+		["M","_","_","_","_","_","_","_","_","M"],
+		["M","M","M","M","M","M","M","M","_","M"],
+		["M","_","_","_","_","_","_","M","_","M"],
+		["M","_","_","_","_","_","_","M","_","M"],
+    ["M","_","_","_","_","_","_","M","_","M"],
+    ["M","_","_","_","_","_","_","M","_","M"],
+    ["M","_","_","_","_","_","_","M","_","M"],
+    ["M","M","M","M","M","M","M","M","_","M"],
+    ["M","_","_","_","_","M","_","_","_","M"],
+    ["M","_","_","_","_","_","_","_","_","M"],
+    ["M","_","_","_","_","M","_","_","_","M"],
+    ["M","M","M","M","M","M","M","M","M","M"]
+		];
+
+    var Final687419587 = [
+		["M","M","M","M","M","M","M","M"],
+		["M","_","_","_","_","_","_","M"],
+		["M","_","_","_","_","_","_","M"],
+		["M","_","_","_","_","_","_","M"],
+    ["M","_","_","_","_","_","_","M"],
+    ["M","A","_","_","_","_","_","M"],
+    ["M","_","_","_","_","_","_","M"],
+    ["M","M","M","M","M","M","M","M"]
+		];
+
+var map = map1;
+
+      function AfficheMap(map){
+			//vérifier map
+			if(Array.isArray(map) == false){
+				console.error("crash de la fonction");
+			}else{
+			//afficher les couleurs
+				var chaine = "";
+            var map_couleur = [];
+            for (var i = 0; i < map.length; i++) {
+               for(var j = 0; j < map[i].length; j++) {
+                  switch(map[i][j]) {
+                     case "M":
+                     map_couleur.push("background: grey");
+                     break;
+                     case "_":
+                     map_couleur.push("background: #58FA58");
+                     break;
+                     case "D":
+                     map_couleur.push("background: #141907");
+                     break;
+                     case "A":
+                     map_couleur.push("background: red");
+                     break;
+                     default:
+                     console.error("Une erreur est survenue, je ne sais pas plus !");
+                     break;
+                  }
+                  chaine += '%c   ';
+               }
+               chaine += '\n';
+            }
+            console.log(chaine, ...map_couleur);
+			}
+
+		}
+
+
+      function Play(option) {
+        /*for (var i = 0; i < map.length; i++){
+          if (map[i].indexOf("A") != -1 && map[i].indexOf("D") != -1) {
+            if (map[i].indexOf("A") == map[i].indexOf("D")) {
+              AfficheMap(Final687419587);
+              console.log("Gagné");
+            }
+          }
+        }*/
+         switch(option) {
+            case "showMap":
+            AfficheMap(map);
+            break;
+            case "top":
+              for (var i = 0; i < map.length; i++){
+                if (map[i].indexOf("A") != -1) {
+                  if(i != 0){
+                    var save = map[i].indexOf("A");
+                    if (map[i -1][save] == "D") {
+                    map = Final687419587;
+                    AfficheMap(map);
+                  }
+                    else if (map[i -1][save] != "M")
+                    {
+                    map[i][save] = "_";
+                    map[i -1][save] = "A";
+                  }
+                  
+                  else {console.log("Une montagne vous bloque !");}
+                  }else {console.log("Bordure de la map");}
+                }
+              }
+              AfficheMap(map);
+            break;
+            case "bot":
+              for (var i = 0; i < map.length; i++){
+                if (map[i].indexOf("A") != -1) {
+                  if(i != map.length -1){
+                    var save = map[i].indexOf("A");
+                    if (map[i +1][save] != "M") {
+                    map[i][save] = "_";
+                    map[i +1][save] = "A";
+                    break; } else {console.log("Une montagne vous bloque !");}
+                  }else {console.log("Bordure de la map");}
+                }
+              }
+              AfficheMap(map);
+            break;
+            case "left":
+              for (var i = 0; i < map.length; i++){
+        				if (map[i].indexOf("A") != 0) {
+        					if (map[i].indexOf("A") != -1) {
+        						var save = map[i].indexOf("A");
+        						if (map[i][save -1]  != "M") {
+        							map[i][save] = "_";
+        							map[i][save -1] = "A";
+        						}else{
+        							console.log("Bloquer par la gauche");
+        						}
+        					}
+        				}else{
+        					console.log("Bordure de la map");
+        				}
+        			}
+        			AfficheMap(map);
+            break;
+            case "right":
+              for (var i = 0; i < map.length; i++){
+        				if (map[i].indexOf("A") != map[i].length) {
+        					if (map[i].indexOf("A") != -1) {
+        						var save = map[i].indexOf("A");
+        						if (map[i][save +1] != "M") {
+        							map[i][save] = "_";
+        							map[i][save +1] = "A";
+        						}else{
+        							console.log("Bloquer par la gauche");
+        						}
+        					}
+        				}else{
+        					console.log("Bordure de la map");
+        				}
+        		}
+        		AfficheMap(map);
+            break;
+            default:
+            console.error("Command not found, sry :)");
+            break;
+         }
+      }
+
+		
+		</script>
+		
+	</body>
+</html>

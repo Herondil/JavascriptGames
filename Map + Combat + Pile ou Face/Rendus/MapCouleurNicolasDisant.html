@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+		<script>
+		
+		const map = [
+		["M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+		["M","_","_","_","_","_","_","_","_","_","_","_","_","C","_","D","M"],
+		["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M","M","M"],
+		["M","_","_","_","_","_","_","_","_","_","_","_","_","_","_","M","M"],
+		["M","_","_","_","_","_","_","_","M","M","M","M","M","M","M","_","M"],
+		["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M","_","M"],
+		["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M","_","M"],
+		["M","_","_","M","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+		["M","_","C","_","_","_","_","_","M","_","_","_","_","_","_","_","M"],
+		["M","M","M","M","M","M","_","_","M","_","_","_","_","_","_","_","M"],
+		["M","_","_","C","_","_","_","M","M","M","M","_","M","M","M","_","M"],
+		["M","_","M","M","M","M","M","_","_","C","_","C","_","_","M","_","M"],
+		["M","_","_","_","_","_","_","_","M","_","_","_","_","_","M","_","M"],
+		["M","_","_","_","_","_","_","_","M","_","_","_","_","_","M","A","M"],
+		["M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M"]
+		];
+		const map_donjon = [
+		["M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+		["M","_","_","_","M","_","_","_","_","_","_","_","_","_","A","M","M"],
+		["M","_","_","C","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+		["M","_","_","_","M","_","_","_","_","_","_","_","_","_","_","_","M"],
+		["M","M","_","M","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+		["M","_","C","_","M","_","_","_","_","_","_","_","_","_","C","E","M"],
+		["M","_","_","_","M","_","_","_","_","_","_","_","_","_","_","C","M"],
+		["M","_","_","_","_","C","_","_","_","_","_","_","_","_","_","_","M"],
+		["M","_","_","_","M","_","_","_","_","_","_","_","_","_","_","_","M"],
+		["M","M","_","M","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+		["M","_","B","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+		["M","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+		["M","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+		["M","_","_","_","_","_","_","_","_","_","_","_","_","_","C","C","M"],
+		["M","_","_","_","_","_","_","_","_","_","_","_","_","_","C","S","M"],
+		["M","_","_","_","_","_","_","_","_","_","_","_","_","_","C","M","M"],
+		["M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+		];
+		var A_horizontal = 15;
+		var A_vertical = 13;
+		var degats = Math.round(Math.random()*6)+10;
+		var epee = {
+			name: 'une Epée',
+			bonus_degats: Math.round(Math.random()*6)+20
+		}
+		var boss = 20;
+
+		console.log("Tu te situes dans un parc abandonné de New-York, certaines personnes disent qu'il est hanté, fait attention à toi !\nComment jouer ? Utilise la fonction Jouer, afin d'effectuer des actions. \nAction possible : 'AfficherMap' 'Avancer' 'Reculer' 'Droite' 'Gauche' 'Attaquer'. \nTu ne peux pas traverser les montagnes, tu es obligé de tuer les ennemies que tu rencontres !")
+		function Jouer(action){
+			//Action d'affichage de map
+			if (action== 'AfficherMap') {
+				//vérifier map
+				if(Array.isArray(map) == false){
+					console.error("crash de la fonction");
+				}else{
+				//afficher les couleurs
+					var Chaine = "";
+					var map_couleur = [];
+					for (var i = 0; i < map.length; i++){
+						for(var j = 0; j < map[i].length; j++){
+							if(map[i][j] == "M"){
+								map_couleur.push("background: #582900");
+							}else if(map[i][j] == "_"){
+								map_couleur.push("background: #32CD32");
+							}else if(map[i][j] == "A"){
+								map_couleur.push("background: #f5e93d");
+							}else if(map[i][j] == "C"){
+								map_couleur.push("background: grey");
+							}else if(map[i][j] == "D"){
+								map_couleur.push("background: red");
+							}else if(map[i][j] == "E"){
+								map_couleur.push("background: #00FF00");
+							}else if(map[i][j] == "S"){
+								map_couleur.push("background: #48D1CC");
+							}else if(map[i][j] == "B"){
+								map_couleur.push("background: #000");
+							}else{
+								console.error("crash de la fonction");
+								return 0;
+							}
+							Chaine += '%c   ';
+
+						}
+						Chaine += '\n';					
+					}
+					console.log(Chaine, ...map_couleur);
+				}
+				//Action de déplacement en haut
+			}else if (action == 'Avancer') {
+				if (map[A_vertical-1][A_horizontal] == "E") {
+						map[A_vertical][A_horizontal] = "_";
+						map[A_vertical][A_horizontal] = "A";
+						degats = epee.bonus_degats;
+						console.log('Bravo tu as rammasé '+ epee.name + ' tu as donc maintenant ' + degats + ' points de dégats');
+				}
+				if (map[A_vertical-1][A_horizontal] != "M" && map[A_vertical-1][A_horizontal] != "C"){
+					map[A_vertical][A_horizontal] = "_"; 
+					A_vertical += -1;
+					map[A_vertical][A_horizontal] = "A";
+					if (map[A_vertical-1][A_horizontal] == "C") {
+							console.log("Attention ! Un ennemie ! Utilise la fonction Attaquer pour attaquer");
+					}
+					if (map[A_vertical-1][A_horizontal] == "D") {
+							map = map_donjon;
+							console.log('La map à changé ! Tu es dans un donjon, trouve la sortie au plus vite. Des objets peuvent être trouvés sur la map');
+					}
+				}else{
+					console.error('Contact avec une entité, si c\'est un ennemie, utilise la fonction Attaquer, si c\'est une montagne, tu ne peux pas traverser les montagnes.');
+				}
+				Jouer('AfficherMap');
+				//Action de déplacement en bas
+			}else if (action == 'Reculer') {
+				if (map[A_vertical+1][A_horizontal] == "E") {
+						map[A_vertical][A_horizontal] = "_";
+						map[A_vertical][A_horizontal] = "A";
+						degats = epee.bonus_degats;
+						console.log('Bravo tu as rammasé '+ epee.name + ' tu as donc maintenant ' + degats + ' points de dégats');
+				}
+				if (map[A_vertical+1][A_horizontal] == "S") {
+						console.log('Bravo tu as fini !');
+				}
+				if (map[A_vertical+1][A_horizontal] != "M" && map[A_vertical+1][A_horizontal] != "C" && map[A_vertical+1][A_horizontal] != "B"){
+					map[A_vertical][A_horizontal] = "_"; 
+					A_vertical += +1;
+					map[A_vertical][A_horizontal] = "A";
+					if (map[A_vertical+1][A_horizontal] == "C") {
+							console.log("Attention ! Un ennemie ! Utilise la fonction Attaquer pour attaquer");
+					}
+					if (map[A_vertical+1][A_horizontal] == "D") {
+						map = map_donjon;
+						console.log('La map à changé ! Tu es dans un donjon, trouve la sortie au plus vite. Des objets peuvent être trouvés sur la map, afin de tuer le Dragon Noir qui bloque le chemin');
+					}
+				}else{
+					console.error('Contact avec une entité, si c\'est un ennemie, utilise la fonction Attaquer, si c\'est une montagne, tu ne peux pas traverser les montagnes.');
+				}
+				Jouer('AfficherMap');
+				//Action de déplacement à droite
+			}else if (action == 'Droite'){
+				if (map[A_vertical][A_horizontal+1] == "E") {
+						map[A_vertical][A_horizontal] = "_";
+						map[A_vertical][A_horizontal] = "A";
+						degats = epee.bonus_degats;
+						console.log('Bravo tu as rammasé '+ epee.name + ' tu as donc maintenant ' + degats + ' points de dégats');
+				}
+				if (map[A_vertical][A_horizontal+1] == "S") {
+						console.log('Bravo tu as fini !');
+				}
+				if (map[A_vertical][A_horizontal+1] != "M" && map[A_vertical][A_horizontal+1] != "C"){
+					map[A_vertical][A_horizontal] = "_"; 
+					A_horizontal += +1;
+					map[A_vertical][A_horizontal] = "A";
+					if (map[A_vertical][A_horizontal+1] == "C") {
+							console.log("Attention ! Un ennemie ! Utilise la fonction Attaquer pour attaquer");
+					}
+					if (map[A_vertical][A_horizontal+1] == "D") {
+							map = map_donjon;
+							console.log('La map à changé ! Tu es dans un donjon, trouve la sortie au plus vite. Des objets peuvent être trouvés sur la map');
+					}
+				}else{
+					console.error('Contact avec une entité, si c\'est un ennemie, utilise la fonction Attaquer, si c\'est une montagne, tu ne peux pas traverser les montagnes.');
+				}
+
+				Jouer('AfficherMap');
+				//Action de déplacement à gauche
+			}else if (action == 'Gauche'){
+				if (map[A_vertical][A_horizontal-1] == "E") {
+						map[A_vertical][A_horizontal] = "_";
+						map[A_vertical][A_horizontal] = "A";
+						degats = epee.bonus_degats;
+						console.log('Bravo tu as rammasé '+ epee.name + ' tu as donc maintenant ' + degats + ' points de dégats');
+				}
+				if (map[A_vertical][A_horizontal-1] != "M" && map[A_vertical][A_horizontal-1] != "C"){
+					map[A_vertical][A_horizontal] = "_"; 
+					A_horizontal += -1;
+					map[A_vertical][A_horizontal] = "A";
+					if (map[A_vertical][A_horizontal-1] == "C") {
+							console.log("Attention ! Un ennemie ! Utilise la fonction Attaquer pour attaquer");
+					}
+					if (map[A_vertical][A_horizontal-1] == "D") {
+							map = map_donjon;
+							console.log('La map à changé ! Tu es dans un donjon, trouve la sortie au plus vite. Des objets peuvent être trouvés sur la map');
+					}
+				}else{
+					console.error('Contact avec une entité, si c\'est un ennemie, utilise la fonction Attaquer, si c\'est une montagne, tu ne peux pas traverser les montagnes.');
+				}
+				Jouer('AfficherMap');
+				//Action d'attaque
+			}else if (action == 'Attaquer') {
+				if (map[A_vertical+1][A_horizontal] == "C") {
+				map[A_vertical][A_horizontal] = "_";
+				console.log('Tu as enlevé '+ degats + ' points de vie au monstre, tu l\'as tué, continue vers la sortie !');
+				A_vertical += +1;
+				map[A_vertical][A_horizontal] = "A";
+				}else if (map[A_vertical][A_horizontal-1] == "C") {
+					map[A_vertical][A_horizontal] = "_";
+					console.log('Tu as enlevé '+ degats + ' points de vie au monstre, tu l\'as tué, continue vers la sortie !');
+					A_horizontal += -1;
+					map[A_vertical][A_horizontal] = "A";
+				}else if (map[A_vertical-1][A_horizontal] == "C") {
+					map[A_vertical][A_horizontal] = "_";
+					console.log('Tu as enlevé '+ degats + ' points de vie au monstre, tu l\'as tué, continue vers la sortie !');
+					A_vertical += -1;
+					map[A_vertical][A_horizontal] = "A";
+				}else if (map[A_vertical][A_horizontal+1] == "C") {
+					map[A_vertical][A_horizontal] = "_";
+					console.log('Tu as enlevé '+ degats + ' points de vie au monstre, tu l\'as tué, continue vers la sortie !');
+					A_horizontal += +1;
+					map[A_vertical][A_horizontal] = "A";
+				}else if (map[A_vertical+1][A_horizontal] == "B" && degats >= boss) {
+				map[A_vertical][A_horizontal] = "_";
+				console.log('Tu as enlevé '+ degats + ' points de vie au Boss, tu l\'as tué, continue vers la sortie !');
+				A_vertical += +1;
+				map[A_vertical][A_horizontal] = "A";
+				}else if (map[A_vertical][A_horizontal-1] == "B" && degats >= boss) {
+					map[A_vertical][A_horizontal] = "_";
+					console.log('Tu as enlevé '+ degats + ' points de vie au Boss, tu l\'as tué, continue vers la sortie !');
+					A_horizontal += -1;
+					map[A_vertical][A_horizontal] = "A";
+				}else if (map[A_vertical-1][A_horizontal] == "B" && degats >= boss) {
+					map[A_vertical][A_horizontal] = "_";
+					console.log('Tu as enlevé '+ degats + ' points de vie au Boss, tu l\'as tué, continue vers la sortie !');
+					A_vertical += -1;
+					map[A_vertical][A_horizontal] = "A";
+				}else if (map[A_vertical][A_horizontal+1] == "B" && degats >= boss) {
+					map[A_vertical][A_horizontal] = "_";
+					console.log('Tu as enlevé '+ degats + ' points de vie au Boss, tu l\'as tué, continue vers la sortie !');
+					A_horizontal += +1;
+					map[A_vertical][A_horizontal] = "A";
+				}else{
+					console.error("Action impossible");
+				}
+				
+				Jouer('AfficherMap');
+			}else{
+				console.error('Mauvais paramètre');
+			}
+		}
+
+		</script>
+		
+	</body>
+</html>

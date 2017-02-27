@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+		<script>
+		
+		var map =   [
+            ["M","I","_","_","_","M","_","M","_","M","_","_","_","M","M","M","M","_","_","_","_","_","_","_","M","M","M","M","M","M","M","M","M","M","M","M"],
+            ["I","M","M","M","_","M","_","_","_","_","_","M","_","I","M","I","_","_","M","_","_","_","_","_","_","M","_","_","_","_","_","M","_","_","_","M"],
+            ["_","_","M","M","_","M","_","_","M","M","M","M","M","M","M","M","M","M","_","_","M","_","_","M","_","M","_","_","M","M","_","I","_","M","_","M"],
+            ["_","M","M","M","_","_","_","_","_","_","_","_","_","_","M","_","_","_","_","_","M","_","_","M","_","M","_","_","M","M","M","M","M","M","_","M"],
+            ["_","_","_","M","_","M","_","_","_","_","M","M","_","M","M","_","_","_","M","_","M","_","_","M","_","M","_","_","M","I","_","_","_","M","_","M"],
+            ["_","M","_","M","_","M","_","_","M","_","M","_","_","_","M","_","_","_","M","_","_","_","_","M","_","M","_","_","M","M","M","_","M","M","_","M"],
+            ["_","_","_","M","_","M","_","_","M","_","M","_","_","_","M","_","_","_","M","_","_","M","_","M","_","_","_","_","M","_","_","_","M","_","_","M"],
+            ["_","M","_","M","_","M","_","_","M","_","M","_","_","M","M","_","_","_","M","_","_","M","_","M","_","_","_","_","_","_","_","_","_","M","_","M"],
+            ["_","M","_","M","_","M","_","_","M","_","M","_","_","M","M","M","_","_","M","_","_","M","_","M","_","_","_","_","_","_","_","M","_","_","_","M"],
+            ["_","M","_","M","_","_","_","_","M","_","M","M","_","M","M","M","_","_","M","_","_","M","_","_","_","_","M","M","M","M","M","M","M","M","_","B"],
+            ["_","M","_","M","_","_","_","M","M","_","M","_","_","M","M","M","_","_","M","_","_","M","_","_","M","_","_","_","_","_","_","M","_","_","_","M"],
+            ["_","M","_","M","_","_","M","M","P","_","M","_","_","M","M","M","_","_","M","_","_","M","_","_","M","_","_","_","_","M","I","M","_","_","_","M"],
+            ["_","_","M","_","_","M","M","M","M","M","M","_","M","M","_","M","_","_","M","_","_","M","M","_","_","M","M","_","_","M","M","M","_","_","_","M"],
+            ["_","_","_","_","_","_","_","_","_","_","M","_","_","M","_","_","M","_","M","_","_","_","M","_","_","_","M","_","_","_","_","M","_","_","_","M"],
+            ["_","M","_","M","M","M","M","M","_","_","M","_","_","_","_","_","M","_","_","_","_","_","M","_","_","_","_","_","M","M","_","_","_","_","_","M"],
+            ["_","M","_","_","_","_","_","_","_","_","M","_","M","M","M","M","M","M","M","M","_","_","M","M","_","M","M","M","M","_","_","_","_","_","_","M"],
+            ["_","M","_","_","M","_","_","M","M","M","M","_","M","_","_","_","_","_","M","_","_","_","_","_","M","_","_","I","M","_","M","M","M","M","M","M"],
+            ["I","M","_","_","M","_","_","_","_","_","_","_","_","_","M","M","M","_","_","_","_","_","M","_","_","_","_","_","M","_","_","_","_","_","_","I"],
+            ["M","M","_","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+            ],
+			affiche =   "",
+			tbl     =   [],
+			couleur =   {
+							M : '#000',
+							P : '#FF5E4D',
+							B : '#3A9D23',
+							I : '#425B8A',
+							Reste : '#8D4024'
+						}
+			player  =   {
+							y : 11,
+							x : 8,
+							inventaire : [
+								{
+									objet : 'Arme',
+									type : 'merde',
+									degats : 5
+								},
+								{
+									objet : 'Magie',
+									type : 'inutile',
+									degats : 5
+			   
+								},
+								{
+									objet : 'Aide',
+									type : 'inexistante',
+									degats : 0
+			   
+								}
+							],
+							Pointsdevie : 666,
+							combat : false
+			},
+			boss    =   {
+							Pointsdevie : 100,
+							Faiblesse : '',
+							Resistance : ''
+			},
+			objet = {
+				objet       : ['Arme','Magie','Aide'],
+				typemagie   : ['Feu','Glace','Vent','Terre'],
+				typearme    : ['Épée','Lance','Hache','Masse'],
+				typeaide    : ['Soin Sacré','Bouclier']
+			}
+			 
+			// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+			 
+			window.document.onkeydown = function(e){
+				if (!player.combat) {
+					// Haut
+					if(e.keyCode == 38){
+						if(player.y-1 < 0) console.log('Tu pense que tomber dans le vide est une bonne id... ... ... Tu sais quoi? Laisse tomber...')
+						else if(map[player.y-1][player.x] == 'M') console.log('Mais pourquoi tu fonces contre un mur?');
+						else if(map[player.y-1][player.x] != 'M' ) {
+							if(map[player.y-1][player.x] == 'I'){
+								CreationObjet();
+							}else if(map[player.y-1][player.x] == 'B') Combat();
+			 
+							map[player.y][player.x] = '_';
+							player.y--;
+							map[player.y][player.x] = 'P';
+							boss.Pointsdevie += Math.round(Math.random()*10)+15;
+						}
+					}
+					// Bas
+					else if(e.keyCode == 40){
+						if(player.y >= map.length-1) console.log('Tu pense que tomber dans le vide est une bonne id... ... ... Tu sais quoi? Laisse tomber...')
+						else if(map[player.y+1][player.x] == 'M') console.log('Mais pourquoi tu fonces contre un mur?');
+						else if(map[player.y+1][player.x] != 'M') {
+							if(map[player.y+1][player.x] == 'I'){
+								CreationObjet();
+							}else if(map[player.y+1][player.x] == 'B') Combat();
+							map[player.y][player.x] = '_';
+							player.y++;
+							map[player.y][player.x] = 'P';
+							boss.Pointsdevie += Math.round(Math.random()*10)+15;
+						}
+					}
+					// Gauche
+					else if(e.keyCode == 37){
+						if(player.x -1 < 0) console.log('Tu pense que tomber dans le vide est une bonne id... ... ... Tu sais quoi? Laisse tomber...')
+						else if(map[player.y][player.x-1] == 'M') console.log('Mais pourquoi tu fonces contre un mur?');
+						else if(map[player.y][player.x-1] != 'M') {
+							if(map[player.y][player.x-1] == 'I'){
+								CreationObjet();
+							}else if(map[player.y][player.x-1] == 'B') Combat();
+							map[player.y][player.x] = '_';
+							player.x--;
+							map[player.y][player.x] = 'P';
+							boss.Pointsdevie += Math.round(Math.random()*10)+15;
+						}
+					}
+					// Droite
+					else if(e.keyCode == 39){
+						if(player.x >= map[player.y].length-1) console.log('Tu pense que tomber dans le vide est une bonne id... ... ... Tu sais quoi? Laisse tomber...')
+						else if(map[player.y][player.x+1] == 'M') console.log('Mais pourquoi tu fonces contre un mur?');
+						else if(map[player.y][player.x+1] != 'M') {
+							if(map[player.y][player.x+1] == 'I'){
+								CreationObjet();
+							}else if(map[player.y][player.x+1] == 'B') Combat();
+							map[player.y][player.x] = '_';
+							player.x++;
+							map[player.y][player.x] = 'P';
+							boss.Pointsdevie += Math.round(Math.random()*10)+15;
+						}
+					}
+					Map();
+				}
+			};
+			 
+			// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+			 
+			function CreationObjet(){
+				var objetcree = Math.floor(Math.random()*objet.objet.length);
+				if (objet.objet[objetcree] == 'Arme') {
+					if (player.inventaire[0].type != 'merde') {
+						player.inventaire[0].degats += player.inventaire[0].degats *0.75;
+					}else{
+						objetcree = Math.floor(Math.random()*objet.typearme.length);
+						player.inventaire[0].type = objet.typearme[objetcree];
+						objetcree = Math.round(Math.random()*100)+100;
+						player.inventaire[0].degats = objetcree;
+					}
+					console.log('Vous avez une '+player.inventaire[0].type+' qui fait maintenant '+player.inventaire[0].degats+' points de dégats')
+				}else if (objet.objet[objetcree] == 'Magie') {
+					if (player.inventaire[1].type != 'inutile') {
+						player.inventaire[1].degats += player.inventaire[1].degats *0.75;
+					}else{
+						objetcree = Math.floor(Math.random()*objet.typemagie.length);
+						player.inventaire[1].type = objet.typemagie[objetcree];
+						objetcree = Math.round(Math.random()*100)+100;
+						player.inventaire[1].degats = objetcree;
+					}
+					console.log('Vous avez une Magie de type '+player.inventaire[1].type+' qui fait maintenant '+player.inventaire[1].degats+' points de dégats')
+				}else if (objet.objet[objetcree] == 'Aide') {
+					if (player.inventaire[2].type != 'inexistante') {
+						if (player.inventaire[2].type == 'Bouclier') {
+							player.inventaire[2].degats += player.inventaire[2].degats *0.25;
+						}
+					}else{
+						objetcree = Math.floor(Math.random()*objet.typeaide.length);
+						player.inventaire[2].type = objet.typeaide[objetcree];
+						if (player.inventaire[2].type == 'Bouclier') {
+							objetcree = Math.round(Math.random()*25)+25;
+							player.inventaire[2].degats = objetcree;
+						}
+					}
+					console.log('Vous avez une Aide de qui est un '+player.inventaire[2].type)
+				}
+			}
+			 
+			// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+			 
+			function Combat(){
+				player.combat = true;
+				var faiblesseboss = Math.floor(Math.random()*objet.objet.length);
+				faiblesseboss = objet.objet[faiblesseboss];
+				if (faiblesseboss == 'Arme') {
+					faiblesseboss = Math.floor(Math.random()*objet.typearme.length);
+					boss.Faiblesse = objet.typearme[faiblesseboss];
+				}else{
+					faiblesseboss = Math.floor(Math.random()*objet.typemagie.length);
+					boss.Faiblesse = objet.typemagie[faiblesseboss];
+				}
+				var resistanceboss = Math.floor(Math.random()*objet.objet.length);
+				resistanceboss = objet.objet[resistanceboss];
+				if (resistanceboss == 'Arme') {
+					resistanceboss = Math.floor(Math.random()*objet.typearme.length);
+					boss.Resistance = objet.typearme[resistanceboss];
+				}else{
+					resistanceboss = Math.floor(Math.random()*objet.typemagie.length);
+					boss.Resistance = objet.typemagie[resistanceboss];
+				}
+				while(boss.Faiblesse == boss.Resistance){
+					resistanceboss = Math.floor(Math.random()*objet.objet.length);
+					resistanceboss = objet.objet[resistanceboss];
+					if (resistanceboss == 'Arme') {
+						resistanceboss = Math.floor(Math.random()*objet.typearme.length);
+						boss.Resistance = objet.typearme[resistanceboss];
+					}else{
+						resistanceboss = Math.floor(Math.random()*objet.typemagie.length);
+						boss.Resistance = objet.typemagie[resistanceboss];
+					}
+				}
+				Map();
+			}
+			 
+			// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+			 
+			function Jouer(action){
+				if (action == "Inventaire") {
+					if (player.inventaire[2].type != 'inexistante') return("Vous possèdez une arme, une "+player.inventaire[0].type+" ainsi qu'une magie d'élement "+player.inventaire[1].type+". Elles font "+player.inventaire[0].degats+" et "+player.inventaire[1].degats+" points de dégats, ainsi qu'un "+player.inventaire[2].type+".");
+					else return("Vous possèdez une arme, une "+player.inventaire[0].type+" ainsi qu'une magie d'élement "+player.inventaire[1].type+". Elles font "+player.inventaire[0].degats+" et "+player.inventaire[1].degats+" points de dégats. Vous n'avez ni soin, ni bouclier.");
+				}
+				else if (player.combat){
+					if(player.Pointsdevie <= 0 && boss.Pointsdevie <= 0) return('Parfois se sacrifier est bon... mais bordel, pour le faire au test faut être sacrément con.')
+					else if (boss.Pointsdevie <= 0) return("Mais... pourquoi tu t'acharnes sur ses restes? *soupir* Retourne au camp...");
+					else if(player.Pointsdevie <= 0) return("Et il vécut heureux, dévorant les recrues trop stupides pour vaincre");
+					else if(action == 'Arme' || action == 'Magie' || action == 'Aide'){
+						var degatsjoueur = 0;
+						var degatsslime = 0;
+						// Notre attaque
+						if (action == 'Arme') {
+							if (player.inventaire[0].type == boss.Faiblesse) degatsjoueur = player.inventaire[0].degats * 1.75;
+							else if(player.inventaire[0].type == boss.Resistance) degatsjoueur = player.inventaire[0].degats * 0.5;
+							else degatsjoueur = player.inventaire[0].degats;
+						}else if (action == 'Magie'){
+							if (player.inventaire[1].type == boss.Faiblesse) degatsjoueur = player.inventaire[1].degats * 1.75;
+							else if(player.inventaire[1].type == boss.Resistance) degatsjoueur = player.inventaire[1].degats * 0.5;
+							else degatsjoueur = player.inventaire[1].degats;
+						}else if (action == 'Aide' && player.inventaire[2].type == 'Soin Sacré'){
+							degatsjoueur = Math.round(Math.random()*150)+200;
+						}else if (action == 'Aide' && player.inventaire[2].type == 'Bouclier') {
+							return('Frappez avec un bouclier? Pourquoi pas, mais pas ici, attaque avec une vraie arme...');
+						}
+						// Attaque du slime
+						degatsslime = Math.round(Math.random()*100)+50;
+						if (player.inventaire[2].type == 'Bouclier') {
+							degatsslime -= player.inventaire[2].degats;
+							if (degatsslime < 0) degatsslime = 0;
+						}
+						if (action == 'Aide' && player.inventaire[2].type == 'Soin Sacré') {
+							player.Pointsdevie += degatsjoueur;
+							if (player.Pointsdevie > 666) player.Pointsdevie = 666;
+						}else{
+							boss.Pointsdevie -= degatsjoueur;
+						}
+						player.Pointsdevie -= degatsslime;
+			 
+						if (boss.Pointsdevie < 0) boss.Pointsdevie = 0;
+						if (player.Pointsdevie < 0) player.Pointsdevie = 0;
+						if (player.inventaire[2].type == 'Bouclier') console.log("Vous infligez "+degatsjoueur+" dégats au slime, ne lui laissant que "+boss.Pointsdevie+" points de vie tandis que lui vous inflige seulement "+degatsslime+" grâce à la protection de votre bouclier, vous laissant "+player.Pointsdevie+" points de vie.");
+						else if( action == 'Aide' && player.inventaire[2].type == 'Soin Sacré') console.log('Vous vous êtes soigné de '+degatsjoueur+" tandis que le slime vous inflige "+degatsslime+" . Vous avez alors "+player.Pointsdevie+" points de vie.");
+						else console.log("Vous infligez "+degatsjoueur+" dégats au slime, ne lui laissant que "+boss.Pointsdevie+" points de vie tandis que lui vous inflige "+degatsslime+", vous laissant "+player.Pointsdevie+" points de vie.");
+					}else console.log("Bordel cr...recrue, je le repête encore, c'est Jouer('Arme'), Jouer('Magie') ou Jouer('Aide')...")
+				};
+			}
+			 
+			// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+			 
+			function Map(){
+				if (player.combat) {
+					console.log("Vous êtes arrivé face au Slime, que vous soyez prêt ou non, rien n'a d'importance. Il vous sent et le combat s'enclenche. Vous avez juste le temps de voir sa faiblesse au "+boss.Faiblesse+" et sa résistance au "+boss.Resistance+"\n \n Utilisez la commande Jouer() avec entre les parenthèse 'Arme', 'Magie' ou 'Aide' en fonction de votre préférence. Vous avez aussi accès à Jouer('Inventaire')")
+				}
+				else{
+					tbl = [];
+					for (var j = 0; j <= map.length - 1; j++) {
+						for (var i = 0; i <= map[j].length - 1; i++) {
+							affiche += "%c  ";
+							if (map[j][i] == 'M') {
+								tbl.push("background : "+couleur.M);
+							}else if(map[j][i] == 'P'){
+								tbl.push("background : "+couleur.P);
+							}else if(map[j][i] == 'I'){
+								tbl.push("background : "+couleur.I);
+							}else if(map[j][i] == 'B'){
+								tbl.push("background : "+couleur.B);
+							}else{
+								tbl.push("background : "+couleur.Reste);
+							}
+						}
+						affiche += "\n"
+					}
+					console.log(affiche, ...tbl);
+					affiche = "";
+				}
+			}
+			 
+			console.log("Bienvenue THIBAUT LE PLUS BEAU. Tu es ici àfin de tester tes aptitudes. Aujourd'hui, tu tueras un slime. Retire moi ce sourire de débile de ton visage et reste sur tes gardes, ce slime devient plus puissant à chaque secondes. Prends trop de temps à améliorer ton équipement, et seul la mort t'attends... afin si tu n'es pas un joli fille, mais vu ta tronche de rat, c'est difficile de te nommer humain... File maintenant! \n \n Vous jouerez dans un premier temps avec les touches fléchés de votre clavier afin d'avancer dans le jeu. Pour ce faire, cliquer sur le corps de votre page (la grande partie blanche idiot...) Vous serez le carré rouge. \n Vous êtes le carrés rouges.\n Les carrés bleus sont vos armes ou magies récupérables. Si vous possèdez déjà une arme ou une magie autre que celle de base, vous enchanterez votre arme à partir de celle trouver et utiliserez le savoir d'une nouvelle magie pour améliorer la votre.\n Le carré vert représente le slime à combatre. \n L'ennemi possède une faiblesse et une résistance. Si vous possèdez la magie ou l'arme de faiblesse, vous augmenterez par x1.75 les dégats de l'arme, mais ne ferez que la moitié des dégats en cas de résistance.")
+			Map();
+		
+		</script>
+		
+	</body>
+</html>

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Zeren CHEN Test</title>
+</head>
+<body>
+
+	<!--********************************
+		PAGE HTML
+	-->
+	
+	<div>
+		<h2>Directionelles :</h2>
+		<p class="jouer">Jouer(" ")</p>
+		<table class="directionelle">
+	  		<tr>
+	    		<td></td>
+	    		<td>Haut</td> 
+	   			<td></td>
+	    	</tr>
+	    	<tr>
+	    		<td></td>
+	    		<td>Z</td> 
+	   			<td></td>
+	    	</tr>
+	   		
+	   		<tr>
+	    		<td>Gauche</td>
+	    		<td>Bas</td> 
+	   			<td>Droite</td>
+	    	</tr>
+	    	<tr>
+	    		<td>Q</td>
+	    		<td>S</td> 
+	   			<td>D</td>
+	    	</tr>
+		</table>
+	</div>
+
+	
+	<div>
+		<h1>Instruction Imaginaire :</h1>
+		<table>
+			<tr>
+				<td class="nom">Lancer le jeu : </td>
+				<td> Jouer("start")</td>
+				<td class="nom">Help : </td>
+				<td> Jouer("help")</td>
+			</tr>
+			<tr>
+				<td class="nom"></td>
+				<td></td>
+				<td class="nom G">G : </td>
+				<td> le point G</td>
+			</tr>
+			<tr>
+				<td class="Inventaire">Inventaire:</td>
+				<td></td>
+				<td class="nom C">C : </td>
+				<td> le Commerçant</td>
+			</tr>
+			<tr>
+				<td>Lunettes imaginaires : </td>
+				<td> Jouer("li")</td>
+				<td class="nom F">F : </td>
+				<td> le Forgeron</td>
+			</tr>	
+		</table>
+	</div>	
+
+
+	<!--********************************
+		PAGE CSS
+	-->
+	<style>
+		h1, td.Inventaire{
+			color: #173072;
+			font-size: 25px;
+		}
+		h2{
+			font-size: 18px;
+			float: left;
+			margin-right: 20px;
+		}
+
+		table.directionelle td{
+			text-align: center;
+		}
+		td.nom{
+			font-weight: bold;
+			font-size: 15px;
+			padding-right: 15px;
+		}
+		td, p.jouer{
+			padding-right: 50px;
+		}
+		div{
+			margin-left: 20px;
+			padding-right: 100px;
+			display: inline-block;
+			border-right: 1px dashed black;
+		}
+	</style>
+
+
+	<!--***********************************************************
+		
+		PAGE JS
+
+	-->
+	
+	<script>
+
+	
+	/* MAP */		
+		var etage1 = [
+		["M","M","M","M","M","M","M","M"],
+		["M","M","_","M","M","_","_","M"],
+		["M","F","_","M","_","M","_","M"],
+		["M","_","_","M","M","_","_","M"],
+		["M","C","_","_","_","_","M","M"],
+		["M","M","_","M","_","M","_","M"],
+		["M","_","_","M","_","_","_","M"],
+		["M","_","_","M","_","M","_","M"],
+		["M","_","M","M","_","M","_","M"],
+		["M","_","G","M","_","M","A","M"],
+		["M","M","M","M","M","M","M","M"]
+		];
+
+		var etage2 =[];
+
+	/* COMPTEUR */	
+		var compteur_action = 0;
+		var compteur_repeat = 0;
+		var compteur_help   = 0;
+
+		var compteur_lunette= 0;
+	/*test compteur_action */
+		function l(l){
+			compteur_action ++;
+			console.log(compteur_action);
+		}
+
+		var lunettes_imaginaires = {
+			imagination : []
+
+		}
+
+	/////////////////////.  MAP() 
+		function Map(etage){
+		
+			//vérifier map
+			if(Array.isArray(etage) == false){
+				console.error("crash de la fonction");
+			}else{
+			//afficher les couleurs
+				var Chaine = "";
+				var map_couleur = [];
+				for (var i = 0; i < etage.length; i++){
+					for(var j = 0; j < etage[i].length; j++){
+						if(etage[i][j] == "M"){
+							map_couleur.push("background: black");
+						}else if(etage[i][j] == "_"){
+							map_couleur.push("background: #00ff00");
+						}else if(etage[i][j] == "A"){
+							map_couleur.push("color: #ddd");
+						}else if(etage[i][j] == "G"){
+							map_couleur.push("background: #FFFF00");
+						}else if(etage[i][j] == "F"){
+							map_couleur.push("background: #A29");
+						}else if(etage[i][j] == "C"){
+							map_couleur.push("background: #A30");
+						}else{
+							console.error("crash de la fonction");
+							return 0;
+						}
+						Chaine += '%c   ';
+					}
+					Chaine += '\n';					
+				}
+				console.log(Chaine, ...map_couleur);
+				return "La map a été affichée correctement";	
+			}
+		}//Fin funtion Map()
+
+
+	/////////////////////.  JOUER()
+		function Jouer(action){
+
+
+			/******* START (commencement du jeu) *******/
+			
+			if(action == "start"){
+
+				// 3 != phrases d'intro du début
+				if(action == "start" && compteur_action > 1 && compteur_repeat == 0){
+					compteur_action = 3;
+					compteur_repeat++;
+					console.log("Très cher! Bon retour dans ton monde! Hihi!\nQue les épreuves qui s'offre, soit magistral!");
+				} else if(action == "start" && compteur_repeat == 1){
+					compteur_action = 3;
+					console.log("Ah cher étranger, Im sens cette présence de peur en toi.\nIm espère que c'est la dernier fois! (`w°/")
+				} else{
+					compteur_action = 1;
+					console.log("Voici, un monde chimère. Im Alaba a simple fruit de ton imagination.\nIm juste en face de toi, hihi...! Suis le chemin que tu t'es permis,\npeut être qu'un jour, tu me verras! RHILA, Rhila, rhila...");
+				}
+				Map(etage1);
+				etage = etage1;
+				/*console.log("compteur_action : "+compteur_action);
+				console.log("compteur_repeat : "+compteur_repeat);*/
+			}
+			// Fin start	
+				
+
+			/******* DEPLACEMENT (Interactions)*******/
+			 
+			 // HAUT
+			if(action == "Z" && compteur_action > 0){	
+					for (var i = 0; i < etage.length; i++){
+						if (etage[i].indexOf("A") == -1) {		
+						}else if(i != 0){
+							var save = etage[i].indexOf("A");
+							if(etage[i -1][save] != "M"){
+								etage[i][save] = "_";
+								etage[i -1][save] = "A";
+							} else{ console.warn("Bloquer par le mur");}
+							/*if(etage[i -1][save] != "C"){
+								etage[i][save] = "_";
+								etage[i -1][save] = "A";
+							} else{ console.info("Sais tu que personne d'ici n'as encore réusit à imaginer les étages supérieurs? Les plus forts n'ont jamais eu l'occasion de mettre les pieds ici.");}
+							if(etage[i -1][save] != "F"){
+								etage[i][save] = "_";
+								etage[i -1][save] = "A";
+							} else{ console.info("Tiens! On dirait pas mais tu est bien là! Je suis le Forgeron, en fonction de ta puissance, on peux essyer d'enchanter ton arme imaginaire avec Jouer(\"Enchanter\")");}	*/
+						}
+					}
+					Map(etage);
+					compteur_action++;	
+			}// BAS
+			 else if(action == "S" && compteur_action > 0){
+					for (var i = 0; i < etage.length; i++){
+						if (etage[i].indexOf("A") == -1) {		
+						}else if(i != etage.length -1){
+							var save = etage[i].indexOf("A");
+							if(etage[i +1][save] != "M"){	
+							etage[i][save] = "_";
+							etage[i +1][save] = "A";
+							break;
+							} else{ console.warn("Bloquer par le mur");}
+							/*if(etage[i +1][save] != "C"){
+								etage[i][save] = "_";
+								etage[i +1][save] = "A";
+							} else{ console.info("Sais tu que personne d'ici n'as encore réusit à imaginer les étages supérieurs? Les plus forts n'ont jamais eu l'occasion de mettre les pieds ici.");}
+							if(etage[i +1][save] != "F"){
+								etage[i][save] = "_";
+								etage[i +1][save] = "A";
+							} else{ console.info("Tiens! On dirait pas mais tu est bien là! Je suis le Forgeron, en fonction de ta puissance, on peux essyer d'enchanter ton arme imaginaire avec Jouer(\"Enchanter\")");}*/
+						}
+					}
+					Map(etage);
+					compteur_action++;
+			}// GAUCHE 
+			 else if(action == "Q" && compteur_action > 0){
+					for (var i = 0; i < etage.length; i++){
+						if (etage[i].indexOf("A") != 0) { 
+							if (etage[i].indexOf("A") != -1) {
+								var save = etage[i].indexOf("A");
+								if(etage[i][save -1] != "M"){
+									etage[i][save] = "_";
+									etage[i][save -1] = "A";
+								}else{ console.warn("Bloquer par le mur");}
+								/*if(etage[i][save -1] != "C"){
+								etage[i][save] = "_";
+								etage[i][save -1] = "A";
+								} else{ console.info("Sais tu que personne d'ici n'as encore réusit à imaginer les étages supérieurs? Les plus forts n'ont jamais eu l'occasion de mettre les pieds ici.");}
+								if(etage[i][save -1] != "F"){
+								etage[i][save] = "_";
+								etage[i][save -1] = "A";
+								} else{ console.info("Tiens! On dirait pas mais tu est bien là! Je suis le Forgeron, en fonction de ta puissance, on peux essyer d'enchanter ton arme imaginaire avec Jouer(\"Enchanter\")");}*/
+							}
+						}
+					}
+					Map(etage);
+					compteur_action++;
+			}// DROITE
+			 else if(action == "D" && compteur_action > 0){
+					for (var i = 0; i < etage.length; i++){
+						if (etage[i].indexOf("A") != 0) {
+							if (etage[i].indexOf("A").lenght != -1) {
+								var save = etage[i].indexOf("A");
+								if(etage[i][save +1] != "M"){
+									etage[i][save] = "_";
+									etage[i][save +1] = "A";
+
+								}else{ console.warn("Bloquer par le mur");}
+								/*if(etage[i][save +1] != "C"){
+								etage[i][save] = "_";
+								etage[i][save +1] = "A";
+								} else{ console.info("Sais tu que personne d'ici n'as encore réusit à imaginer les étages supérieurs? Les plus forts n'ont jamais eu l'occasion de mettre les pieds ici.");}
+								if(etage[i +1][save] != "F"){
+								etage[i][save] = "_";
+								etage[i +1][save] = "A";
+								}
+								else{ console.info("Tiens! On dirait pas mais tu est bien là! Je suis le Forgeron, en fonction de ta puissance, on peux essyer d'enchanter ton arme imaginaire avec Jouer(\"Enchanter\")");}*/
+							}
+						}
+					Map(etage);
+					compteur_action++;
+					}  
+			}
+				
+			else{
+				console.warn("Veuillez lancer le jeu!");
+			}
+			
+			
+			if(compteur_action  == 2){
+				console.info("Oh! Im oublié! hihi... Pour te repérer dans ce monde il te faut une paire de \"lunette imaginaire\"!\nIl se trouve dans cette salle. Et puis tu peux m'appeler quand tu veux avec 'Jouer(help)'");
+			}
+		}// Fin function Jouer()
+		
+		
+		
+
+
+
+	/********** FORGERON ***********/
+	
+		
+		function Attaquer(arme){
+			if(typeof arme == "object"){
+				if((arme.name != undefined) && (typeof arme.name == "string")){
+					console.log("Vous attaquez avec "+arme.name);
+				} else {
+					console.log("la propriété arme.name n'est pas valide");
+				}
+			} else {
+				console.log("Erreur de la fonction attaquer");
+			}	
+		}
+		
+		
+
+		var Inventaire = [];
+		
+		function Forger(nb_generique, nb_haches ) {
+			
+			if(nb_haches > 0 && nb_haches < nb_generique) {
+				for(var j = 0 ; j < nb_haches ; j++) {
+					var Haches = {
+						name : "Hache" + j,
+						id : j
+					};
+					Inventaire.push(Haches);
+				}
+				if(nb_generique - nb_haches > 0) {
+					for(var i = j, k = 0; i < nb_generique ; i++) {
+						var Arme = {
+							name : "Arme" + k,
+							id : i
+						};
+						Inventaire.push(Arme);
+						k++
+					}
+				}
+			} else {
+				console.log("Une erreur est survenue.");
+			}
+		};
+
+
+		function Enchanter(Inventaire2){
+			if(Array.isArray(Inventaire2)){
+				for(var i = 0; i < Inventaire2.length; i++){
+					if(typeof Inventaire2[i] == 'object'){
+						Inventaire2[i].enchantement = function LancerBDF(){
+							console.log(Math.round(Math.random()*100));
+						};
+					} else {
+						console.log("Impossibilité d'enchanter  "+Inventaire2[i]);
+					}
+				}
+			} else {
+				console.log("Erreur d'enchantement");
+			}
+		}
+
+
+	/********** Le choix ***********/
+		var victoirePile = 0;
+		var victoireFace = 0;
+		var defaitePile = 0;
+		var defaiteFace = 0;
+		
+		function Mise(choix){
+			console.log("vous avez choisi " + choix);	
+			if (choix == "pile" || choix == "face") {
+				if (Math.random() <0.5) {
+					console.log("la piece fait pile");
+					if (choix == "pile") {
+						console.log("gagné");
+						victoirePile++;
+					} else {
+						console.log("perdu");
+						defaiteFace++;
+					}
+				} else {
+					console.log("la piece fait face");
+					if (choix == "face") {
+						console.log("gagné");
+						victoireFace++;
+					} else {
+						console.log("perdu");
+						defaitePile++;
+					}
+				}
+			} else {console.log("erreur")}
+		}
+
+
+
+
+		</script>
+</body>
+</html>

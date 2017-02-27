@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+		<script>
+			
+			console.log("Attention ! Un monstre attaque le village, tue le pour nous sauver ! \n"+
+						"Ecris sur \"Attaquer()\" pour attaquer");
+					
+			
+			// Correction buggée !!!!!
+			/*
+			
+				Plante si izi devient trop grand à l'attaque suivante.
+				
+				Par exemple :
+				
+					MonsterPV = 15
+					Bonus_Dommages = 3
+					
+					Nouveau PV : 15 - 13 = 2
+					
+					-> Pas de messages sur les nouveaux pv
+					-> Pas de message d'épitaphe
+			
+			*/
+			
+			
+			var MonsterPV = 100,
+				Mort = 0;
+			
+			function Attaquer() {
+				
+				if(MonsterPV > 0){							
+					//IZI WIN
+					var Bonus_Dommages =  Math.floor(Math.random() * 6 );
+					var Dommages = 10 + Bonus_Dommages;
+					MonsterPV -= Dommages;
+				
+					
+					console.log("Le monstre perd " + Dommages + " PV !");
+
+					if(MonsterPV > Bonus_Dommages){
+						console.log("Ahah ! Il me reste encore " + MonsterPV + " !");
+					}
+
+					if (MonsterPV <= 0 && Mort == 0){
+						console.log("NOOON, JE MEURS !");
+						Mort++;
+					}
+				} else if(Mort != 0) {
+					console.log("Le monstre est déjà mort !");
+				}	
+			}
+		</script>
+	</body>
+</html>

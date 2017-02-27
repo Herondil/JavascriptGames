@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+		<script>
+			console.log("Bonjour ! C'est le jeu du Pile Ou Face \n"+
+						"Tape Pile() si tu mises Pile \n"+
+						"Tape Face() si tu mises Face");/*
+			function Pile(){
+				if (Math.random() <0.5){
+				console.log("bravo! c pile");
+				}
+				else {
+				console.log("non c face");
+				}	
+			}
+			function Face(){
+				if (Math.random() <0.5){
+				console.log("bravo! c face");
+				}
+				else {
+				console.log("non c pile dsl");
+				}
+			}
+				*/
+			var victoirePile = 0;
+			var victoireFace = 0;
+			var defaitePile = 0;
+			var defaiteFace = 0;
+			
+			function Mise(choix){
+				console.log("vous avez choisi " + choix);	
+				if (choix == "pile" || choix == "face") {
+					if (Math.random() <0.5) {
+						console.log("la piece fait pile");
+						if (choix == "pile") {
+							console.log("gagné");
+							victoirePile++;
+						} else {
+							console.log("perdu");
+							defaiteFace++;
+						}
+					} else {
+						console.log("la piece fait face");
+						if (choix == "face") {
+							console.log("gagné");
+							victoireFace++;
+						} else {
+							console.log("perdu");
+							defaitePile++;
+						}
+					}
+				} else {console.log("erreur")}
+			}
+		</script>
+	</body>
+</html>

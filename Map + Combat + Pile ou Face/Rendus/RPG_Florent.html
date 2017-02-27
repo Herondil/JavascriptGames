@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>RPG</title>
+</head>
+<body>
+<!--=============================================================================================================-->
+<!--===================================================== HTML ==================================================-->
+<!--=============================================================================================================-->
+<section>
+<h1>l'RPG du swaggeur</h1>
+<br/><br/><br/>
+<input type="button" name="btn_attaque" id="btn_attaque" value="Attaquer" onclick="combat('attaque')" class="btn_attaque">
+<input type="button" name="btn_heal" id="btn_heal" value="Heal" onclick="combat('heal')" class="btn_heal">
+<input type="button" name="btn_magic" id="btn_magic" value="Attaque Magique" onclick="combat('magic')" class="btn_magic">
+<input type="button" name="btn_potion" id="btn_potion" value="Potion" onclick="utiliser('potion')" class="btn_potion">
+<br/><br/>
+<h3>Vos PV :<p id="player" style="color: #D1171D"></p></h3>
+<h3>BOSS :<p id="monster" style="color: #D1171D"></p></h3>
+
+</section>
+<!--=============================================================================================================-->
+<!--===================================================== CSS ===================================================-->
+<!--=============================================================================================================-->
+<style type="text/css">
+	
+/*input.btn_attaque{background-image:url(../img/epee.png)}
+input.btn_heal{background-image:url(../img/heal.png)}
+input.btn_magic{background-image:url(../img/magic.png)}
+input.btn_potion{background-image:url(../img/potion.png)}*/
+	
+</style>
+<!--=============================================================================================================-->
+<!--================================================= JAVA SCRIPT ===============================================-->
+<!--=============================================================================================================-->
+<script type="text/javascript">
+
+var player = 100;
+var monster = 300;
+var damage = 0;
+
+document.getElementById("btn_attaque").innerHTML = btn_attaque;
+document.getElementById("btn_heal").innerHTML = btn_heal;
+document.getElementById("btn_magic").innerHTML = btn_magic;
+document.getElementById("btn_potion").innerHTML = btn_potion;
+
+document.getElementById("player").innerHTML = player;
+document.getElementById("monster").innerHTML = monster;
+
+
+function combat(competence) {
+
+	if (competence == "attaque") {
+		if (Math.random() >=0.3) {
+			damage = Math.round(Math.random() * 5) + 10;
+			monster -= damage;
+			console.log("vous attaquer :  |degat infliger au BOSS : "+damage+"|");
+		}else{console.log("YOU FAIL ATTAQUE")}
+		setTimeout(function() {   btn_attaque.disabled= true;}, 0);
+		setTimeout(function() { btn_attaque.disabled= false;}, 5000);
+	}
+
+	if (competence == "heal") {
+		if (Math.random() <=0.4) {
+			heal = Math.round(Math.random() * 5) + 10;
+			player += heal
+			console.log("| +"+heal+"|");
+		}else{console.log("YOU FAIL HEAL")}
+		setTimeout(function() {btn_heal.disabled= "disabled";}, 0);
+		setTimeout(function() { btn_heal.disabled= false;}, 7500);
+	}
+
+	if (competence == "magic") {
+		if (Math.random() >=0.5) {
+			magic = Math.round(Math.random() * 8) + 20;
+			monster -= magic;
+			console.log("|vous lancer une attaque magique : "+magic+"|");
+		}else{console.log("YOU FAIL MAGIC")}
+		setTimeout(function() {btn_magic.disabled= "disabled";}, 0);
+		setTimeout(function() { btn_magic.disabled= false;}, 12000);
+	}
+
+
+
+	console.log("--------------------------------------------------------------")
+}
+
+
+ 
+
+function utiliser(potion) {
+	player += 50;
+	setTimeout(function() {btn_potion.disabled= "disabled";}, 0);
+	setTimeout(function() { btn_potion.disabled= false;}, 60000);
+}
+
+function boss_attaque() {
+	if (Math.round(Math.random())) {
+		damage_monster = Math.round(Math.random() * 7) + 12;
+		player -= damage_monster
+		console.log("|degat infliger par le BOSS : "+damage_monster+"|");
+	}else{console.log("BOSS FAIL ATTAQUE")}
+	console.log("--------------------------------------------------------------")
+}
+
+function boss_magic() {
+		if (Math.round(Math.random())) {
+			magic_monster = Math.round(Math.random() * 12) + 30;
+			player -= magic_monster
+			console.log("|le BOSS crache du feu, c chaud "+magic_monster+" dmg |");
+		}else{console.log("BOSS FAIL MAGIC")}
+	console.log("--------------------------------------------------------------")
+}
+
+function boss_heal() {
+		if (Math.round(Math.random())) {
+			heal_monster = Math.round(Math.random() * 7) + 12;
+			monster += heal_monster;
+			console.log("|le BOSS se regenne de : "+heal_monster+"|");		
+		}else{console.log("BOSS FAIL HEAL")}
+	console.log("--------------------------------------------------------------")
+}
+
+
+setInterval(boss_attaque, 7000);
+setInterval(boss_magic, 24500);
+setInterval(boss_heal, 17500);
+
+
+function refr() {
+	document.getElementById("player").innerHTML = player;
+	document.getElementById("monster").innerHTML = monster;
+
+	if (player <=0) {
+		console.log("YOU LOOSE !!!")
+		setTimeout(function() { window.location.reload(false); }, 2000);
+		
+	}else if(monster <=0) {
+		console.log("YOU WIN !!!")
+		setTimeout(function() { window.location.reload(false); }, 2000);
+}
+
+}
+
+
+setInterval(refr, 99);
+
+
+</script>
+<!--==============================================================================================================-->
+<!--===================================================== FIN ====================================================-->
+<!--==============================================================================================================-->
+</body>
+</html>

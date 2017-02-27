@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Jeu</title>
+	<meta charset="utf-8"/>
+</head>
+<body>
+	<script type="text/javascript">
+		console.log("Dans ce Jeu, nous sommes dans un univers fictif ou vous vous baladez dans un donjon plein de monstres. \n" 
+		+"Vous incarnez un magicien et donc pour vous défendre, vous devez d'abord vous crée une liste de sort : Jouer('Sortilege',nb_sort). \n"
+		+"Ensuite vous allez piocher 3 sorts qui on été générés aléatoirements dans votre grimoire : Jouer('Pioche',nb_pioche), maximum 3 cartes. \n"
+		+"Pour vous deplacer dans la map utiliser les commandes : Jouer('Mouvement',x) ou x = Haut/Bas/Gauche/Droite. \n"
+		+"Pour consulter vos sorts : grimoire / activable.");
+		// Color affichage 2D ***********************************************************************
+		/*var map = [
+			["M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+			["M","_","_","_","_","_","_","M","_","_","_","M","_","_","_","M","_","_","_","M"],
+			["M","M","M","M","_","M","_","M","_","M","_","M","_","M","M","M","_","M","_","M"],
+			["M","_","_","_","_","M","_","_","_","M","_","M","_","_","_","_","_","M","_","M"],
+			["M","_","M","M","M","M","M","M","M","M","_","M","M","M","_","M","M","M","_","M"],
+			["M","_","_","_","_","_","_","_","_","M","_","_","_","_","_","_","_","M","_","M"],
+			["M","M","M","M","M","M","M","M","_","M","M","M","M","M","M","M","_","M","M","M"],
+			["M","_","_","M","_","_","_","_","_","M","_","_","_","_","_","M","_","_","_","M"],
+			["M","_","M","M","_","M","M","M","M","M","_","M","M","M","_","M","M","_","_","M"],
+			["M","_","M","_","_","M","_","_","_","M","_","M","_","M","_","_","M","M","_","M"],
+			["M","_","M","_","M","M","_","M","_","M","_","M","_","M","_","_","_","M","_","M"],
+			["M","_","_","_","M","_","_","M","_","_","_","_","_","M","_","M","_","_","_","M"],
+			["M","_","M","M","M","M","M","M","_","M","M","M","M","M","_","M","M","_","_","M"],
+			["M","_","M","_","_","M","_","_","_","M","_","_","_","M","_","_","M","M","_","M"],
+			["M","_","M","M","_","M","_","M","M","M","_","_","_","M","_","_","_","M","_","M"],
+			["M","_","_","_","_","M","_","_","_","_","_","M","M","M","M","M","_","M","_","M"],
+			["M","_","M","M","M","M","M","M","M","M","M","M","_","_","_","M","_","M","M","M"],
+			["M","_","M","_","_","_","_","_","_","M","_","_","_","M","_","M","_","_","_","M"],
+			["M","_","M","_","M","M","M","M","_","M","_","M","M","M","_","M","M","M","_","M"],
+			["M","_","_","_","M","C","_","_","_","M","_","_","A","M","_","_","_","_","_","M"],
+			["M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M"]
+		];*/
+		var map = [
+			["V","V","V","V","V","V","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+			["V","V","V","V","V","V","M","C","_","_","M","M","_","_","_","_","_","_","_","_","M","_","C","_","M","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+			["V","V","V","M","M","V","M","_","_","_","M","M","_","_","_","_","_","_","_","C","M","_","_","_","M","_","_","M","_","_","M","M","M","M","M","M","M","M"],
+			["M","M","M","M","M","M","M","M","M","_","M","M","_","_","_","_","_","_","_","_","M","_","_","_","M","_","_","M","_","_","M","M","M","M","M","M","M","M"],
+			["M","M","M","M","M","M","M","M","M","_","M","M","M","M","_","M","M","M","M","M","M","M","_","M","M","_","_","_","_","_","M","M","M","M","M","M","M","M"],
+			["V","M","M","_","_","_","_","_","_","_","_","M","_","_","_","_","_","_","_","_","_","_","_","_","M","_","_","_","_","_","_","M","M","M","M","M","M","M"],
+			["V","M","M","_","_","_","_","_","_","_","_","M","_","_","_","_","_","_","_","_","_","_","_","_","M","_","_","_","_","_","_","_","M","M","M","M","M","M"],
+			["V","M","M","_","_","_","_","_","_","_","_","M","_","_","_","M","_","M","_","_","_","M","_","_","M","_","_","_","_","_","_","_","M","M","M","M","M","M"],
+			["V","M","M","_","_","_","M","M","_","_","_","M","_","_","_","_","_","_","_","_","_","_","_","_","M","_","_","_","_","_","_","_","M","M","M","M","M","M"],
+			["M","M","M","M","_","_","M","M","_","_","M","M","M","_","_","_","_","_","_","_","_","_","_","_","M","M","_","_","_","_","_","_","M","M","M","M","M","M"],
+			["M","M","M","M","_","_","_","_","_","_","M","M","M","_","_","M","_","M","_","_","_","M","_","_","M","M","_","_","M","_","_","_","M","M","M","M","M","M"],
+			["M","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","M","M","_","_","_","_","M"],
+			["M","_","A","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","C","_","M"],
+			["M","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","M","M","_","_","_","_","M"],
+			["M","M","M","M","_","_","_","_","_","_","M","M","M","_","_","M","_","M","_","_","_","M","_","_","M","M","_","_","M","_","_","_","M","M","M","M","M","M"],
+			["M","M","M","M","_","_","M","M","_","_","M","M","M","_","_","_","_","_","_","_","_","_","_","_","M","M","_","_","_","_","_","_","M","M","M","M","M","M"],
+			["V","M","M","_","_","_","M","M","_","_","_","M","_","_","_","_","_","_","_","_","_","_","_","_","M","_","_","_","_","_","_","_","M","M","M","M","M","M"],
+			["V","M","M","_","_","_","_","_","_","_","_","M","_","_","_","M","_","M","_","_","_","M","_","_","M","_","_","_","_","_","_","_","M","M","M","M","M","M"],
+			["V","M","M","_","_","_","_","_","_","_","_","M","_","_","_","_","_","_","_","_","_","_","_","_","M","_","_","_","_","_","_","_","M","M","M","M","M","M"],
+			["V","M","M","_","_","_","_","_","_","_","_","M","_","_","_","_","_","_","_","_","_","_","_","_","M","_","_","_","_","_","_","M","M","M","M","M","M","M"],
+			["M","M","M","M","M","M","M","_","M","M","M","M","M","M","M","_","M","M","_","M","M","_","M","M","M","_","_","C","_","_","M","M","M","M","M","M","M","M"],
+			["M","M","M","M","M","M","M","_","_","_","M","M","M","M","M","_","_","M","_","_","M","_","C","M","M","_","_","M","_","_","M","M","M","M","M","M","M","M"],
+			["V","V","V","M","M","M","M","_","_","_","M","V","M","M","M","_","_","M","_","_","M","_","_","M","M","_","_","M","_","_","M","M","M","M","M","M","M","M"],
+			["V","V","V","V","V","V","M","_","_","C","M","V","M","M","M","M","M","M","_","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+			["V","V","V","V","V","V","M","M","M","M","M","V","V","M","M","M","M","M","_","_","_","_","_","_","M","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+			["V","V","V","V","V","V","V","V","V","V","V","V","V","M","M","M","M","M","_","_","_","_","_","_","M","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+			["V","V","V","V","V","V","V","V","V","V","V","V","V","M","M","M","M","M","M","_","M","M","_","_","M","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+			["V","V","V","V","V","V","V","V","V","V","V","V","V","M","M","M","M","M","_","_","_","M","_","_","M","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+			["V","V","V","V","V","V","V","V","V","V","V","V","V","M","M","M","M","M","_","C","_","M","_","_","M","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+			["V","V","V","V","V","V","V","V","V","V","V","V","V","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M"]
+		];
+		AfficheMap(map);
+		function AfficheMap(map){
+			//vérifier map
+			if (!Array.isArray(map) || !Array.isArray(map[0]) || map[0][0] != "V") {
+				console.error("La map entrer n'est pas valide !");
+			} else {
+				//afficher les couleurs
+				var mapcolor = [];
+				var azert = "";
+				for (var i = 0; i < map.length; i++) {
+					// Vérification des lignes
+					for (var j = 0; j < map[i].length; j++) {
+						// Vérification des caractères des lignes
+						if (map[i][j] == "M") {
+							// Caractère color1
+							mapcolor.push("background: #222");
+						} else if (map[i][j] == "_") {
+							// Caractère color2
+							mapcolor.push("background: #A66");
+						} else if (map[i][j] == "A") {
+							// Caractère color3
+							mapcolor.push("background: #A33");
+						} else if (map[i][j] == "C") {
+							// Caractère color4
+							mapcolor.push("background: #FEFD27");
+						}
+						else if (map[i][j] == "V") {
+							// Caractère color5
+							mapcolor.push("background: rgba(1,1,1,0.1)");
+						} else {
+							console.error("Crash de la fonction !");
+							return 0;
+						}
+						// Taille de la tuile
+						azert += "%c  ";						
+					};
+					// Saut de la ligne
+					azert += "\n";
+				};
+			// Affichage de la map
+			console.log(azert, ...mapcolor);
+			return "La map a été afficher correctement";
+			};
+		};
+		// Mouvement du player dans la map ***********************************************************
+		var Player = {
+			Position :[12,2],
+			/* coo=[Y,X] */
+			Haut:[-1, 0],
+			Bas:[1, 0],
+			Gauche:[0, -1],
+			Droite:[0, 1],
+			Mouvement : function(direction){
+				if (typeof direction == "object") {
+					var CooDestination = [
+						this.Position[0]+direction[0],
+						this.Position[1]+direction[1]
+					];
+					var Destination = map[CooDestination[0]][CooDestination[1]];
+					//si la destination n'est pas un mur
+					if (Destination != "M" && Destination !="V") {
+						//mise a jour de la map
+						map[CooDestination[0]][CooDestination[1]]="A";
+						map[this.Position[0]][this.Position[1]]=Destination;
+
+						//mise a jour des coordonees du player
+						this.Position[0]+=direction[0];
+						this.Position[1]+=direction[1];
+					}
+					AfficheMap(map);
+				} else{
+					console.log("Direction non valide");
+				}
+			}
+		}
+		// Création de sortilège/pioche aléatoire de 3 sorts**************************************************************
+		var grimoire =[];
+		var activable =[];
+
+		function Sortilege(nb_gene){
+			console.log("Génération de vos " +nb_gene +" sorts activé");
+			if (nb_gene > 0) {
+				for (var i = 0; i < nb_gene; i++) {
+					var Sort = {
+						name : "Sort" + i,
+						dégât : Math.round(Math.random() *20),
+						coût : Math.round(Math.random() *20),
+					};
+					grimoire.push(Sort);
+				};
+			} else {
+					console.log("Il y a erreur sur la commande");
+			}
+		}
+		function Pioche(nb_pioche){
+			if (nb_pioche >0 && nb_pioche <= 3) {
+				console.log("Vous piochez " +nb_pioche +" sorts du grimoire");
+				for (var i = 0; i < nb_pioche; i++) {
+					var sort_indice = Math.floor(Math.random()*(grimoire.length-1));
+					activable.push(grimoire[sort_indice]);
+					grimoire.splice(sort_indice,1);
+				}
+			} else {
+				console.log("Vous ne pouvez pas piocher " +nb_pioche +" cartes.")
+			};
+		};
+		// Phase de combat ********************************************************************************* -En travaux-
+		var pvjoueur = 60;
+		var manajoueur = 50;
+		var pvennemi = 100;
+		function Attaquer(sort){
+			if (typeof sort == "object") {
+				console.log("Vous attaquez avec "+sort.name);
+			} else {
+				console.log("Error de la fonction attaquer");
+			}
+			if (pvennemi > 0) {
+				var hasard = Math.floor(Math.random() *6);
+				pvennemi -= sort.dégât;
+				console.log('- ' +sort.dégât +' HP');
+				if (pvennemi > hasard) {
+					console.log('Vous avez toucher l\'ennemi, il lui reste ' +pvennemi +' pv');
+				}
+				if (pvennemi <= 0) {
+					console.log('L\'ennemi est détruit');					
+				}
+			}
+			else {
+				console.log('L\'ennemi est déjà détruit');
+			}
+		}
+		// Fonction général de Jeu **************************************************************************************
+		function Jouer(action,param){
+			switch (action) {
+			  case "Pioche":
+			  	Pioche(param);
+			    break;
+
+			  case "Sortilege":
+			  	Sortilege(param);
+			    break;
+
+			  case "Attaquer":
+			  	Attaquer(param);
+			  	break;
+
+			  case "Mouvement":
+			  	switch (param) {
+			  		case "Gauche":
+			  			Player.Mouvement(Player.Gauche);
+			  		break;
+			  		case "Droite":
+			  			Player.Mouvement(Player.Droite);
+			  		break;
+			  		case "Haut":
+			  			Player.Mouvement(Player.Haut);
+			  		break;
+			  		case "Bas":
+			  			Player.Mouvement(Player.Bas);
+			  		break;
+			    break;
+				}
+			}
+		}
+	</script>
+</body>
+</html>
