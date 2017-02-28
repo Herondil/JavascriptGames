@@ -40,6 +40,8 @@
 								map_couleur.push("background: #555FFF");
 							}else if(map[i][j] == "-"){
 								map_couleur.push("background: #AFF0FF");
+							}else if(map[i][j] == "X"){
+								map_couleur.push("background: red");
 							}else{
 								return "crash de la fonction sur la case "+map[i][j];
 							}
@@ -52,36 +54,46 @@
 				}
 				
 			}
-				
+			
+			var nbr_piege =0;
 				
 			setTimeout(Jouer,  250);
-						
-			function Jouer(  ){
 			
+			function Jouer(  ){
+				if (nbr_piege ==0) {
+				CreerPiege();
+				}
 				AfficheMap(circuit);
 							
 				for (var i = 0; i < circuit.length; i++){
 										
 					if (circuit[i].indexOf("V") != -1) {	
-										
-						if (circuit[i-1] == undefined){
+					
+						var save = circuit[i].indexOf("V");
 							
+						if (circuit[i-1] == undefined){	
 							console.log("Vous etes arrivé");
 							return "Bravo";
+						}else if (circuit[i-1][save] == "X"){	
+							console.log("MORT");
+							return"MORT";							
 						}else{
-										var save = circuit[i].indexOf("V");
-						circuit[i][save] = " ";
-						circuit[i -1][save] = "V";
-						}			
-															
-					}
-						 
-				}		
-				
-				setTimeout(Jouer,  250);
+							circuit[i][save] = " ";
+							circuit[i -1][save] = "V";	
+						}
+									
+					setTimeout(Jouer,  250);
+				}
 			}
+		}
 			
-		
+		function CreerPiege(){
+			var piege=Math.floor(Math.random()*3)
+			if(piege==0){circuit[3][7]="X"}
+			if(piege==1){circuit[5][5]="X"}
+			if(piege==2){circuit[8][3]="X"}
+			nbr_piege++;
+		}
 		</script>
 		
 	</body>
