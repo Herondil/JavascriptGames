@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+	
+		<script>
+			var circuit = [
+				["M","-","-","-","-","-","-","-","-","M"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["M"," "," "," "," "," "," ","V"," ","M"]
+			];
+			
+			function AfficheMap(map){
+				//vérifier map
+				if(Array.isArray(map) == false){
+					console.error("crash de la fonction");
+				}else{
+				//afficher les couleurs
+					var Chaine = "";
+					var map_couleur = [];
+					for (var i = 0; i < map.length; i++){
+						for(var j = 0; j < map[i].length; j++){
+							if(map[i][j] == "M"){
+								map_couleur.push("background: #000");
+							}else if(map[i][j] == " "){
+								map_couleur.push("background: #00ff00");
+							}else if(map[i][j] == "V"){
+								map_couleur.push("background: #555FFF");
+							}else if(map[i][j] == "-"){
+								map_couleur.push("background: #AFF0FF");
+							}else{
+								return "crash de la fonction sur la case "+map[i][j];
+							}
+							Chaine += '%c   ';
+						}
+						Chaine += '\n';					
+					}
+					console.log(Chaine, ...map_couleur);
+					return "La map a été affichée correctement";
+				}
+				
+			}
+				
+				
+			setTimeout(Jouer,  250);
+						
+			function Jouer(  ){
+			
+				AfficheMap(circuit);
+							
+				for (var i = 0; i < circuit.length; i++){
+										
+					if (circuit[i].indexOf("V") != -1) {	
+										
+						if (circuit[i-1] == undefined){
+							
+							console.log("Vous etes arrivé");
+							return "Bravo";
+						}else{
+										var save = circuit[i].indexOf("V");
+						circuit[i][save] = " ";
+						circuit[i -1][save] = "V";
+						}			
+															
+					}
+						 
+				}		
+				
+				setTimeout(Jouer,  250);
+			}
+			
+		
+		</script>
+		
+	</body>
+</html>
