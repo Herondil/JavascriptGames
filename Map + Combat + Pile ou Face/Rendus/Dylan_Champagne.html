@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TestColor</title>
+	<meta charset="utf-8"/>
+</head>
+<body>
+	<script type="text/javascript">
+		// Color affichage 2D ***********************************************************************
+		
+		console.log("Bonjour Aventurier, tu vas devoir te battre, explorer, découvrir de nouveaux lieux et chemins \nTu vas voir redoubler de courage, es-tu prêt ? Pour commencer, affiche la map grace à :\njouer('Map') puis déplace toi avec la commande jouer('Avancer')");
+
+		var game = 1; /*Variable de fin de jeu*/
+
+		var combat = 0;/*Sert a savoir s'il y a un ennemi ou non*/
+
+		var droite = 0, gauche = 0, avancer = 0, reculer = 0;
+
+		var swordMin = 20, swordMax = 30;/*Variable dégats sword*/
+
+		const swordDragonMin = 40, swordDragonMax = 70;
+
+		const arcDragonMin = 100, arcDragonMax = 200;
+
+		const staffDragonMin = 400, staffDragonMax = 700;
+
+		var arcMin = 30, arcMax = 45;/*Variable dégats arc*/
+
+		var staffMin = 10, staffMax = 15;/*Variable dégats staff*/
+
+		var staffEnchantMin = 0, staffEnchantMax = 100;/*Variable dégats staff.enchantment*/
+
+		var gourdinMin = 20, gourdinMax = 30;/*Variable dégats ennemis*/
+
+		var degats = 0, monstre = 100,monstreExp = 1000;/*Varriable de combat & du monstre*/
+
+			/*Variable du joueur*/
+		var joueurPv = 400, exp = 0, multiplicateur = 1, expSuivant = 1000*multiplicateur, lvl = 1, coups = 0;
+
+			/*Objects des armes du joueur et du monstre*/
+
+		var sword = {
+
+			name		: "sword",
+			degats 		: 0,
+			vitesse		: 15,
+			precision	: 85	
+
+		};
+
+		var arc	= {
+
+			name		: "arc",
+			degats		: 0,
+			vitesse		: 25,
+			precision 	: 70
+
+		};
+
+		var staff = {
+
+			name		: "staff",
+			degats		: 0,
+			vitesse		: 35,
+			precision	: 90,
+			enchantment	: function LancerBDF(){
+							return Math.round(Math.random()*(staffEnchantMax - staffEnchantMin)+staffEnchantMin);
+						}
+
+		};
+
+		var gourdin = {
+
+			name 		: "gourdin",
+			degats 		: 0,
+			vitesse		: 15,
+			precision	: 80
+		}
+
+		/*Création du level design*/
+
+		const map1 = [
+			["C","_","_","_","_","_","_","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+			["M","M","M","_","M","_","M","M","M","_","_","_","M","M","_","_","_","M","M","M"],
+			["M","M","M","M","M","_","M","M","M","_","M","_","_","_","_","M","_","M","M","M"],
+			["M","M","M","_","_","_","M","_","_","_","M","M","M","M","M","M","_","M","M","M"],
+			["M","M","M","_","M","M","M","_","M","_","_","_","_","M","M","M","_","_","_","M"],
+			["M","M","M","_","_","_","_","M","M","M","M","M","_","M","M","M","_","M","_","M"],
+			["M","M","M","M","M","M","_","M","M","M","M","M","_","M","M","M","_","M","_","M"],
+			["M","M","M","M","M","M","_","M","M","M","M","M","_","_","M","_","_","M","_","M"],
+			["M","M","_","_","M","_","_","M","M","_","_","_","M","_","M","_","M","M","_","_"],
+			["M","M","_","M","M","_","M","M","M","_","M","_","M","_","_","_","M","M","M","_"],
+			["M","M","_","M","M","_","_","_","M","_","M","_","M","M","M","M","_","M","_","_"],
+			["M","_","_","_","M","M","M","_","M","_","M","_","M","M","M","M","_","_","_","M"],
+			["M","_","M","_","M","M","M","_","M","_","M","_","M","_","_","_","M","M","_","_"],
+			["M","_","M","_","_","_","_","_","_","_","M","_","M","_","M","_","M","M","M","_"],
+			["M","M","M","M","M","M","M","M","M","M","M","_","_","_","M","_","_","_","_","A"], 
+			];
+
+		let carte = map1;
+
+		const map2 = [
+			["M","M","M","M","M","M","M","M"],
+			["M","M","S","M","M","_","_","M"],
+			["M","_","_","M","_","M","_","M"],
+			["M","_","_","M","M","_","_","M"],
+			["M","M","_","_","_","_","M","M"],
+			["M","M","_","M","_","M","_","M"],
+			["M","M","_","M","_","_","_","M"],
+			["M","M","_","_","_","M","_","M"],
+			["M","_","M","_","M","M","_","M"],
+			["M","_","M","_","_","_","A","M"],
+			["M","M","M","M","M","M","M","M"] 
+			];
+
+		const map3 = [
+			["M","M","M","M","M","M","M","M"],
+			["M","_","_","_","_","_","_","M"],
+			["M","_","_","_","_","_","_","M"],
+			["M","_","M","_","_","M","_","M"],
+			["M","_","M","_","_","M","_","M"],
+			["M","_","_","_","_","_","_","M"],
+			["M","_","_","_","_","_","_","M"],
+			["M","_","M","A","_","M","_","M"],
+			["M","_","M","M","M","M","_","M"],
+			["M","_","_","_","_","_","_","M"],
+			["M","M","M","M","M","M","M","M"] 
+			];
+
+		/*Random de la position des ennemis*/
+
+		function PosMob(){
+
+			var mobPos = 0;
+			var mob = 0;
+
+			for (var j = 0; j < 8; j++) {
+				var mobAlea = Math.round(Math.random() * carte.length);
+				var mobeToire = [];
+
+				if (carte[mobAlea] == undefined) {
+					location.reload();				
+				}
+
+				for (var i = 0; i < carte[mobAlea].length; i++) {
+					if (carte[mobAlea][i] == "_") {
+						mobeToire.push(i);
+					}
+				}
+
+				mobPos = Math.round(Math.random() * mobeToire.length);
+				mob = mobeToire[mobPos];
+
+				carte[mobAlea][mob] = "E";
+			}
+		}
+
+		PosMob();
+
+		/*Fonction principale, on réunit toutes nos fonctions de déplacement ici*/
+
+		function jouer(option){
+
+			switch(option){
+
+				case "Map":
+					AfficheMap(carte);
+					break;
+				case "Avancer":
+					Avancer();
+					break;
+				case "Reculer":
+					Reculer();
+					break;
+				case "Gauche":
+					Gauche();
+					break;
+				case "Droite":
+					Droite();
+					break;
+				default:
+					console.error("Mauvais paramètre");
+					break;
+			}
+		}
+		
+		/*Fonction pour afficher une map*/
+
+		function AfficheMap(map){
+
+			let mapcolor = [];
+			let azert = "";
+
+			if (!Array.isArray(map)) {
+				
+				return console.error("Mauvais paramètre fournis");
+			}
+
+			for (var i = 0; i < map.length; i++) {
+				// Vérification des lignes
+				for (var j = 0; j < map[i].length; j++) {
+					// Vérification des caractères des lignes
+					if (map[i][j] == "M") {
+						// Caractère color1
+						// 
+						// // Taille de la tuile
+						azert += "%c   ";
+						mapcolor.push("background: brown");
+					} else if (map[i][j] == "_") {
+						// Caractère color2
+						// 
+						// // Taille de la tuile
+						azert += "%c   ";	
+						mapcolor.push("background: green");
+					} else if (map[i][j] == "A") {
+
+						// Taille de la tuile
+						azert += "%c   ";
+						mapcolor.push("background: blue");
+					} else if (map[i][j] == "C") {
+
+						// Taille de la tuile
+						azert += "%c ^ ";
+						mapcolor.push("background: grey");
+
+					}else if (map[i][j] == "S") {
+
+						azert +="%c O ";
+						mapcolor.push("background: red");
+					} else if (map[i][j] == "E") {
+
+						azert+= "%c   ";
+						mapcolor.push("background: yellow");
+					}else{
+						console.error("Crash");
+					}
+				};
+				// Saut de la ligne
+				azert += "\n";
+			};
+			// Affichage de la map
+			console.log(azert, ...mapcolor);
+			return console.log("Voici la map");
+		};
+
+	/*Les quatres fonctions de déplacement*/
+
+	function Avancer(){
+
+		if (combat == 1) {
+				return console.log("Impossible de se déplacer en combat");
+		}
+
+		for (var i = 0; i < carte.length; i++) { /*On parcourt les tableaux*/
+			for (var j = 0; j < carte[i].length; j++) { /*On parcourt les cases de nos tableaux*/
+
+				if (carte[i][j] == "A") { /*On vérifie si on trouve A*/
+					if (carte[i-1] != undefined) {/*On véifie que la case suivante existe*/
+						if (carte[i-1][j] == "M") {/*Collision avex les montagnes*/
+
+							return console.error("Gros y'a une montagne"); 
+						} else if (carte[i-1][j] == "C") {
+
+							carte = map2;	
+							PosMob();
+							console.log("Vous entrez dans le chateau");
+							return AfficheMap(carte);
+						}else if (carte[i-1][j] == "S") {
+
+							carte = map3;	
+							game = 0;
+							console.log("Vous êtes sortis du chateau, bravo aventurier, vous avez sauvé ce monde");
+							return AfficheMap(carte);
+						}else if (carte[i -1][j] == "E") {
+							if (monstre == 0) {
+
+								monstre = 100 * multiplicateur;	/*Calcul des pv du monstre*/
+								carte[i-1][j] = "A";
+								carte[i][j] = "_";
+								console.log("T'as bien bougé");
+								return AfficheMap(carte);								
+							}
+							else{
+								combat = 1;
+								avancer = 1;
+								console.log("Le monstre a "+monstre+" pv");
+								console.log("Lancez la fonction Attaquer(nomArme) pour l'attaquer, vous avez le choix entre sword arc staff et staff.enchantment ");
+							}
+						} else{
+
+							carte[i-1][j] = "A";
+							carte[i][j] = "_";
+							console.log("T'as bien bougé");
+							return AfficheMap(carte);
+						}
+					} else{
+							console.error("C'est le bord de la map tu le fais exprès débile ?!!!");
+					}
+				}
+			}
+		}
+	}
+
+	function Reculer(){
+
+		if (combat == 1) {
+				return console.log("Impossible de se déplacer en combat");
+		}
+
+		for (var i = 0; i < carte.length; i++) {/*On parcourt les tableaux*/
+			for (var j = 0; j < carte[i].length; j++) {/*On parcourt les cases de nos tableaux*/
+					
+				if (carte[i][j] == "A") {/*On vérifie si on trouve A*/
+					if (carte[i+1] != undefined) {/*On véifie que la case suivante existe*/
+						if (carte[i+1][j] == "M") {/*Collision avex les montagnes*/
+
+							return console.error("Gros y'a une montagne");
+						} else if (carte[i+1][j] == "C") {
+
+							carte = map2;
+							PosMob();
+							console.log("Vous entrez dans le chateau");
+							return AfficheMap(carte);
+						} else if (carte[i+1][j] == "S") {
+
+							carte = map3;	
+							game = 0;
+							console.log("Vous êtes sortis du chateau, bravo aventurier, vous avez sauvé ce monde");
+						} else if (carte[i+1][j] == "E") {
+
+							if (monstre == 0) {
+
+								monstre = 100 * multiplicateur;	/*Calcul des pv du monstre*/
+								carte[i+1][j] = "A";
+								carte[i][j] = "_";
+								console.log("T'as bien bougé");
+								return AfficheMap(carte);								
+							}
+							else{
+								reculer = 1;
+								combat = 1;
+								console.log("Le monstre a "+monstre+" pv");
+								console.log("Lancez la fonction Attaquer(nomArme) pour l'attaquer, vous avez le choix entre sword arc staff et staff.enchantment ");
+							}
+						}  else{
+							
+							carte[i+1][j] = "A";
+							carte[i][j] = "_";
+							console.log("T'as bien bougé");
+							return AfficheMap(carte);
+						}
+					} else{
+						console.error("C'est le bord de la map tu le fais exprès débile ?!!!");
+					}
+				}
+			}
+		}
+	}
+
+	function Gauche(){
+
+		if (combat == 1) {
+				return console.log("Impossible de se déplacer en combat");
+		}
+
+		for (var i = 0; i < carte.length; i++) {/*On parcourt les tableaux*/
+			for (var j = 0; j < carte[i].length; j++) {/*On parcourt les cases de nos tableaux*/
+					
+				if (carte[i][j] == "A") {/*On vérifie si on trouve A*/
+					if (carte[i][j-1] != undefined) {/*On véifie que la case suivante existe*/
+						if (carte[i][j-1] == "M") {/*Collision avex les montagnes*/
+
+							return console.error("Gros y'a une montagne");
+						} else if (carte[i][j-1] == "C") {
+
+							carte = map2;	
+							PosMob();
+							console.log("Vous entrez dans le chateau");
+							return AfficheMap(carte);
+						} else if (carte[i][j-1] == "S") {
+
+							carte = map3;	
+							game = 0;
+							console.log("Vous êtes sortis du chateau, bravo aventurier, vous avez sauvé ce monde");
+							return AfficheMap(carte);
+						} else if (carte[i][j-1] == "E") {
+
+							if (monstre == 0) {
+
+								monstre = 100 * multiplicateur;	/*Calcul des pv du monstre*/
+								carte[i][j-1] = "A";
+								carte[i][j] = "_";
+								console.log("T'as bien bougé");
+								return AfficheMap(carte);								
+							}
+							else{
+								gauche = 1;
+								combat = 1;
+								console.log("Le monstre a "+monstre+" pv");
+								console.log("Lancez la fonction Attaquer(nomArme) pour l'attaquer, vous avez le choix entre sword arc staff et staff.enchantment ");
+							}
+						} else{
+							
+							carte[i][j-1] = "A";
+							carte[i][j] = "_";
+							console.log("T'as bien bougé");
+							return AfficheMap(carte);
+						}
+					} else{
+						console.error("C'est le bord de la map tu le fais exprès débile ?!!!");
+					}
+				}
+			}
+		}
+	}
+
+	function Droite(){
+
+		if (combat == 1) {
+				return console.log("Impossible de se déplacer en combat");
+		}
+
+		for (var i = 0; i < carte.length; i++) {/*On parcourt les tableaux*/
+			for (var j = 0; j < carte[i].length; j++) {/*On parcourt les cases de nos tableaux*/
+					
+				if (carte[i][j] == "A") {/*On vérifie si on trouve A*/
+					if (carte[i][j+1] != undefined) {/*On véifie que la case suivante existe*/
+						if (carte[i][j+1] == "M") {/*Collision avex les montagnes*/
+
+							return console.error("Gros y'a une montagne");
+						}else if (carte[i][j+1] == "C") {
+
+							carte = map2;	
+							PosMob();
+							console.log("Vous entrez dans le chateau");
+							return AfficheMap(carte);
+						} else if (carte[i][j+1] == "S") {
+
+							carte = map3;	
+							game = 0;
+							console.log("Vous êtes sortis du chateau, bravo aventurier, vous avez sauvé ce monde");
+							return AfficheMap(carte);
+						} else if (carte[i][j+1] == "E") {
+
+							if (monstre == 0) {
+
+								monstre = 100 * multiplicateur;	/*Calcul des pv du monstre*/
+								carte[i][j+1] = "A";
+								carte[i][j] = "_";
+								console.log("T'as bien bougé");
+								return AfficheMap(carte);								
+							}
+							else{
+
+								droite = 1;
+								combat = 1;
+								console.log("Le monstre a "+monstre+" pv");
+								console.log("Lancez la fonction Attaquer(nomArme) pour l'attaquer, vous avez le choix entre sword arc staff et staff.enchantment ");
+							}
+						} else{
+							
+							carte[i][j+1] = "A";
+							carte[i][j] = "_";
+							console.log("T'as bien bougé");
+							return AfficheMap(carte);
+						}
+					} else{
+						console.error("C'est le bord de la map tu le fais exprès débile ?!!!");
+					}
+				}
+			}
+		}
+	}/*Fin des fonctions de déplacement*/
+
+	/*Fonction d'attaque*/
+
+	function Attaquer(arme){
+
+		if (monstre >0 && game == 1) { /*On vérifie les pv du monstre puis on attribue des jets aux armes*/
+
+			if (combat == 0) { /*On vérifie s'il y a bien un ennemi a attaquer*/
+			return console.log("Il n'y a personne a attaquer");
+			}
+
+			/*Calcul des dégats des armes en fonction de l'arme choisie*/
+
+			if (arme == staff.enchantment) {
+				arme.degats = staff.enchantment();
+
+			} else if (arme == sword) {
+				arme.degats = Math.round(Math.random() * (swordMax - swordMin) + swordMin);
+
+			}  else if (arme == staff) {
+				arme.degats = Math.round(Math.random() * (staffMax - staffMin) + staffMin);
+
+			} else if (arme == arc) {
+				arme.degats = Math.round(Math.random() * (arcMax - arcMin) + arcMin);
+
+			} else if(sword.dragon.degats > 0 && arme == sword.dragon){
+				arme.degats = Math.round(Math.random() * (swordDragonMax - swordDragonMin) + swordDragonMin);
+
+				console.log("Ryūjin no ken wo kūrae !");
+
+			} else if (arc.dragon.degats > 0 && arme == arc.dragon) {
+				arme.degats = Math.round(Math.random() * (arcDragonMax - arcDragonMin) + arcDragonMin);
+
+				console.log("Ryū ga waga teki wo kurau");
+
+			} else if (staff.dragon.degats > 0 && arme == staff.dragon) {
+				arme.degats = Math.round(Math.random() * (staffDragonMax - staffDragonMin) + staffDragonMin);
+
+				console.log("ōkami yo waga teki wo kurae");
+
+			} else{
+				return console.log("Vous n'avez pas cette arme");
+
+			}
+
+			/*Attribution du jet de l'arme ennemie*/
+			gourdin.degats = Math.round(Math.random() * (gourdinMax - gourdinMin) + gourdinMin);
+
+			monstre -= arme.degats;
+
+			/*Vérification des pv du monstre après dégats*/
+			if (monstre <= 0) {
+				/*Calcul des dégats + xp*/
+				monstre = 0;
+				coups++;
+				exp += monstreExp;
+				expSuivant -= monstreExp;
+				combat = 0;
+
+				if (avancer == 1) {
+
+					avancer = 0;
+					Avancer();
+				} else if (reculer == 1) {
+
+					reculer = 0;
+					Reculer();
+				} else if (droite == 1) {
+
+					droite = 0;
+					Droite();
+				} else if (gauche == 1) {
+
+					gauche = 0;
+					Gauche();
+				}
+
+				console.log("Héros : TIENS FDP");
+				console.log("Vous infligez "+arme.degats+" points de dégats");
+				console.log("Monstre : 'HAAAA BATARD ! JE MEURS PAR TA FAUTE ! SOIS MAUDIT AVENTURIER !'");
+				console.log("Le monstre a désormais "+monstre+" pv, vous l'avez vaincu en "+coups+" coups bravo héros!!");;
+				coups = 0;
+				console.log("Vous gagnez "+monstreExp+" points d'expérience.");
+				console.log("Total d'xp : "+exp+".");
+
+				/*Ici on va gérer les lvl up du joueur et donc de ces capacités, on va aussi lvl up les ennemis*/
+
+				if (expSuivant <= 0) {
+					expSuivant = 0;
+					console.log("Exp niveau suivant : "+expSuivant+".");
+					lvl++;
+					oneTime = 1;
+					console.log("Bien joué vous passez au niveau supérieur ! Vous êtes niveau "+lvl);
+					console.log("Tout vos dégats sont augmentés !!");
+
+					if (lvl == 2 && oneTime == 1) {
+
+						console.log("Vous débloquez la capacité sword.dragon");
+
+						swordMax += 10;
+						swordMin += 10;
+
+						sword.dragon = {
+							degats : 1
+						}
+
+						arcMax += 20;
+						arcMin += 15;
+
+						staffMax += 10;
+						staffMin += 10;
+
+						staffEnchantMax += 10;
+						staffEnchantMin += 20;
+
+						gourdinMax += 20;
+						gourdinMin += 10;
+
+						oneTime = 0;
+
+						joueurPv = 450;
+					}
+
+					if (lvl == 3 && oneTime == 1) {
+						swordMax += 20;
+						swordMin += 20;
+
+						arcMax += 30;
+						arcMin += 20;
+
+						console.log("Vous débloquez la capacité arc.dragon");
+
+						arc.dragon = {
+							degats : 1
+						}
+
+
+						staffMax += 10;
+						staffMin += 10;
+
+						staffEnchantMax += 15;
+						staffEnchantMin += 10;
+
+						gourdinMax += 25;
+						gourdinMin += 15;
+
+						oneTime = 0;
+
+						joueurPv = 500
+					}
+
+					if (lvl == 4 && oneTime == 1) {
+						swordMax += 25;
+						swordMin += 25;
+
+						arcMax += 20;
+						arcMin += 15;
+
+						staffMax += 5;
+						staffMin += 5;
+
+						staffEnchantMax += 10;
+						staffEnchantMin += 40;
+
+						console.log("Vous débloquez la capacité staff.dragon");
+
+						staff.dragon = {
+							degats : 1
+						}
+
+						gourdinMax += 15;
+						gourdinMin += 20;
+
+						oneTime = 0;
+
+						joueurPv = 550;
+					}
+
+					multiplicateur++; /*Augmentation du multiplicateur de niveau && pv des monstres*/
+					exp = 0;
+					expSuivant = 1000 * multiplicateur; /*Calcul du niveau suivant*/
+				} else {
+					console.log("Exp niveau suivant : "+expSuivant+".");
+
+				}
+
+				return;
+			} else {
+				/*Application des dégats du monstre s'il est en vie*/
+				joueurPv -= gourdin.degats;
+
+				console.log("Héros : TIENS FDP");
+				console.log("Vous infligez "+arme.degats+" points de dégats");
+				console.log("Le monstre a désormais "+monstre+" pv");
+				console.log("Monstre : 'GRHHRHRHRRRRRHRRHHH'");
+				console.log("Le monstre vous attaque a son tour ! Attention !");
+				console.log("Le monstre vous inflige "+gourdin.degats+" points de dégats");
+				if (joueurPv <= 0) {	/*On vérifie si le joueur est vivant ou non*/
+					joueurPv = 0;
+					console.log("Il vous reste "+joueurPv+" pv");
+					console.log("Vous avez perdu le combat héros, ce monde va bientôt être détruit...");
+					console.log("System clear...");	/*Redémarrage du jeu*/
+					setTimeout(function(){ console.log("The system will now restart..."); }, 1000);
+					setTimeout(function(){ console.log("3"); }, 2000);
+					setTimeout(function(){ console.log("2"); }, 3000);
+					setTimeout(function(){ console.log("1"); }, 4000);
+					setTimeout(function(){ console.log("Bye bitch"); }, 5000);
+					setTimeout(function(){ location.reload(); }, 7000);
+				} else{/*Sinon affichage des pv du joueur*/
+					console.log("Il vous reste "+joueurPv+" pv");
+					coups++;
+				}
+			}
+		}else if(game == 0){	/*Fin du jeu, donc la page se recharge pour lancer une nouvelle partie.*/
+
+			console.log("Vous n'avez plus besoin de vous battre héros, le roi démon est vaincu ! Vivez heureux..")
+			setTimeout(function(){ console.log("System clear..."); }, 1000);	/*Redémarrage du jeu*/
+			setTimeout(function(){ console.log("The system will now restart..."); }, 2000);
+			setTimeout(function(){ console.log("3"); }, 3000);
+			setTimeout(function(){ console.log("2"); }, 4000);
+			setTimeout(function(){ console.log("1"); }, 5000);
+			setTimeout(function(){ console.log("Bye bitch"); }, 6000);
+			setTimeout(function(){ location.reload(); }, 8000);
+
+		} else if (combat == 0) { /*On vérifie s'il y a bien un ennemi a attaquer*/
+
+			return console.log("Il n'y a personne a attaquer");
+		}
+
+	}
+
+	</script>
+</body>
+</html>

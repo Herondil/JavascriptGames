@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head></head>
+	<body onkeydown="KeyPressHandler(event)">
+	
+	<p>Je ne respire jamais mais j'ai beaucoup de souffle.
+	Qui suis-je ?</p>
+	
+		<script>
+			var touche_a_appuye_avant = false;
+			var touche_s_appuye_apr_a = false;
+			var touche_p_appuye_apr_s = false;
+			var touche_i_appuye_apr_p = false;
+			var touche_r_appuye_apr_i = false;
+			var touche_a_appuye_apr_r = false;
+			var touche_t_appuye_apr_a = false;
+			var touche_e_appuye_apr_t = false;
+			var touche_u_appuye_apr_e = false;
+			var touche_r_appuye_apr_u = false;
+			function KeyPressHandler(event) {
+				switch(event.keyCode){
+					case 65 :	{
+								if(touche_r_appuye_apr_i == true){
+									touche_a_appuye_apr_r = true;
+									touche_r_appuye_apr_i = false;
+									console.log("Vous afficher le second 'a'");
+								}else	{
+								touche_a_appuye_avant = true;
+									console.log("Vous affichez un 'a'");	
+								}
+						break;
+					}
+					case 83 : {
+						if (touche_a_appuye_avant == true){
+							touche_s_appuye_apr_a = true;
+							touche_a_appuye_avant = false;
+							console.log("Vous affichez un 's'");
+						}
+						break;
+					}
+					case 80 : {
+						if (touche_s_appuye_apr_a == true){
+							touche_p_appuye_apr_s = true;
+							touche_s_appuye_apr_a = false;
+							console.log("Vous affichez un 'p'");
+						}
+						break;
+					}
+					case 73 : {
+						if (touche_p_appuye_apr_s == true){
+							touche_i_appuye_apr_p = true;
+							touche_p_appuye_apr_s = false;
+							console.log("Vous affichez un 'i'");
+						}
+						break;
+					}
+					case 82 : {
+						if (touche_i_appuye_apr_p == true){
+							touche_r_appuye_apr_i = true;
+							touche_i_appuye_apr_p = false;
+							console.log("Vous affichez un 'r'");
+						}else if(touche_u_appuye_apr_e == true){
+							touche_r_appuye_apr_u = true; 
+							touche_u_appuye_apr_e = false;
+								console.log("Vous affichez le second 'r'")
+						}
+						break;
+					}
+					case 84 : {
+						if (touche_a_appuye_apr_r == true){
+							touche_t_appuye_apr_a = true;
+							touche_a_appuye_apr_r = false;
+							console.log("Vous affichez un 't'");
+						}
+						break;
+					}
+					case 69 : {
+						if (touche_t_appuye_apr_a == true){
+							touche_e_appuye_apr_t = true;
+							touche_t_appuye_apr_a = false;
+							console.log("Vous affichez un 'e'");
+						}
+						break;
+					}
+					case 85 : {
+						if (touche_e_appuye_apr_t == true){
+							touche_u_appuye_apr_e = true;
+							touche_e_appuye_apr_t = false;
+							console.log("Vous affichez un 'u'");
+						}
+						break;
+					}
+					default : {
+						touche_a_appuye_avant = false;
+						touche_s_appuye_apr_a = false;
+						touche_p_appuye_apr_s = false;
+						touche_i_appuye_apr_p = false;
+						touche_r_appuye_apr_i = false;
+						touche_a_appuye_apr_r = false;
+						touche_t_appuye_apr_a = false;
+						touche_e_appuye_apr_t = false;
+						touche_u_appuye_apr_e = false;
+						console.log("Vous n'avez pas appuyez sur les bonnes touches.");	
+					}
+				}
+				
+			}
+		
+		</script>
+		
+	</body>
+</html>

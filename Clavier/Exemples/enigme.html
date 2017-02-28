@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Enigme</title>
+</head>
+<body onkeypress="KeyPressHandler(event)">
+
+	<script type="text/javascript">
+		
+		var first_letter = 1
+		var compteur = 0;
+		var game = 1;
+
+		var z = "";
+
+
+		function enigme(event){
+
+
+		}
+
+
+		function KeyPressHandler(event){
+
+			switch(event.key){
+				case "a": {
+					if (first_letter == 1 && game == 1) {
+						first_letter = 0;
+						compteur++;
+						console.log("Vous écrivez un 'a'");
+
+					} else if (compteur == 5 && game == 1) {
+						compteur++;
+						console.log("Vous écrivez 'aspira'");
+
+					} else if (game == 1) {
+						console.log("Faux, veuillez recommencer depuis le début");
+						compteur = 0;
+					} else {
+						console.log("la partie est terminée");
+
+					}
+					break;
+				}
+
+				case "s":{
+					if (compteur == 1 && game == 1) {
+						compteur++;
+						console.log("Vous écrivez 'as'");
+
+					} else  if (game == 1){
+						first_letter = 1;
+						console.log("Faux, veuillez recommencer depuis le début");
+						compteur = 0;
+
+					} else {
+						console.log("la partie est terminée");
+
+					}
+					break;
+				}
+				case "p":{
+					if (compteur == 2 && game == 1) {
+						compteur++;
+						console.log("Vous écrivez 'asp'");
+
+					} else  if (game == 1){
+						first_letter = 1;
+						console.log("Faux, veuillez recommencer depuis le début");
+						compteur = 0;
+
+					} else {
+						console.log("la partie est terminée");
+
+					}
+					break;
+
+				}
+				case "i": {
+					if (compteur == 3 && game == 1) {
+						compteur++;
+						console.log("Vous écrivez 'aspi'");
+
+					} else  if (game == 1){
+						first_letter = 1;
+						console.log("Faux, veuillez recommencer depuis le début");
+						compteur = 0;
+
+					} else {
+						console.log("la partie est terminée");
+
+					}
+					break;
+				}
+				case "r":{
+					if (compteur == 4 && game == 1) {
+						compteur++;
+						console.log("Vous écrivez 'aspir'");
+
+					} else if (compteur == 9 && game == 1) {
+						compteur = 0;
+						game = 0;
+						console.log("Vous écrivez 'aspirateur'");
+						console.log("la partie est terminée");
+
+					}  else  if (game == 1){
+						first_letter = 1;
+						console.log("Faux, veuillez recommencer depuis le début");
+						compteur = 0;
+
+					} else {
+						
+
+					}
+					break;
+
+				}
+				case "t":{
+					if (compteur == 6 && game == 1) {
+						compteur++;
+						console.log("Vous écrivez 'aspirat'");
+
+					}else  if (game == 1){
+						first_letter = 1;
+						console.log("Faux, veuillez recommencer depuis le début");
+						compteur = 0;
+
+					} else {
+						console.log("la partie est terminée");
+
+					}
+					break;
+
+				}
+				case "e":{
+					if (compteur == 7 && game == 1) {
+						compteur++;
+						console.log("Vous écrivez 'aspirate'");
+
+					} else  if (game == 1){
+						first_letter = 1;
+						console.log("Faux, veuillez recommencer depuis le début");
+						compteur = 0;
+
+					} else {
+						console.log("la partie est terminée");
+
+					}
+					break;
+
+				}
+				case "u":{
+					if (compteur == 8 && game == 1) {
+						compteur++;
+						console.log("Vous écrivez 'aspirateu'");
+
+					} else  if (game == 1){
+						first_letter = 1;
+						console.log("Faux, veuillez recommencer depuis le début");
+						compteur = 0;
+
+					} else {
+						console.log("la partie est terminée");
+
+					}
+					break;
+
+				}
+				default:{
+					if (game == 0) {
+						console.log("La partie est terminée");
+
+					} else {
+						first_letter = 1;
+						console.log("Mauvaise lettre, veuillez recommencer depuis le début");
+						compteur = 0;
+
+					}
+				}
+			}
+
+		}
+
+	</script>
+
+</body>
+</html>

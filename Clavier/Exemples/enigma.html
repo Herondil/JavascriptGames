@@ -1,0 +1,27 @@
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>JS : Enigma</title>
+</head>
+
+<body>
+	<p>Je suis d'eau, je suis d'air, et je suis d'électricité.</br>
+	Qui suis-je ?</p>
+
+	<input id="divA" type="text" size="40"/>
+	<input type="submit" name="VALIDER" onclick="valide()"/>
+
+<script>
+
+var z = "courant";
+
+function valide() {
+    var x = document.getElementById("divA").value; 
+    if (x == z) {document.write("OK")
+    } else { document.write("FAUX")}
+}	
+	</script>
+</body>
+</html>
+
+

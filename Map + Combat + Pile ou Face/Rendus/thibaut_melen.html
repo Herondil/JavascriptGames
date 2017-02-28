@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+		<script>
+
+		console.log("Salut et bienvenue dans le jeu :");
+
+		setTimeout(function(){
+			console.log(
+			" ▄█  ███▄▄▄▄   ████████▄   ▄█     ▄████████ ███▄▄▄▄      ▄████████          ▄█  ▄██████▄  ███▄▄▄▄      ▄████████    ▄████████\n"+
+			"███  ███▀▀▀██▄ ███   ▀███ ███    ███    ███ ███▀▀▀██▄   ███    ███         ███ ███    ███ ███▀▀▀██▄   ███    ███   ███    ███ \n"+
+			"███▌ ███   ███ ███    ███ ███▌   ███    ███ ███   ███   ███    ███         ███ ███    ███ ███   ███   ███    █▀    ███    █▀  \n"+
+			"███▌ ███   ███ ███    ███ ███▌   ███    ███ ███   ███   ███    ███         ███ ███    ███ ███   ███  ▄███▄▄▄       ███        \n"+
+			"███▌ ███   ███ ███    ███ ███▌ ▀███████████ ███   ███ ▀███████████         ███ ███    ███ ███   ███ ▀▀███▀▀▀     ▀███████████ \n"+
+			"███  ███   ███ ███    ███ ███    ███    ███ ███   ███   ███    ███         ███ ███    ███ ███   ███   ███    █▄           ███ \n"+
+			"███  ███   ███ ███   ▄███ ███    ███    ███ ███   ███   ███    ███         ███ ███    ███ ███   ███   ███    ███    ▄█    ███ \n"+
+			"█▀    ▀█   █▀  ████████▀  █▀     ███    █▀   ▀█   █▀    ███    █▀      █▄ ▄███  ▀██████▀   ▀█   █▀    ██████████  ▄████████▀  "
+			);
+		},2000);
+
+		setTimeout(function(){
+			console.log("Tu dois récupérer le de money dans la map 💰💰💰💰💰💰💰💰💰 !");
+		},4000);
+
+		setTimeout(function(){
+			console.log(DisplayMap(map));
+		},6000);
+
+		setTimeout(function(){
+			console.log("C'EST PARTI, BON CHANCE !");
+		},8000);
+		
+		var map = [
+		["M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+		["M","M","M","M","_","_","_","M","M","_","M","M","M","M","M","M","_","_","_","_","_","_","_","_","_","_","M","M","M","M","M"],
+		["M","M","M","M","_","M","_","M","_","_","_","M","M","M","M","_","_","_","_","_","_","_","_","_","M","_","_","M","M","M","M"],
+		["M","M","B","B","X","M","_","_","_","Y","_","_","M","M","_","B","Y","_","_","_","_","_","_","M","M","M","_","_","M","M","M"],
+		["M","M","C","B","M","M","M","M","M","_","_","B","_","_","_","_","Y","_","_","_","_","_","M","M","M","M","M","M","_","M","M"],
+		["M","M","B","M","M","N","M","Y","_","_","_","_","_","_","O","_","_","_","_","_","X","M","M","M","C","C","C","M","_","_","M"],
+		["M","M","M","M","M","N","Y","M","_","_","_","_","_","_","_","_","_","_","Y","_","M","M","M","C","C","C","X","M","M","_","M"],
+		["M","M","M","M","N","M","M","N","_","_","Y","_","_","_","Y","_","_","_","_","_","M","M","M","C","C","C","C","M","M","_","M"],
+		["M","_","M","M","M","W","W","N","N","_","_","_","_","_","_","_","_","_","M","_","X","M","M","C","X","C","C","M","_","_","M"],
+		["M","Y","_","_","N","W","N","N","N","_","_","_","_","_","_","M","_","_","_","_","_","X","M","C","C","C","C","M","_","_","M"],
+		["M","_","B","N","W","W","W","N","_","_","_","_","M","M","_","_","M","_","_","Y","Y","_","Y","_","C","M","M","M","_","_","M"],
+		["M","M","_","N","N","W","N","_","_","O","_","_","_","M","M","_","_","_","_","_","M","_","Y","M","M","_","_","_","_","_","M"],
+		["M","M","M","_","N","N","W","_","_","M","M","_","_","_","M","M","_","_","_","_","M","_","_","_","_","_","Y","_","_","_","M"],
+		["M","M","M","C","_","_","_","_","B","_","_","_","_","_","M","_","_","_","_","M","M","M","X","Y","_","_","_","_","_","_","M"],
+		["M","M","_","X","Y","Y","_","_","M","Y","_","_","_","_","_","M","Y","_","_","_","M","_","_","_","_","Y","_","X","_","_","M"],
+		["M","M","M","_","_","Y","_","M","M","M","_","_","Y","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+		["M","M","M","C","X","_","_","M","M","M","M","_","_","Y","_","_","Y","_","Y","_","_","_","Y","_","_","_","_","_","_","_","M"],
+		["M","M","_","Y","_","_","Y","_","B","M","_","_","B","_","_","Y","Y","Y","_","_","_","_","_","_","_","X","_","_","M","_","M"],
+		["M","M","_","_","B","Y","_","_","_","_","_","_","_","_","Y","Y","B","B","Y","M","_","_","_","_","_","_","_","_","_","_","M"],
+		["M","_","Y","_","_","_","_","N","N","N","N","_","_","_","_","M","B","B","_","_","_","_","_","_","O","_","_","_","_","_","M"],
+		["M","_","_","_","_","N","N","N","W","W","N","N","Y","X","_","Y","Y","Y","Y","_","_","X","_","_","_","_","_","_","_","_","M"],
+		["M","_","_","_","_","N","N","W","W","W","W","N","_","_","_","_","Y","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+		["M","M","_","_","N","N","N","W","W","W","W","N","_","_","_","_","_","Y","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+		["M","M","M","_","N","N","W","W","W","W","N","N","_","_","Y","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+		["M","M","M","O","_","N","W","W","W","W","W","N","_","Y","Y","_","_","_","_","_","B","_","_","X","B","_","_","_","_","_","M"],
+		["M","M","_","_","_","N","N","W","W","W","N","N","_","_","_","X","_","_","_","_","_","_","_","_","_","_","_","C","C","_","M"],
+		["M","M","M","B","_","_","N","N","N","W","N","Y","_","_","_","_","B","_","_","_","_","_","_","_","_","_","_","_","_","O","M"],
+		["M","_","_","_","_","_","N","N","N","W","N","Y","_","X","_","_","_","_","_","Y","_","_","B","_","_","B","_","_","O","O","M"],
+		["M","B","_","_","Y","_","_","N","N","N","N","_","_","_","_","_","_","_","Y","B","_","_","_","B","_","_","_","X","O","O","M"],
+		["M","_","_","Y","_","_","_","_","N","N","_","_","_","_","Y","_","_","_","_","B","_","_","_","_","_","_","_","_","X","O","M"],
+		["M","M","_","_","C","B","_","_","N","_","_","M","M","_","_","_","_","_","_","_","_","W","B","_","_","_","_","_","_","M","M"],
+		["M","M","M","_","_","_","X","_","_","_","_","M","_","_","_","_","_","_","_","_","W","W","_","_","X","_","A","_","M","M","M"],
+		["M","M","M","M","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","X","_","_","_","_","_","_","_","M","M","M","M"],
+		["M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+		];
+
+		// PERSO
+		var hp = 100;
+		var heart = "❤❤❤❤❤";
+		var gold = 1;
+		
+		// MAP
+		function DisplayMap(map){
+				var Chaine = "";
+				var map_color = [];
+				for (var i = 0; i < map.length; i++){
+
+					// parcour tt le tableau
+					for(var j = 0; j < map[i].length; j++){
+
+						//Inaccessible
+						if(map[i][j] == "M"){//montagne
+							map_color.push("background: #6d5753");
+						}
+						// Accessible 
+						else if(map[i][j] == "_"){//sol
+							map_color.push("background: #529b6f");
+						}
+
+						// Buisson vide + bonus_malus
+						else if(map[i][j] == "Y"){//buisson vide
+							map_color.push("background: #2d7149");
+						}
+						else if(map[i][j] == "B"){//buisson bonus_malus
+							map_color.push("background: #2d7149");
+						}
+
+						// Water
+						else if(map[i][j] == "W"){//water++
+							map_color.push("background: #326683");
+						}
+						else if(map[i][j] == "N"){//water+
+							map_color.push("background: #5fa4c9");
+						}
+
+						//Potion
+						else if(map[i][j] == "O"){//potion
+							map_color.push("background: #6969e7");
+						}
+						//Ennemi
+						else if(map[i][j] == "X"){//ennemi
+							map_color.push("background: #EB4F4F");
+						}
+
+						// Trésor
+						else if(map[i][j] == "C"){//tresor
+							map_color.push("background: #FFF176");
+						}
+						
+						// Joueur
+						else if(map[i][j] == "A"){//joueur
+							map_color.push("background: #FFE0B2");
+						}
+
+						else{
+							console.error("WWWWWWWHHHAAAA SA BUUUGGG ERROR 404 DSL BRO");
+							return 0;
+						}
+						Chaine += '%c   ';
+					}
+					Chaine += '\n';					
+				}
+				console.log(Chaine, ...map_color);
+				return "▃▄▅▆▇█✌MAP AFFICHE✌█▇▆▅▄▃ ";	
+		}
+
+		// DEPLACEMENT
+
+
+		window.document.onkeydown = function(e){
+			// top
+		    if(e.keyCode == 38){
+			    for (var i = 0; i < map.length; i++){
+
+					if(map[i].indexOf("A") != -1){
+
+						var search_a = map[i].indexOf("A");
+						 // sol
+						if((map[i-1][search_a]) == ("_") ){
+							map[i-1].splice(search_a, 1, "A");
+							map[i].splice(search_a, 1, "_");
+						}
+
+						// BUISSON
+						// buisson vide
+						else if((map[i-1][search_a]) == ("Y") ){
+							map[i-1].splice(search_a, 1, "A");
+							map[i].splice(search_a, 1, "Y");
+						}
+						// buisson bonus
+						else if((map[i-1][search_a]) == ("B") ){
+							map[i-1].splice(search_a, 1, "A");
+							map[i].splice(search_a, 1, "B");
+							bonus_malus_buisson();
+						}
+
+						// WATER
+						//water +
+						else if((map[i-1][search_a]) == ("N") ){
+							map[i-1].splice(search_a, 1, "A");
+							map[i].splice(search_a, 1, "N");
+							water_simple();
+						}
+						//water -
+						else if((map[i-1][search_a]) == ("W") ){
+							map[i-1].splice(search_a, 1, "A");
+							map[i].splice(search_a, 1, "W");
+							water_vener();
+						}
+
+						// +++
+						//Potion
+						else if((map[i-1][search_a]) == ("O") ){
+							map[i-1].splice(search_a, 1, "A");
+							map[i].splice(search_a, 1, "_");
+							potion();
+
+						}
+						//Ennemi
+						else if((map[i-1][search_a]) == ("X") ){
+							map[i-1].splice(search_a, 1, "A");
+							map[i].splice(search_a, 1, "_");
+							ennemi();
+							
+						}
+						// Trésor
+						else if((map[i-1][search_a]) == ("C") ){
+							map[i-1].splice(search_a, 1, "A");
+							map[i].splice(search_a, 1, "_");
+							tresor();
+							
+						}
+
+					}//end
+
+				}
+				DisplayMap(map);
+		    }
+		    // down
+		    else if(e.keyCode == 40){
+		    	for (var i = 0; i < map.length; i++){
+				if(map[i].indexOf("A") != -1){
+					var search_a = map[i].indexOf("A");
+
+					// sol
+					if((map[i+1][map[i].indexOf("A")]) == ("_") ){
+						map[i+1].splice(map[i].indexOf("A"), 1, "A");
+						map[i].splice(map[i].indexOf("A"), 1, "_");
+						break;
+					}
+
+					// BUISSON
+					// buisson vide
+					if((map[i+1][map[i].indexOf("A")]) == ("Y") ){
+						map[i+1].splice(map[i].indexOf("A"), 1, "A");
+						map[i].splice(map[i].indexOf("A"), 1, "Y");
+						break;
+					}
+					// buisson bonus
+					if((map[i+1][map[i].indexOf("A")]) == ("B") ){
+						map[i+1].splice(map[i].indexOf("A"), 1, "A");
+						map[i].splice(map[i].indexOf("A"), 1, "B");
+						bonus_malus_buisson();
+						break;
+					}
+
+					// WATER
+					//water +
+					if((map[i+1][map[i].indexOf("A")]) == ("N") ){
+						map[i+1].splice(map[i].indexOf("A"), 1, "A");
+						map[i].splice(map[i].indexOf("A"), 1, "N");
+						water_simple();
+						break;
+					}
+					//water -
+					if((map[i+1][map[i].indexOf("A")]) == ("W") ){
+						map[i+1].splice(map[i].indexOf("A"), 1, "A");
+						map[i].splice(map[i].indexOf("A"), 1, "W");
+						water_vener();
+						break;
+						
+					}
+
+					//Potion
+					if((map[i+1][search_a]) == ("O") ){
+						map[i+1].splice(search_a, 1, "A");
+						map[i].splice(search_a, 1, "_");
+						potion();
+						break;
+						
+
+					}
+					//Ennemi
+					if((map[i+1][search_a]) == ("X") ){
+						map[i+1].splice(search_a, 1, "A");
+						map[i].splice(search_a, 1, "_");
+						ennemi();
+						break;
+					}
+					// Trésor
+					if((map[i+1][search_a]) == ("C") ){
+						map[i+1].splice(search_a, 1, "A");
+						map[i].splice(search_a, 1, "_");
+						tresor();
+						break;
+						
+					}
+				}//end
+				}
+				DisplayMap(map);
+		    }
+		    // right
+		    else if(e.keyCode == 39){
+			    for (var i = 0; i < map.length; i++){
+					if(map[i].indexOf("A") != -1){
+						var search_a = map[i].indexOf("A");
+
+						// sol
+						if((map[i][map[i].indexOf("A") +1]) == ("_") ){
+							map[i].splice(map[i].indexOf("A") +1, 1, "A");
+							map[i].splice(map[i].indexOf("A"), 1, "_");
+						}
+
+						// BUISSON
+						// buisson vide
+						if((map[i][map[i].indexOf("A") +1]) == ("Y") ){
+							map[i].splice(map[i].indexOf("A") +1, 1, "A");
+							map[i].splice(map[i].indexOf("A"), 1, "Y");
+						}
+						// buisson bonus
+						if((map[i][map[i].indexOf("A") +1]) == ("B") ){
+							map[i].splice(map[i].indexOf("A") +1, 1, "A");
+							map[i].splice(map[i].indexOf("A"), 1, "B");
+							bonus_malus_buisson();
+						}
+
+						// WATER
+						//water +
+						if((map[i][map[i].indexOf("A") +1]) == ("N") ){
+							map[i].splice(map[i].indexOf("A") +1, 1, "A");
+							map[i].splice(map[i].indexOf("A"), 1, "N");
+							water_simple();
+						}
+						//water -
+						if((map[i][map[i].indexOf("A") +1]) == ("W") ){
+							map[i].splice(map[i].indexOf("A") +1, 1, "A");
+							map[i].splice(map[i].indexOf("A"), 1, "W");
+							water_vener();
+						}
+
+						//Potion
+						if((map[i][map[i].indexOf("A") +1]) == ("O") ){
+							map[i].splice(map[i].indexOf("A") +1, 1, "A");
+							map[i].splice(map[i].indexOf("A"), 1, "_");
+							potion();
+						}
+						//Ennemi
+						if((map[i][map[i].indexOf("A") +1]) == ("X") ){
+							map[i].splice(map[i].indexOf("A") +1, 1, "A");
+							map[i].splice(map[i].indexOf("A"), 1, "_");
+							ennemi();	
+						}
+						// Trésor
+						if((map[i][map[i].indexOf("A") +1]) == ("C") ){
+							map[i].splice(map[i].indexOf("A") +1, 1, "A");
+							map[i].splice(map[i].indexOf("A"), 1, "_");
+							tresor();
+						}
+					}//end
+				}
+				DisplayMap(map);
+			    }
+		    // left
+		    else if(e.keyCode == 37){
+		    	
+				for (var i = 0; i < map.length; i++){
+					if(map[i].indexOf("A") != -1){
+						var search_a = map[i].indexOf("A");
+
+						// sol
+						if((map[i][map[i].indexOf("A") -1]) == ("_") ){
+							map[i].splice(map[i].lastIndexOf("A") -1, 1, "A");
+							map[i].splice(map[i].lastIndexOf("A"), 1, "_");
+							break;
+						}
+
+						// BUISSON
+						// buisson vide
+						if((map[i][map[i].indexOf("A") -1]) == ("Y") ){
+							map[i].splice(map[i].lastIndexOf("A") -1, 1, "A");
+							map[i].splice(map[i].lastIndexOf("A"), 1, "Y");
+						}
+						// buisson bonus
+						if((map[i][map[i].indexOf("A") -1]) == ("B") ){
+							map[i].splice(map[i].lastIndexOf("A") -1, 1, "A");
+							map[i].splice(map[i].lastIndexOf("A"), 1, "B");
+							bonus_malus_buisson();
+						}
+
+						// WATER
+						//water +
+						if((map[i][map[i].indexOf("A") -1]) == ("N") ){
+							map[i].splice(map[i].lastIndexOf("A") -1, 1, "A");
+							map[i].splice(map[i].lastIndexOf("A"), 1, "N");
+							water_simple();
+						}
+						//water -
+						if((map[i][map[i].indexOf("A") -1]) == ("W") ){
+							map[i].splice(map[i].lastIndexOf("A") -1, 1, "A");
+							map[i].splice(map[i].lastIndexOf("A"), 1, "W");
+							water_vener();
+						}
+
+						//Potion
+						if((map[i][map[i].indexOf("A") -1]) == ("O") ){
+							map[i].splice(map[i].lastIndexOf("A") -1, 1, "A");
+							map[i].splice(map[i].lastIndexOf("A"), 1, "_");
+							potion();
+
+						}
+						//Ennemi
+						if((map[i][map[i].indexOf("A") -1]) == ("X") ){
+							map[i].splice(map[i].lastIndexOf("A") -1, 1, "A");
+							map[i].splice(map[i].lastIndexOf("A"), 1, "_");
+							ennemi();
+							
+						}
+						// Trésor
+						if((map[i][map[i].indexOf("A") -1]) == ("C") ){
+							map[i].splice(map[i].lastIndexOf("A") -1, 1, "A");
+							map[i].splice(map[i].lastIndexOf("A"), 1, "_");
+							tresor();
+						}
+					}//end
+				}
+				DisplayMap(map);
+
+			    }
+		}
+
+		// BUISSON BONUS_MALUS
+		function bonus_malus_buisson() {
+
+			var ramdom = Math.random();
+
+			//gold
+			if(ramdom>0.66){
+				var Bonus_Gold =  Math.floor(Math.random() * 10 );
+				var PlusGold = 5 + Bonus_Gold;
+
+				gold += PlusGold;
+
+				console.log("OUUAAII C'était un buisson Argent 😃\n"+ 
+							"Tu gagne " + gold + " 💸💸");
+				if(gold > 0){
+					console.log("Cooool tu as " + gold + " 💰");
+				}else if(gold < 0){
+					console.log("Tu es toujours en négatif 😭, tu as"  + gold + " 💰");
+				}
+			}
+			//potion
+			else if(ramdom>0.33){
+
+				var potion_random = Math.random();
+
+				if(potion_random > 0.5){
+					Potion = 20;
+					heart_potion ="❤️";
+				}else{
+					Potion = 40;
+					heart_potion ="❤️❤️";
+				}
+
+				hp += Potion;
+				
+				if(hp > 200){
+					heart = "❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️";
+				}else if(hp > 180){
+					heart = "❤️❤️❤️❤️❤️❤️❤️❤️❤️";
+				}else if(hp > 160){
+					heart = "❤️❤️❤️❤️❤️❤️❤️❤️";
+				}else if(hp > 140){
+					heart = "❤️❤️❤️❤️❤️❤️❤️";
+				}else if(hp > 120){
+					heart = "❤️❤️❤️❤️❤️❤️";
+				}else if(hp > 100){
+					heart = "❤️❤️❤️❤️❤️";
+				}else if(hp > 60){
+					heart = "❤️❤️❤️❤️";
+				}else if(hp > 40){
+					heart = "❤️❤️❤️";
+				}else if(hp > 20){
+					heart = "❤️❤️";
+				}else if(hp > 1){
+					heart = "❤️";
+				}
+
+				console.log("OUUAAII 😍 C'était un buisson Potion 🍺💕\n"+ 
+							"Tu gagnes " + heart_potion +"\n"+
+							"Tu as " + heart + " !");
+			}
+			//piege
+			else{
+				var piege_random = Math.random();
+
+				if(piege_random > 0.5){
+					Piege = 20;
+					heart_piege ="💔";
+				}else{
+					Piege = 40;
+					heart_piege ="💔💔";
+				}
+
+				hp -= Piege;
+				
+				if(hp > 200){
+					heart = "❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️";
+				}else if(hp > 180){
+					heart = "❤️❤️❤️❤️❤️❤️❤️❤️❤️";
+				}else if(hp > 160){
+					heart = "❤️❤️❤️❤️❤️❤️❤️❤️";
+				}else if(hp > 140){
+					heart = "❤️❤️❤️❤️❤️❤️❤️";
+				}else if(hp > 120){
+					heart = "❤️❤️❤️❤️❤️❤️";
+				}else if(hp > 100){
+					heart = "❤️❤️❤️❤️❤️";
+				}else if(hp > 60){
+					heart = "❤️❤️❤️❤️";
+				}else if(hp > 40){
+					heart = "❤️❤️❤️";
+				}else if(hp > 20){
+					heart = "❤️❤️";
+				}else if(hp > 1){
+					heart = "❤️";
+				}
+				console.log("HHAAAIII 😭 C'était un buisson Piegé 💣\n"+ 
+							"Tu perd " + heart_piege +
+							"\nTu as " + heart + " !");
+			}
+		}
+
+		// WATER
+		function water_simple() {
+
+			hp -= 20;
+			heart_piege ="💔";
+			
+			if(hp > 200){
+				heart = "❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️";
+			}else if(hp > 180){
+				heart = "❤️❤️❤️❤️❤️❤️❤️❤️❤️";
+			}else if(hp > 160){
+				heart = "❤️❤️❤️❤️❤️❤️❤️❤️";
+			}else if(hp > 140){
+				heart = "❤️❤️❤️❤️❤️❤️❤️";
+			}else if(hp > 120){
+				heart = "❤️❤️❤️❤️❤️❤️";
+			}else if(hp > 100){
+				heart = "❤️❤️❤️❤️❤️";
+			}else if(hp > 60){
+				heart = "❤️❤️❤️❤️";
+			}else if(hp > 40){
+				heart = "❤️❤️❤️";
+			}else if(hp > 20){
+				heart = "❤️❤️";
+			}else if(hp > 1){
+				heart = "❤️";
+			}
+
+			console.log("HHAAAIII 😭 Je suis pas waterproof 💦\n"+ 
+			"Tu perd " + heart_piege +
+			"\nTu as " + heart + " !");
+		}
+		function water_vener() {
+
+			hp = 0;
+			
+			if(hp > 200){
+				heart = "❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️";
+			}else if(hp > 180){
+				heart = "❤️❤️❤️❤️❤️❤️❤️❤️❤️";
+			}else if(hp > 160){
+				heart = "❤️❤️❤️❤️❤️❤️❤️❤️";
+			}else if(hp > 140){
+				heart = "❤️❤️❤️❤️❤️❤️❤️";
+			}else if(hp > 120){
+				heart = "❤️❤️❤️❤️❤️❤️";
+			}else if(hp > 100){
+				heart = "❤️❤️❤️❤️❤️";
+			}else if(hp > 60){
+				heart = "❤️❤️❤️❤️";
+			}else if(hp > 40){
+				heart = "❤️❤️❤️";
+			}else if(hp > 20){
+				heart = "❤️❤️";
+			}else if(hp > 1){
+				heart = "❤️";
+			}else{
+				heart = "💀";
+			}
+
+			console.log("HHAAAIII 😭 Je suis pas du tout waterproof je coule💦\n"+ 
+			"Tu meurt "+
+			"\nTu as " + heart + " !");
+		}
+
+		// POTION
+		function potion() {
+			var potion_random = Math.random();
+
+			if(potion_random > 0.5){
+				Potion = 40;
+				heart_potion ="❤️❤️";
+			}else{
+				Potion = 60;
+				heart_potion ="❤️❤️❤️";
+			}
+
+			hp += Potion;
+			
+			if(hp > 200){
+				heart = "❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️";
+			}else if(hp > 180){
+				heart = "❤️❤️❤️❤️❤️❤️❤️❤️❤️";
+			}else if(hp > 160){
+				heart = "❤️❤️❤️❤️❤️❤️❤️❤️";
+			}else if(hp > 140){
+				heart = "❤️❤️❤️❤️❤️❤️❤️";
+			}else if(hp > 120){
+				heart = "❤️❤️❤️❤️❤️❤️";
+			}else if(hp > 100){
+				heart = "❤️❤️❤️❤️❤️";
+			}else if(hp > 60){
+				heart = "❤️❤️❤️❤️";
+			}else if(hp > 40){
+				heart = "❤️❤️❤️";
+			}else if(hp > 20){
+				heart = "❤️❤️";
+			}else if(hp > 1){
+				heart = "❤️";
+			}
+
+			console.log("OUUAAII 😍 C'était une potion 💕🍺🍷🍻🍵☕️\n"+ 
+						"Tu gagnes " + heart_potion +"\n"+
+						"Tu as " + heart + " !");
+		}
+
+		// ENNEMI
+		function ennemi() {
+				var piege_random = Math.random();
+
+				if(piege_random > 0.5){
+					Piege = 60;
+					heart_piege ="💔💔💔";
+				}else{
+					Piege = 120;
+					heart_piege ="💔💔💔💔💔💔";
+				}
+
+				hp -= Piege;
+				
+				if(hp > 200){
+					heart = "❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️";
+				}else if(hp > 180){
+					heart = "❤️❤️❤️❤️❤️❤️❤️❤️❤️";
+				}else if(hp > 160){
+					heart = "❤️❤️❤️❤️❤️❤️❤️❤️";
+				}else if(hp > 140){
+					heart = "❤️❤️❤️❤️❤️❤️❤️";
+				}else if(hp > 120){
+					heart = "❤️❤️❤️❤️❤️❤️";
+				}else if(hp > 100){
+					heart = "❤️❤️❤️❤️❤️";
+				}else if(hp > 60){
+					heart = "❤️❤️❤️❤️";
+				}else if(hp > 40){
+					heart = "❤️❤️❤️";
+				}else if(hp > 20){
+					heart = "❤️❤️";
+				}else if(hp > 1){
+					heart = "❤️";
+				}
+				console.log("HHAAAIII 😭 C'était un ennemi pas très gentil 🤡\n"+ 
+							"Tu perd " + heart_piege +
+							"\nTu as " + heart + " !");
+		}
+
+		// TRESOR
+		function tresor() {
+			var Bonus_Gold =  Math.floor(Math.random() * 10 );
+			var PlusGold = 50 + Bonus_Gold;
+
+			gold += PlusGold;
+
+			console.log("OUUAAII C'était un buisson Argent 😃\n"+ 
+						"Tu gagne " + gold + " 💸💸");
+			if(gold > 0){
+				console.log("Cooool tu as " + gold + " 💰");
+			}else if(gold < 0){
+				console.log("Tu es toujours en négatif 😭, tu as"  + gold + " 💰");
+			}
+		}
+
+		</script>
+		
+	</body>
+</html>

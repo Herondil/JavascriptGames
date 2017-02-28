@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+		
+
+		console.log("Vous vous appelez Boon. Vous êtes mort en guerrier fâce à des monstres surpuissant. \n"+
+			"Accéder jusqu'a la zone d'objectif afin derenaître et récupérer votre âme.\n"+
+			"Cependant, des monstres vous attaqueront a chacunde vos mouvements. Passez dans leur zone afin de les empêcher d'attaquer plus longtemps.\n"+
+			"Commandes:\n"+
+			"Mouvement(direction)\n"+
+			"Inventaire(slot1)\n"+
+			"AfficheMap(map)")
+		/* Mob Health */
+		var player = 500
+
+		/* Inventory */
+
+		var slot = {slot1, slot2, slot3, slot4}
+
+			var slot1 = {
+				name: "Potion",
+				caracteristic: "Give back between 25 and 30 HP.",
+				heal: 25 + Math.floor(Math.random() * 6)
+			}
+			var slot2 = {
+				name: "Empty"
+			}
+			var slot3 = {
+				name: "Empty"
+			}
+			var slot4 = {
+				name: "Empty"
+			}
+
+
+		/* Map */
+
+		var map = [
+		["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
+		["~","~",",",",","~","~","~",",","V",",","~","~",",","~","~","~","~",":","~","~"],
+		["~","~",",",",",",","~",",",",","o",",",",",",",",","~","~","~","~",":",":","~"],
+		["~","~",",",",","O",",",",","o","o","o",",",",","~","~","~","~","~","~","~","~"],
+		["~",",",",",",","B","o","o","o",",","o","o",",",",","~","~","~","~","~","~","~"],
+		["~",",",",",",",",","o",",",",",",",",","o",",",",","~","~","~","~","~","~","~"],
+		["~",",",",",",",",","M",",",",","~",",","M",",",",","~","~",":","~","~","~","~"],
+		["~",",",",",",",",","o",",",",","~",",","o",",",",",",",",",":",":","~","~","~"],
+		["~","~",",",",",",","o",",",",",",",",","o",",",",","~",",",",",":",":","~","~"],
+		["~","~","~","~",",","M",",","~","~",",","M","o","o","o","o","o","P",":","~","~"],
+		["~","~","~","~","~","o",",","~","~",",","o",",",",",",",",",",",",",":","~","~"],
+		["~","~","~","~","o","o","o","o","o","o","M",",","~","~",",",",",":","~","~","~"],
+		["~","~","~","~","V",",",",","~","~",",","o",",","~","~","~",",","~","~","~","~"],
+		["~","~","~","~",",",",","~","~","~",",","o",",",",","~","~","~","~","~","~","~"],
+		["~","~","~",",",",",",","~","~","~",",","o",",",",","~","~","~","~","~","~","~"],
+		["~","~",",",",",",",",","~","~","~",",",",",",",",","~","~","~","~","~","~","~"],
+		["~","~","~","~",",",",","~","~","~","~",",",",","~","~","~","~","~","~","~","~"],
+		["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
+		["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
+		]
+
+		var x = 4
+		var y = 3
+
+
+
+		function AfficheMap(map){
+			if (Array.isArray(map) == false) {
+				console.error("Bug MAP?!");
+			}
+			else {
+				var Chaine = "";
+				var map_couleur = [];
+				for (var i = 0; i < map.length; i++){
+					for(var j = 0; j < map[i].length; j++){
+						if(map[i][j] == "~"){
+							Chaine += '%c ~ ';
+							map_couleur.push("color: #01A9DB; background: #0174DF");
+						}
+						else if(map[i][j] == ","){
+							Chaine += '%c , ';
+							map_couleur.push("color: green; background: #01DF01");
+						}
+						else if(map[i][j] == ":"){
+							Chaine += '%c : ';
+							map_couleur.push("color: orange; background: yellow");
+						}
+						else if(map[i][j] == "o"){
+							Chaine += '%c o ';
+							map_couleur.push("color: yellow; background: #01DF01");
+						}
+						else if(map[i][j] == "O"){
+							Chaine += '%c O ';
+							map_couleur.push("color: #0000FF; background: #01DF01");
+						}
+						else if(map[i][j] == "V"){
+							Chaine += '%c V ';
+							map_couleur.push("color: red; background: #01DF01");
+						}
+						else if(map[i][j] == "P"){
+							Chaine += '%c P ';
+							map_couleur.push("color: red; background: yellow");
+						}
+						else if(map[i][j] == "M"){
+							Chaine += '%c M ';
+							map_couleur.push("color: red; background: #01DF01");
+							var degats = 10 + Math.floor(Math.random() * 11 );
+							if (Math.random() < 0.5) {
+								player -= degats
+								console.log("Vous recevez "+degats+" points de dommage.\n"+
+								"Il vous reste "+player+" PDV.")
+							}
+							else{
+								console.log("Vous avez évité l'attaque.")
+							}
+							
+
+						}
+						else if(map[i][j] == "B"){
+							Chaine += '%c B ';
+							map_couleur.push("color: #FFFFFF; background: #01DF01");
+						}
+						else{
+							console.log("Map non paramétré.")
+						}
+						
+					}
+					Chaine += '\n';
+				}
+				
+				console.log(Chaine, ...map_couleur);
+				console.log("B = Boon\n"+
+					"O = Objectif\n"+
+					"V = Ville");
+				return "Vous avez ouvert la carte.";
+			}
+		}
+
+		/* Mouvement */
+		
+		function Mouvement(direction) {
+			if (direction == "avancer") {
+				for (var i = 0; i < map.length; i++){
+					if (map[i].indexOf("B") != 0) {
+						if (map[i].indexOf("B") != -1) {
+							var save = map[i].indexOf("B");
+							if (map[i -1][save]  != "," && map[i -1][save] != "~" && map[i -1][save] != ":") {
+								map[i][save] = "o";
+								map[i -1][save] = "B";
+								if ( "B" == map[x][y]) {
+									console.log("izbdoabdzj")
+								}
+								else{
+
+								}
+							}
+							else{
+								console.log("Bloquer par le haut.")
+							}	
+						}
+					}
+					else{
+						console.log("Bordure de la map.")
+					}
+				}
+			}
+			else if (direction == "reculer") {
+				for (var i = 0; i < map.length; i++){
+					if (map[i].indexOf("B") != 0) {
+						if (map[i].indexOf("B") != -1) {
+							var save = map[i].indexOf("B");
+							if (map[i +1][save]  != "," && map[i +1][save] != "~" && map[i -1][save] != ":") {
+								map[i][save] = "o";
+								map[i +1][save] = "B";
+								break;
+							}
+							else{
+								console.log("Bloquer par le bas.")
+							}	
+						}
+					}
+					else{
+						console.log("Bordure de la map.")
+					}
+				}
+			}
+			else if (direction == "gauche") {
+				for (var i = 0; i < map.length; i++){
+					if (map[i].indexOf("B") != 0) {
+						if (map[i].indexOf("B") != -1) {
+							var save = map[i].indexOf("B");
+							if (map[i][save -1]  != "," && map[i][save -1] != "~" && map[i -1][save] != ":") {
+								map[i][save] = "o";
+								map[i][save -1] = "B";
+							}
+							else{
+								console.log("Bloquer par la gauche.")
+							}	
+						}
+					}
+					else{
+						console.log("Bordure de la map.")
+					}
+				}
+			}
+			else if (direction == "droite") {
+				for (var i = 0; i < map.length; i++){
+					if (map[i].indexOf("B") != 0) {
+						if (map[i].indexOf("B") != -1) {
+							var save = map[i].indexOf("B");
+							if (map[i][save +1]  != "," && map[i][save +1] != "~" && map[i -1][save] != ":") {
+								map[i][save] = "o";
+								map[i][save +1] = "B";
+							}
+							else{
+								console.log("Bloquer par la gauche.")
+							}	
+						}
+					}
+					else{
+						console.log("Bordure de la map.")
+					}
+				}
+
+			}
+			else if (direction == "map") {
+				console.log(+map)
+			}
+			else {
+				console.error("Essaye pas de glitch!")
+			}
+
+			AfficheMap(map);
+			return "Vous avez effectué un mouvement"
+		}
+
+		function Inventaire(item) {
+			if (typeof item == "object") {
+				if (item == slot1) {
+		            player += slot1.heal
+		            console.log("Vous avez utilisé une " +item.name+ " et retrouvez " +item.heal+ " PDV.");
+		    	}
+		    }
+		}
+		if (player <= 0) {
+			console.log("Vous êtes mort.")
+		}
+		
+
+
+
+
+		</script>
+	</body>
+</html>

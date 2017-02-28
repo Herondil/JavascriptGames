@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>RPG Maker</title>
+</head>
+<body>
+<script>
+		var life_mob = 50;
+		var life = 100;
+		var exp = 0;
+		var map = [
+		["M","C","M","M","M","M","M","M","M","M","M"],
+		["M","_","M","M","M","_","_","_","_","_","M"],
+		["M","_","M","M","M","_","_","_","_","_","M"],
+		["M","_","M","M","M","_","_","E","_","_","M"],
+		["M","E","M","M","M","_","_","_","_","_","M"],
+		["M","_","_","_","_","_","_","_","_","_","M"],
+		["M","_","_","_","_","_","_","_","_","_","M"],
+		["M","_","E","_","_","_","_","_","_","_","M"],
+		["M","_","_","_","_","E","_","_","_","_","M"],
+		["M","_","_","_","_","_","_","_","_","_","M"],
+		["M","_","_","_","_","_","_","_","E","_","M"],
+		["M","_","_","E","_","_","_","_","_","_","M"],
+		["M","_","_","_","_","_","_","_","_","_","M"],
+		["M","_","_","_","_","_","M","M","M","M","M"],
+		["M","_","_","_","A","_","M","M","M","M","M"],
+		["M","M","M","M","M","M","M","M","M","M","M"]
+		];
+
+		var map2 = [
+		["M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","C","M"],
+		["M","M","M","M","T","_","_","_","_","_","M","M","M","M","M","T","M","M","_","M"],
+		["M","M","M","M","M","M","M","M","M","_","M","M","_","E","_","E","_","E","_","M"],
+		["M","_","_","_","M","M","M","M","_","_","_","M","_","M","M","_","M","M","_","M"],
+		["M","_","E","_","_","T","M","M","_","E","_","M","_","M","M","_","M","M","_","M"],
+		["M","_","_","_","M","M","M","_","_","_","_","M","_","M","M","_","M","M","E","M"],
+		["M","_","_","_","M","_","_","_","M","M","_","M","_","M","M","_","M","M","_","M"],
+		["M","_","M","_","M","_","M","M","M","M","_","M","_","M","E","_","M","M","_","M"],
+		["M","_","M","_","_","_","M","M","M","M","_","M","_","M","_","M","M","M","_","M"],
+		["M","_","M","M","M","M","M","M","M","M","_","_","_","M","_","_","M","M","_","M"],
+		["M","_","M","M","M","M","M","M","M","M","_","_","_","M","M","_","M","M","_","M"],
+		["M","_","M","M","M","M","M","M","M","M","_","M","_","M","M","_","M","M","_","M"],
+		["M","_","M","M","M","T","M","M","M","M","_","M","_","M","M","_","M","M","_","M"],
+		["M","_","_","_","M","_","M","M","M","M","_","M","_","_","M","_","M","M","_","M"],
+		["M","A","_","_","E","_","E","_","E","_","_","M","_","_","_","E","_","_","_","M"],
+		["M","C","_","_","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M"]
+		];
+		console.log("Vous apparaissez dans une forêt remplis de monstre suite à un échec de transfère de dimension. Vous êtes pertubé par le voyage mais vous devez rejoindre la ville la plus proche. \n \n Orientez vous avec : AfficherMap(map) pour afficher la carte." + " \n \n Déplacez vous avec : Avancer(), Reculer(), Gauche(), Droite(). \n \n Bonne chance, jeune aventurier ! ")
+
+	function AfficherMap(map,map2){
+			//vérifier map
+			if(Array.isArray(map) == false){
+				console.error("crash de la fonction");
+			}else{
+			//afficher les couleurs
+				var Chaine = "";
+				var map_couleur = [];
+				for (var i = 0; i < map.length; i++){
+					for(var j = 0; j < map[i].length; j++){
+						if(map[i][j] == "M"){
+							map_couleur.push("background: #234F36");
+						}else if(map[i][j] == "_"){
+							map_couleur.push("background: #70FFAD");
+						}else if(map[i][j] == "A"){
+							map_couleur.push("background: blue");
+						}else if(map[i][j] == "P"){
+							map_couleur.push("background: purple");
+						}else if(map[i][j] == "E"){
+							map_couleur.push("background: red");
+						}else if(map[i][j] == "T"){
+							map_couleur.push("background: yellow");
+						}else if(map[i][j] == "C"){
+							map_couleur.push("background: white");
+						}else{
+							console.error("crash de la fonction");
+							return 0;
+						}
+						Chaine += '%c   ';
+					}
+					Chaine += '\n';					
+				}
+				console.log(Chaine, ...map_couleur);
+				return "La map a été affichée correctement";
+			}
+		}
+		
+		function Avancer() {
+			for (var i = 0; i < map.length; i++){
+				if (map[i].indexOf("A")== -1) {		
+				}else if(i != 0){
+					var save = map[i].indexOf("A");
+					map[i][save] = "_";
+					map[i -1][save] = "A";
+				}else {
+					map[i][save] = "M";
+					console.log("Vous ne pouvez pas passez.")
+				}
+			}
+			AfficherMap(map);
+		}
+
+
+		function Reculer() {
+		for (var i = 0; i < map.length; i++){
+			if (map[i].indexOf("A")== -1) {		
+			}else if(i != map.length -1){
+				var save = map[i].indexOf("A");
+				map[i][save] = "_";
+				map[i +1][save] = "A";
+				break;
+			}else {
+				map[i][save] = "M";
+				console.log("Vous ne pouvez pas passez.")
+			}
+		}
+		AfficherMap(map);
+		}
+
+		function Gauche() {
+			for (var i = 0; i < map.length; i++){
+				if (map[i].indexOf("A") !=0){
+					if (map[i].indexOf("A") != -1) {	
+						var save = map[i].indexOf("A");
+						if (map[i][save -1] != "M"){
+							map[i][save] = "_";
+							map[i ][save -1] = "A";
+					}else{
+						console.log("Vous ne pouvez pas passez.")
+					}
+				}
+			}else {
+					console.log("Vous ne pouvez pas passez.")
+			}
+		}
+		AfficherMap(map);
+		}
+
+		function Droite() {
+			for (var i = 0; i < map.length; i++){
+			if (map[i].indexOf("A") !=0){
+				if (map[i].indexOf("A") != -1) {		
+				var save = map[i].indexOf("A");
+				if (map[i][save +1] != "M"){
+					map[i][save] = "_";
+					map[i][save + 1] = "A";
+				}else{
+					console.log("Vous ne pouvez pas passez.")
+				}
+			}
+		}else {
+			console.log("Vous ne pouvez pas passez.")
+			}
+		}
+		AfficherMap(map);
+		}
+
+	function Prendre(){
+		for (var i = 0; i < map.length; i++) {
+			map[i]
+		}
+		if(map[i][j] == "T"){
+			console.log("Vous avez ouvert le coffre")
+		}else{
+			console.log("Il n'y pas de coffre ici !")
+		}
+	}
+	function Fuir(){
+		console.log("Vous avez pris la fuite.")
+	}
+
+	function Attaquer(){
+		
+			var mult = Math.floor(Math.random()*5);
+			var dmg = 10 +  mult;
+		life_mob -= dmg ;
+		life-+dmg;
+
+		if (life > mult){
+			console.log("blblblblblbl")
+			if (life <= 0) {
+				console.log("BLBLBLBLBLBLBBLBLBL")
+			}
+		exp += Math.round(Math.random()*6+10);
+		
+			return("Vous infligez " + dmg + ". Il lui reste " + life + " pv.");
+		}else{
+			return(". Vous obtenez : " + exp +  " points d'exp.");
+		}
+	}
+
+	function Jouer(option){
+	            switch(option){
+
+                case "Map":
+                    AfficheMap(map);
+                    break;
+                case "Avancer":
+                    Avancer();
+                    break;
+                case "Reculer":
+                    Reculer();
+                    break;
+                case "Gauche":
+                    Gauche();
+                    break;
+                case "Droite":
+                    Droite();
+                    break;
+                default:
+                    console.error("Mauvais paramètre");
+                    break;
+            }
+        }
+		
+</script>
+</body>
+</html>
