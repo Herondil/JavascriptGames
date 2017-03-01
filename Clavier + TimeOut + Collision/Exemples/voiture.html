@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>JS : MapColor</title>
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script>
+
+	console.log("Pour commencer : Start() avec 1,2 ou 3")
+
+var map= [
+	["M","V","V","V","V","V","V","V","V","K","V","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","_","_","_","_","_","_","M"],
+	["M","_","_","_","_","O","_","_","_","T","_","M"]	
+]
+
+var affiche = "";
+var x = 5;
+var y = 25;
+var Ex = 9;
+var Ey = 25;
+
+function Start(choix){
+	Aleatoire()
+
+if (choix == '1') {
+	var Var = setInterval(function(){ Ennemy() }, 100);
+
+		var myVar = setInterval(function(){
+		if (map[0][x] == 'O'){
+			console.log("WINNER");
+			myStopFunction ()
+		}else{
+		map[y][x] = '_';
+		y--;
+		map[y][x] = 'O';
+		Map();
+		}
+	}, 250);
+}else if (choix == '2') {
+	var Var = setInterval(function(){ Ennemy() }, 500);	
+
+	var myVar = setInterval(function(){
+	if (map[0][x] == 'O'){
+		console.log("WINNER");
+		myStopFunction ()
+	}else{
+	map[y][x] = '_';
+	y--;
+	map[y][x] = 'O';
+	Map();
+	}
+}, 250);
+}else if (choix == '3') {
+	var Var = setInterval(function(){ Ennemy() }, 1000);
+
+	var myVar = setInterval(function(){
+	if (map[0][x] == 'O'){
+		console.log("WINNER");
+		myStopFunction ()
+	}else{
+	map[y][x] = '_';
+	y--;
+	map[y][x] = 'O';
+	Map();
+	}
+}, 250);
+}
+
+//////////////ENNEMY 
+
+function Ennemy(){
+		if (map[Ey-1][Ex] == 'K'){
+				console.log("LOSE");
+				myStopFunction ()
+			}else{
+			map[Ey][Ex] = '_';
+			Ey--;
+			map[Ey][Ex] = 'T';
+		}
+}
+
+function myStopFunction() {
+    clearInterval(myVar);
+    clearInterval(Var)
+}
+}
+
+//////////////////////////////////
+
+window.document.onkeydown = function(evt){
+	if (event.keyCode == 37 && map[y][x-1] != 'M') {
+		map[y][x] = '_';
+		x--;
+		map[y][x] = 'O';
+	}
+	else if (event.keyCode == 39 && map[y][x+1] != 'M') {
+		map[y][x] = '_';
+		x++;
+		map[y][x] = 'O';
+	}
+}
+
+
+function Aleatoire(){
+
+	var r = Math.floor(Math.random()*3);
+	if (r == 0) {map[20][6] = 'X'}
+	if (r == 1) {map[10][10] = 'X'}
+	if (r == 2) {map[5][2] = 'X'}
+}
+
+function Map(){
+	tbl = [];
+	for (var j = 0; j <= map.length - 1; j++) {
+		for (var i = 0; i <= map[j].length - 1; i++) {
+			affiche += "%c  ";
+			if (map[j][i] == 'M') {
+				tbl.push("background : #000");
+			}else if(map[j][i] == '_'){
+				tbl.push("background : green");
+			}else if(map[j][i] == 'O'){
+				tbl.push("background : pink");
+			}else if(map[j][i] == 'V'){
+				tbl.push("background : white");
+			}else if(map[j][i] == 'X'){
+				tbl.push("background : blue");
+			}else if(map[j][i] == 'T'){
+				tbl.push("background : red");
+			}else if(map[j][i] == 'K'){
+				tbl.push("background : white");
+			}
+			
+		}
+		affiche += "\n"
+	}
+	console.log(affiche, ...tbl);
+	affiche = "";
+}
+
+	</script>
+</body>
+</html>
