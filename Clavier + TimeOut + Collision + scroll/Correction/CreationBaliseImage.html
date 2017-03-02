@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			p {
+				margin : 0;
+			}
+		</style>
+	</head>
+	<body>
+	
+		<script>
+		var nb_souris = 0;
+		var points = "";
+		
+		setTimeout(Jouer,  250);
+		
+		CreerBalise("DIV","", document.body,"historique");
+		CreerBalise("DIV","<span>Vous ne pouvez rien faire encore, attendez un peu !</span>", document.body,"message");
+			
+		function Jouer(  ){
+			
+			if (nb_souris == 100){
+				CreerBalise("DIV","<span>On se révolte!<span><img src='http://www.youpimobile.com/up/images/cinema/19020172.jpg'/>",
+									document.body,"");
+			}		
+			
+			for(var i = 10; i <= 100; i+= 10){
+				if(nb_souris == i){
+					points += "." ;
+					ModifierBalise("message","<span>Vous ne pouvez rien faire encore, attendez un peu "+points+"</span>")
+				}	
+			}
+			CreerBalise("P","Vous avez gagne "+ nb_souris++ +" souris.",
+				document.getElementsByTagName("DIV")[0],"");	
+			
+			// supprimer la 1ere balise quand il ya plus de 5 balises
+			
+			if (document.getElementsByTagName("P").length>5){
+				SupprimerPremiereBaliseP()
+			}
+			setTimeout(Jouer,  250);
+		}
+		
+		function CreerBalise(typebalise, textebalise, parent,id) {
+			var para = document.createElement(typebalise);                      
+			para.innerHTML = textebalise;
+			parent.appendChild(para);
+			
+			
+			var att = document.createAttribute("id");      
+			att.value = id;                         
+			para.setAttributeNode(att); 
+		}
+		
+		function SupprimerPremiereBaliseP(){
+			var div = document.getElementsByTagName("DIV")[0];
+			div.removeChild(div.firstChild);
+			
+		}
+		
+		function ModifierBalise(id,message){
+			var id = document.getElementById(id);
+			id.innerHTML = message;
+		}
+		</script>
+		
+	</body>
+</html>
