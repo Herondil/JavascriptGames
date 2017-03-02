@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+	
+		<script>
+		var nb_souris = 0;
+		
+		setTimeout(Jouer,  250);
+		
+		CreerBalise("DIV","", document.body);
+			
+		function Jouer(  ){
+			CreerBalise("P","Vous avez gagne "+ nb_souris++ +" souris.",
+				document.getElementsByTagName("DIV")[0]);	
+			
+			// supprimer la 1ere balise quand il ya plus de 5 balises
+			
+			if (document.getElementsByTagName("P").length>1){
+				SupprimerPremiereBaliseP()
+			}
+			setTimeout(Jouer,  250);
+		}
+		
+		function CreerBalise(typebalise, textebalise, parent) {
+			var para = document.createElement(typebalise);                       // Create a <p> element
+			para.innerHTML = textebalise;
+			parent.appendChild(para);
+		}
+		
+		function SupprimerPremiereBaliseP(){
+			var div = document.getElementsByTagName("DIV")[0];
+			div.removeChild(div.firstChild);
+			
+		}
+		
+		</script>
+		
+	</body>
+</html>
