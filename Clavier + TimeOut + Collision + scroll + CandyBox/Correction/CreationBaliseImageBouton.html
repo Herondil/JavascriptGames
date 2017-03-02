@@ -23,7 +23,11 @@
 			if (nb_souris == 100){
 				CreerBalise("DIV","<span>On se révolte!<span><img src='http://www.youpimobile.com/up/images/cinema/19020172.jpg'/>",
 									document.body,"");
-			}		
+			}
+			
+			if (nb_souris == 150){
+				CreerBouton();
+			}
 			
 			for(var i = 10; i <= 100; i+= 10){
 				if(nb_souris == i){
@@ -63,6 +67,12 @@
 			var id = document.getElementById(id);
 			id.innerHTML = message;
 		}
+		
+		function CreerBouton(){
+			CreerBalise("BUTTON", "ERADIQUE LES SOURIS", document.body, "eradique");
+			document.getElementById("eradique").onclick  = function() { nb_souris= 0;};
+		}
+		
 		</script>
 		
 	</body>
