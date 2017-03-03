@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+		<script>
+		
+		var map = [
+			["M"," "," "," "," "," "," "," "," "," "," "," "," ","M"],
+			["M"," "," "," "," "," "," "," "," "," "," "," "," ","M"],
+			["M"," "," "," "," "," "," "," "," "," "," "," "," ","M"],
+			["M"," "," "," ","T "," T"," "," ","T ","T "," "," "," ","M"],
+			["M"," "," "," "," ","T "," "," "," ","T "," "," "," ","M"],
+			["M"," "," "," "," "," "," "," "," "," "," "," "," ","M"],
+			["M"," "," "," "," ","❤️"," T","T"," T"," "," "," "," ","M"],
+			["M"," "," "," "," "," "," "," "," "," "," "," "," ","M"],
+			["M"," "," "," "," "," ","O "," O"," "," "," "," "," ","M"],
+			["M"," "," "," "," "," "," ","O "," "," "," "," "," ","M"],
+			["M"," "," "," "," "," "," "," "," "," "," "," "," ","M"],
+			["M","M","M","M","M","M","M","M","M","M"]
+			
+		];
+		
+		
+		
+		function CreerBalise(typebalise, textebalise, parent, id) {
+			var para = document.createElement(typebalise);                      
+			para.innerHTML = textebalise;
+			parent.appendChild(para);
+			
+			var att = document.createAttribute("id");      
+			att.value = id;                         
+			para.setAttributeNode(att); 
+		}
+		
+		function AfficheMapDocument (){
+			CreerBalise("DIV","", document.body,"ParentMap");
+			CreerBalise("PRE","",document.querySelector("#ParentMap"),"pmap");
+			
+			var chaine = "";
+			
+			
+			for (var i = 0; i < map.length; i++){
+				chaine += map[i].join("")+"\n";
+				
+			}
+			
+			ModifierBalise("pmap",chaine);
+		}
+		
+		function ModifierBalise(id,message){
+			var id = document.getElementById(id);
+			id.innerHTML = message;
+		}
+			
+			
+		
+		
+
+		
+		
+		
+	
+		
+		</script>
+		
+	</body>
+</html>
