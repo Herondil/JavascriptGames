@@ -22,6 +22,7 @@ Pour la première notation :
 
 Pour la seconde notation :
 
+/* Un jeu de course dans le document peut être marrant ! */
   - Il faut être capable d'expliquer le jeu en une phrase (d'un point de vue thématique sans parler "code")
   - 4 points de présence
   - 6 points pour la réalisation d'un jeu qui valide :
