@@ -22,19 +22,25 @@
 		
 		
 		
+		// typebalise 	: Le type de balise qui sera créer (div, p, span, ...)
+		// textebalise 	: Le contenu littéral de la nouvelle balise ("texte","<img> ...")
+		// parent 			: l'élément auuel sera rattaché la nouvelle balise
+		// id					: L'attribut "id" de la nouvelle balise	
 		function CreerBalise(typebalise, textebalise, parent, id) {
-			var para = document.createElement(typebalise);                      
-			para.innerHTML = textebalise;
+			var para 				= document.createElement(typebalise);                      
+			para.innerHTML 	= textebalise;
+			
 			parent.appendChild(para);
 			
-			var att = document.createAttribute("id");      
-			att.value = id;                         
+			var att 	= document.createAttribute("id");      
+			att.value 	= id;                         
 			para.setAttributeNode(att); 
 		}
 		
 		function AfficheMapDocument (){
-			CreerBalise("DIV","", document.body,"ParentMap");
-			CreerBalise("PRE","",document.querySelector("#ParentMap"),"pmap");
+			CreerBalise("DIV","", document.body										,"ParentMap");
+			//la balise pre permet de conserver les espaces et les sauts de ligne
+			CreerBalise("PRE","", document.querySelector("#ParentMap")	,"pmap");
 			
 			var chaine = "";
 			
