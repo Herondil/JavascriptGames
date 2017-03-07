@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+		body{
+			background-color: lightblue;
+		}
+		</style>
+	</head>
+	<body>
+		<script>
+	
+	/* Initialisation Canvas*/
+		var canvas = document.createElement('CANVAS');
+		canvas.width 	= 800;
+		canvas.height	=	600;
+		document.body.appendChild(canvas);
+		var ctx = canvas.getContext('2d');
+		
+		var positionCercle = {
+			x: 100,
+			y: 300
+		};
+		
+		var vecteurCercle ={
+			u1: Math.random()*50,
+			u2: Math.random()*50
+		};
+		
+		bouclePrincipale();
+		
+		function dessineLeFond(){
+			ctx.fillStyle = "blue";
+			ctx.strokeStyle=" #00ff00";
+			ctx.fillRect(0,0,800,600);
+		}
+		
+		//centre =coordonées centre cercle
+		// centre : objet {x:0,  y:0}
+		function dessineLeCercle(centre){
+			ctx.beginPath();
+			ctx.arc(centre.x,centre.y,20,Math.PI*0.75,2*Math.PI);
+			ctx.stroke();
+		}
+	
+		function effaceTout(){ 
+			ctx.clearRect(0,0,800,600);
+		}
+		
+	
+		function bouclePrincipale(){
+			effaceTout();
+			dessineLeFond();
+			dessineLeCercle(positionCercle);
+			positionCercle = translater(positionCercle, vecteurCercle);
+			Collision();
+			
+			setTimeout(bouclePrincipale,1000/60);
+		}
+		
+		// point : objet {x:0,  y:0}
+		// vecteur : objet {u1:45, u2:79}
+		function translater (point,vecteur){
+				var nouvellePosition ={
+					x : point.x+ vecteur.u1,
+					y : point.y + vecteur.u2
+				};			
+				return nouvellePosition;
+			}
+			
+		function Collision(){
+			
+			if(positionCercle.x >= canvas.width){
+				
+				vecteurCercle.u1 -= vecteurCercle.u1 * 2;
+			}
+			if(positionCercle.x <= 0){
+				vecteurCercle.u1 -= vecteurCercle.u1*2;
+			}
+			if(positionCercle.y >= canvas.height){
+				vecteurCercle.u2 -= vecteurCercle.u2*2;
+			}
+			if(positionCercle.y <= 0){
+				vecteurCercle.u2 -= vecteurCercle.u2*2;
+			}
+			
+		}
+
+			
+		</script>
+		
+	</body>
+</html>
