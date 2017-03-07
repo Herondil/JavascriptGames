@@ -17,14 +17,16 @@
 		document.body.appendChild(canvas);
 		var ctx = canvas.getContext('2d');
 		
+		var rayonCercle = 20;
+		
 		var positionCercle = {
 			x: 100,
 			y: 300
 		};
 		
 		var vecteurCercle ={
-			u1: Math.random()*50,
-			u2: Math.random()*50
+			u1: Math.random()*(-10) + 5,
+			u2: Math.random()*(-10) + 5
 		};
 		
 		bouclePrincipale();
@@ -39,21 +41,22 @@
 		// centre : objet {x:0,  y:0}
 		function dessineLeCercle(centre){
 			ctx.beginPath();
-			ctx.arc(centre.x,centre.y,20,Math.PI*0.75,2*Math.PI);
+			ctx.arc(centre.x,centre.y,rayonCercle,0,2*Math.PI);
+			ctx.lineWidth = 5;
 			ctx.stroke();
+			
 		}
 	
 		function effaceTout(){ 
 			ctx.clearRect(0,0,800,600);
 		}
-		
-	
+			
 		function bouclePrincipale(){
 			effaceTout();
 			dessineLeFond();
 			dessineLeCercle(positionCercle);
 			positionCercle = translater(positionCercle, vecteurCercle);
-			Collision();
+			VerifierCollision();
 			
 			setTimeout(bouclePrincipale,1000/60);
 		}
@@ -68,19 +71,22 @@
 				return nouvellePosition;
 			}
 			
-		function Collision(){
+		function VerifierCollision(){
 			
-			if(positionCercle.x >= canvas.width){
-				
+			if(positionCercle.x >= (canvas.width -rayonCercle)){
+				//collision avec la droite
 				vecteurCercle.u1 -= vecteurCercle.u1 * 2;
 			}
-			if(positionCercle.x <= 0){
+			if(positionCercle.x <= rayonCercle){
+				//collision avec la gauche
 				vecteurCercle.u1 -= vecteurCercle.u1*2;
 			}
-			if(positionCercle.y >= canvas.height){
+			if(positionCercle.y >= (canvas.height- rayonCercle)){
+				//collision avec le bas
 				vecteurCercle.u2 -= vecteurCercle.u2*2;
 			}
-			if(positionCercle.y <= 0){
+			if(positionCercle.y <= rayonCercle){
+				//collision avec le haut
 				vecteurCercle.u2 -= vecteurCercle.u2*2;
 			}
 			
