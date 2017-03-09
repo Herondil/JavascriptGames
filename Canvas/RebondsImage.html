@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+		body{
+			background-color: lightblue;
+		}
+		</style>
+	</head>
+	<body>
+		<script>
+	
+
+			/* Initialisation Canvas*/
+			var canvas = document.createElement('CANVAS');
+			canvas.width 	= 	800;
+			canvas.height	=	600;
+			document.body.appendChild(canvas);
+			var ctx = canvas.getContext('2d');
+	
+			var Background = new Image(401,240);
+			Background.src = "KOF03_Town.png";
+			var Ball = new Image(20,20);
+			Ball.src = "Devilish-MainBall.png";
+			
+			
+			var PositionOriginBall = {
+				x : 10,
+				y:  10
+			};
+			var PositionOriginBall2 = {
+				x : 200,
+				y:  200
+			};
+			var VectorBall = {
+				u1 : 3,
+				u2 : 10
+			};
+			var VectorBall2 = {
+				u1 : 2,
+				u2 : 8
+			}
+			var RadiusBall = 10;
+			
+			
+			MainLoop();
+			function MainLoop(){
+				DrawBackground();
+				DrawBall(PositionOriginBall);
+				DrawBall(PositionOriginBall2);
+				
+				PositionOriginBall = Translate(PositionOriginBall, VectorBall);
+				PositionOriginBall2 = Translate(PositionOriginBall2, VectorBall2);
+				CheckColision(PositionOriginBall,VectorBall);
+				CheckColision(PositionOriginBall2,VectorBall2);
+				
+				CheckBallColision(PositionOriginBall,VectorBall);
+				//console.log(CalculateDistanceBetwenTwoPoints(PositionOriginBall,PositionOriginBall2));
+				setTimeout(MainLoop,1000/60);
+			}
+			
+			
+			// DRAW
+			function DrawBackground(){
+				ctx.drawImage(Background,0,0,800,600);
+			}
+
+			function DrawBall(position){
+				ctx.drawImage(Ball,position.x-30/2,position.y-30/2,30,30);
+			}
+			
+			function Translate(point,vector){
+				var nouvellePosition = {
+					x : point.x+ vector.u1,
+					y : point.y + vector.u2
+				};			
+				return nouvellePosition;
+			}
+			
+			// CHECK COLISION	BALL/ WALL
+			function CheckColision(PositionOriginBall,VectorBall){
+			
+				if(PositionOriginBall.x >= (canvas.width -RadiusBall)){
+					//collision avec la droite
+					VectorBall.u1 -= VectorBall.u1 * 2;
+				}
+				if(PositionOriginBall.x <= RadiusBall){
+					//collision avec la gauche
+					VectorBall.u1 -= VectorBall.u1*2;
+				}
+				if(PositionOriginBall.y >= (canvas.height- RadiusBall)){
+					//collision avec le bas
+					VectorBall.u2 -= VectorBall.u2*2;
+				}
+				if(PositionOriginBall.y <= RadiusBall){
+					//collision avec le haut
+					VectorBall.u2 -= VectorBall.u2*2;
+				}			
+			}
+			
+			function CalculateDistanceBetwenTwoPoints(Point1,Point2){
+				return Math.sqrt(Math.pow(Point2.y - Point1.y,2) + Math.pow(Point2.x - Point1.x,2));
+			}
+			
+			
+			var CompteurColision = 0;
+			function CheckBallColision(){
+				if(CalculateDistanceBetwenTwoPoints(PositionOriginBall,PositionOriginBall2) <= 30 && CompteurColision == 0){
+					console.log("COLISION");
+					
+					if(CompteurColision == true){
+						VectorBall.x *= -1;
+						VectorBall.y*= -1;
+						VectorBall2.x *= -1;
+						ectorBall2.y*= -1;
+					
+						CompteurColision = 0;
+					}
+				}
+					
+			}
+		</script>
+		
+	</body>
+</html>

@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+		body{
+			background-color: lightblue;
+		}
+		</style>
+	</head>
+	<body>
+		<script>
+	
+
+			/* Initialisation Canvas*/
+			var canvas = document.createElement('CANVAS');
+			canvas.width 	= 	320;
+			canvas.height	=	224
+			document.body.appendChild(canvas);
+			var ctx = canvas.getContext('2d');				
+			MainLoop();
+			
+			
+			
+			function MainLoop(){
+				
+				
+				setTimeout(MainLoop,1000/60);
+			}
+			
+			
+			
+		</script>
+		
+	</body>
+</html>
