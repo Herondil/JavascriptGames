@@ -44,10 +44,10 @@ Pour la dernière notation :
   - 6 points pour la réalisation d'un jeu qui valide :
     - La scène se déroule dans un canvas de taille fixe
     - Il y a une image de fond
-    - Une map est affichée au dessus de du fond (une map façon talbeau)
+    - Une map est affichée au dessus de du fond (une map façon tableau)
     
     - Au moins une animation en sprite à une position fixe (comme le décor de KOF)
-    - Au moins une animation en code (position qui bouge)
+    - Au moins une animation en code (position qui bouge, zoom ou autre)
     - Collision avec des objets
    
    - 5 points si c'est bel et bien un jeu:
