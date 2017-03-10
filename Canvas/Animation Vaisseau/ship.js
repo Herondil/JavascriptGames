@@ -1,17 +1,17 @@
 ﻿var shipSprite = {
 	
 	
-	width                             :43,
-	height							 :28,
-	x									 :-50,
-	y									 :250,
-	speed                            :10,
-	zoom							 :13,
-	angle							 :30,
-	dezoomSpeed				 :98,
-	angleSpeed					 : -0.4,
+	width                       :43,
+	height						:28,
+	x							:-50,
+	y							:250,
+	speed                       :10,
+	zoom					 	:13,
+	angle					 	:30,
+	dezoomSpeed				 	:98,
+	angleSpeed					:-0.4,
 	
-	Animate					     :function(){
+	Animate					    :function(){
 		//animation de la position
 		if(this.x>712){
 			this.speed = 0;
