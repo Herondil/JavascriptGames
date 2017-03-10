@@ -50,7 +50,7 @@ Pour la dernière notation :
     - Au moins une animation en code (position qui bouge, zoom ou autre)
     - Collision avec des objets
    
-   - 5 points si c'est bel et bien un jeu:
+ - 5 points si c'est bel et bien un jeu:
     - 3 points s'il y a bien une énigme à résoudre (au sens large)
     - Une fin
     - Un message qui invite à relancer une partie (par exemple en rechargeant)
