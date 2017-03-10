@@ -2,7 +2,7 @@
 
 ##In French :
 
-Voici les corrections et exos du programme.
+Voici les corrections et exos du programme, me but est de faire un jeu par semaine !
 
 
 Pour la première notation :
@@ -36,3 +36,21 @@ Pour la seconde notation :
     - 1 point par joueur qui teste une partie, jusque 3 fois
     - 1 point si quelqu'un a essayer de faire bugger sans y arriver
     - 1 point si on réussit à faire planter le jeu de quelqu'un d'autre avec la console ou des actions en jeu
+    
+ 
+Pour la dernière notation :
+
+  - 4 points de présence
+  - 6 points pour la réalisation d'un jeu qui valide :
+    - La scène se déroule dans un canvas de taille fixe
+    - Il y a une image de fond
+    - Une map est affichée au dessus de du fond (une map façon talbeau)
+    
+    - Au moins une animation en sprite à une position fixe (comme le décor de KOF)
+    - Au moins une animation en code (position qui bouge)
+    - Collision avec des objets
+   
+   - 5 points si c'est bel et bien un jeu:
+    - 3 points s'il y a bien une énigme à résoudre (au sens large)
+    - Une fin
+    - Un message qui invite à relancer une partie (par exemple en rechargeant)
