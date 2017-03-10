@@ -53,4 +53,4 @@ Pour la dernière notation :
   - 5 points si c'est bel et bien un jeu:
     - 3 points s'il y a bien une énigme à résoudre (au sens large)
     - Une fin
-    - Un message qui invite à relancer une partie (par exemple en rechargeant)
+    - Un message qui invite à relancer une partie (par exemple en rechargeant la page)
