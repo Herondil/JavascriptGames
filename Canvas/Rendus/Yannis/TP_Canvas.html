@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>TP Canvas</title>
+	</head>
+	<body>
+		<script>
+
+			var collision = 0;
+
+			var canvas = document.createElement('CANVAS');
+			canvas.width = 1300;
+			canvas.height = 600;
+			document.body.appendChild(canvas);
+			var ctx = canvas.getContext('2d');
+
+			var fond = new Image(1300, 600);
+			fond.src = "nebula.jpg";
+
+			var asteroid = {
+				Step : 0,
+				animationSpeed : 0.03,
+				imagex : 5,
+				imagey : 5,
+				width : 110,
+				heigth : 110,
+				x : 65,
+				y : 110,
+				marginLeftPluswidth : 249,
+				loadImage : function(){
+					var img = new Image(100, 100);
+					img.src= "Asteroid.png";
+					this.img = img;
+				},
+				Draw : function(){
+					ctx.drawImage(this.img,
+											this.imagex,
+											this.imagey+this.marginLeftPluswidth*(Math.floor(this.Step))
+											,this.width,this.heigth,this.x,this.y,this.width,this.heigth  );
+				},
+				Animate : function(){
+					if (this.Step  >= 2){
+						this.Step  = 0;
+					}
+					this.Step += this.animationSpeed;
+				}
+			};
+
+			var asteroid2 = {
+				Step : 0,
+				animationSpeed : 0.03,
+				imagex : 5,
+				imagey : 5,
+				width : 110,
+				heigth : 110,
+				x : 1020,
+				y : 400,
+				marginLeftPluswidth : 249,
+				loadImage : function(){
+					var img = new Image(100, 100);
+					img.src= "Asteroid.png";
+					this.img = img;
+				},
+				Draw : function(){
+					ctx.drawImage(this.img,
+											this.imagex,
+											this.imagey+this.marginLeftPluswidth*(Math.floor(this.Step))
+											,this.width,this.heigth,this.x,this.y,this.width,this.heigth  );
+				},
+				Animate : function(){
+					if (this.Step  >= 2){
+						this.Step  = 0;
+					}
+					this.Step += this.animationSpeed;
+				}
+			};
+
+			var vaisseau = new Image(50,50);
+			vaisseau.src = "BlueFalcon.png";
+
+			var positionOrigineVaisseau = {
+				x : 600,
+				y:  350
+			};
+
+			var vecteurVaisseau = {
+				u1: Math.random()*(-10) + 5,
+				u2: Math.random()*(-10) + 5
+			};
+			
+			function DessinerFond(){
+				ctx.drawImage(fond,0,0,1300,600);
+			}
+		
+			function EffacerTout(){ 
+				ctx.clearRect(0,0,1300,600);
+			}
+
+			function DessinerVaisseau(position){
+				ctx.drawImage(vaisseau,position.x-30/2,position.y-30/2);
+			}
+			
+			function Translation(point,vector){
+				var nouvellePosition = {
+					x : point.x+ vecteurVaisseau.u1,
+					y : point.y + vecteurVaisseau.u2
+				};			
+				return nouvellePosition;
+			}
+
+			function ConfirmationColision(positionOrigineVaisseau, vecteurVaisseau){
+			
+				if(positionOrigineVaisseau.x >= (canvas.width - 25)){
+					//collision avec la droite
+					vecteurVaisseau.u1 -= vecteurVaisseau.u1 * 2;
+					collision++;
+				}
+				if(positionOrigineVaisseau.x <= (canvas.height - 575)){
+					//collision avec la gauche
+					vecteurVaisseau.u1 -= vecteurVaisseau.u1*2;
+					collision++;
+				}
+				if(positionOrigineVaisseau.y >= canvas.width){
+					//collision avec le bas
+					vecteurVaisseau.u2 -= vecteurVaisseau.u2*2;
+					collision++;
+				}
+				if(positionOrigineVaisseau.y <= canvas.height){
+					//collision avec le haut
+					vecteurVaisseau.u2 -= vecteurVaisseau.u2*2;
+					collision++;
+				}			
+			}
+
+			asteroid.loadImage();
+			asteroid2.loadImage();
+
+			BouclePrincipale();
+
+			function BouclePrincipale() {
+				DessinerFond();
+
+				asteroid.Draw();
+				asteroid.Animate();
+				asteroid2.Draw();
+				asteroid2.Animate();
+
+				DessinerVaisseau(positionOrigineVaisseau);
+				positionOrigineVaisseau = Translation(positionOrigineVaisseau, vecteurVaisseau);
+				ConfirmationColision(positionOrigineVaisseau, vecteurVaisseau);
+
+				setTimeout(BouclePrincipale,1000/60);
+			}
+
+		</script>
+		
+	</body>
+</html>

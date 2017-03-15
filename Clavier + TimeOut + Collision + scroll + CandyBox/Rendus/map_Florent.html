@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+	<head></head>
+	<body onkeypress="KeyPressHandler(event)">
+	
+		<script>
+			var circuit = [
+				["M","-","-","-","-","-","-","-","-","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M","M","M"," "," ","M","M","M"," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M","M","M","M"," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," ","M","M","M"," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," ","M","M","M","M","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M","M","M","M"," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," "," "," "," "," ","M"],
+				["O"," "," "," "," "," "," "," "," ","O"],
+				["M"," "," "," "," ","V"," "," "," ","M"]
+			];
+			var y= 0;
+			for (var i = 0; i < circuit.length- 1; i++){	
+				if(circuit[i].indexOf("V") != -1){
+					y = i;
+				}
+			};
+			function AfficheMap(map){
+				if(Array.isArray(map) == false){
+					console.error("crash de la fonction");
+				}else{
+					var Chaine = "";
+					var map_couleur = [];
+					if (y >15){
+						for (var i = y - 15; i <= y; i++){
+							for(var j = 0; j < map[i].length; j++){
+								if(map[i][j] == "M"){
+									map_couleur.push("background: #000");
+								}else if(map[i][j] == " "){
+									map_couleur.push("background: #00ff00");
+								}else if(map[i][j] == "O"){
+									map_couleur.push("background: #A00");
+								}else if(map[i][j] == "V"){
+									map_couleur.push("background: #555FFF");
+								}else if(map[i][j] == "-"){
+									map_couleur.push("background: #AFF0FF");
+								}else if(map[i][j] == "X"){
+									map_couleur.push("background: red");
+								}else{
+									return "crash de la fonction sur la case "+map[i][j];
+								}
+								Chaine += '%c   ';
+							}
+							Chaine += '\n';
+						}		
+					}else{
+						for (var i = 0; i <15; i	++){
+							for(var j = 0; j < map[i].length; j++){
+								if(map[i][j] == "M"){
+									map_couleur.push("background: #000");
+								}else if(map[i][j] == " "){
+									map_couleur.push("background: #00ff00");
+								}else if(map[i][j] == "O"){
+									map_couleur.push("background: #A00");
+								}else if(map[i][j] == "V"){
+									map_couleur.push("background: #555FFF");
+								}else if(map[i][j] == "-"){
+									map_couleur.push("background: #AFF0FF");
+								}else if(map[i][j] == "X"){
+									map_couleur.push("background: red");
+								}else{
+									return "crash de la fonction sur la case "+map[i][j];
+								}
+								Chaine += '%c   ';
+							}
+							Chaine += '\n';
+						}		
+					}
+					console.log(Chaine, ...map_couleur);
+					return "La map a été affichée correctement";
+				}
+				
+			}
+				
+			setTimeout(Jouer,  250);
+			
+			function Jouer(  ){
+		
+				AfficheMap(circuit);
+							
+				for (var i = 0; i < circuit.length; i++){
+										
+					if (circuit[i].indexOf("V") != -1) {	
+					
+						var save = circuit[i].indexOf("V");
+							
+						if (circuit[i-1] == undefined){	
+							console.log("Vous etes arrivé");
+							CreerBalise("DIV","<img src='http://www.lamaisondefrance.it/wp-content/uploads/la-fin.png'/>",
+									document.body,"");
+							return "Bravo";
+						}else{
+							circuit[i][save] = " ";
+							circuit[i -1][save] = "V";	
+							y--;
+						}
+									
+					setTimeout(Jouer,  250);
+					}
+				}
+			}
+
+			function CreerBalise(typebalise, textebalise, parent,id) {
+				var para = document.createElement(typebalise);                      
+				para.innerHTML = textebalise;
+				parent.appendChild(para);
+				
+				
+				var att = document.createAttribute("id");      
+				att.value = id;                         
+				para.setAttributeNode(att); 
+			}
+
+			function droite() {
+
+			}
+
+			function KeyPressHandler(event) {
+				console.log("test");
+				switch(event.keyCode){
+					case 39 : {
+						console.log("droite");
+						for (var i = 0; i < circuit.length; i++){
+							if (circuit[i].indexOf("V") != 0) {
+								if (circuit[i].indexOf("V") != -1) {
+									var save = circuit[i].indexOf("V");
+									if (circuit[i][save +1]  != "M","O") {
+										circuit[i][save] = " ";
+										circuit[i][save +1] = "V";
+									}else{
+								console.log("Bloquer par la Droite")
+									}	
+								}
+							}else{
+							console.log("Bordure du circuit")
+							}
+						}
+					}
+					case 37 : {
+						for (var i = 0; i < circuit.length; i++){
+							if (circuit[i].indexOf("V") != 0) {
+								if (circuit[i].indexOf("V") != -1) {
+									var save = circuit[i].indexOf("V");
+									if (circuit[i][save -1]  != "M","O") {
+										circuit[i][save] = " ";
+										circuit[i][save -1] = "V";
+									}else{
+										console.log("Bloquer par la gauche")
+									}	
+								}
+							}else{
+								console.log("Bordure du circuit")
+							}
+						}
+					}
+				}
+			}
+		
+		</script>
+		
+	</body>
+</html>

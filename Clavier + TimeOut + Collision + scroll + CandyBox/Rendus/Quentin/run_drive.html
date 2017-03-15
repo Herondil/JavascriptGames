@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		img{
+				display:block;
+				margin:0 auto;
+			}
+			.tuile{
+				display: inline-block;
+				width: 32px;
+				height:32px;
+			}
+			
+			.ligne{
+				height:32px;
+			}
+	</style>
+</head>
+<body>
+
+	<script type="text/javascript">
+		
+
+		// CIRCUIT MAP TMTC MAGGLE
+		var map = [
+			["-","_","_","_","_","_","_","-"],
+			["-","_","_","_","_","_","_","-"],
+			["-","_","O","_","_","_","_","-"],
+			["-","_","_","_","_","_","_","-"],
+			["-","_","_","_","_","_","_","-"],
+			["-","_","_","_","O","_","_","-"],
+			["-","_","_","_","_","_","_","-"],
+			["-","_","_","_","_","_","_","-"],
+			["-","_","_","_","_","_","_","-"],
+			["-","_","O","_","_","_","_","-"],
+			["-","_","_","_","_","O","_","-"],
+			["-","_","_","_","_","_","_","-"],
+			["-","_","_","_","_","_","_","-"],
+			["-","_","O","_","_","_","_","-"],
+			["-","_","_","_","_","_","_","-"],
+			["-","_","_","_","_","_","_","-"],
+			["-","_","_","O","O","_","_","-"],
+			["-","_","_","_","_","_","_","-"],
+			["-","_","_","_","_","_","_","-"],
+			["-","_","_","_","_","_","_","-"],
+			["-","_","_","V","_","_","_","-"],
+		];
+		// FIN TMTC MAGGLE
+
+		function CreerBalise(typebalise, textebalise, parent, id) {
+			var para 				= document.createElement(typebalise);                      
+			para.innerHTML 	= textebalise;
+			
+			parent.appendChild(para);
+			
+			var att 	= document.createAttribute("id");      
+			att.value 	= id;                         
+			para.setAttributeNode(att); 
+		}
+		
+
+		function AjouterClass(id, classe) {
+			var att 	= document.createAttribute("class");      
+			att.value 	= classe;                         
+			document.getElementById(id).setAttributeNode(att);
+		};
+		
+		function AfficherMapDocumentImg() {
+			
+			for(var i = 0 ; i < map.length ; i++){
+				CreerBalise("DIV", "", document.getElementById("containermap"), "ligne" + i);
+				AjouterClass("ligne"+i , "ligne");
+				for(var j = 0 ; j < map[i].length ; j++) {
+					if(map[i][j] == "_"){
+						CreerBalise("DIV", "<img src='road.jpg' width=32px height=32px>", document.getElementById("ligne"+i), "map" + j + "ligne" + i);
+					} 
+					else if (map[i][j] == "V"){
+						CreerBalise("DIV", "<img src='CarRed.png' width=32px height=32px>", document.getElementById("ligne"+i), "map" + j+ "ligne" + i);
+					} 
+					else if (map[i][j] == "O"){
+						CreerBalise("DIV", "<img src='wheel.jpg' width=32px>", document.getElementById("ligne"+i), "map" + j+ "ligne" + i);
+					}
+					else {
+						CreerBalise("DIV", "<img src='road1.jpg' width=32px height=32px>", document.getElementById("ligne"+i), "map" + j+ "ligne" + i);
+					}
+					AjouterClass("map"+j + "ligne" + i, "tuile");
+				}
+			}
+		}
+		
+		setTimeout(GO,  250);
+						
+		CreerBalise("DIV", "", document.body, "containermap");
+		function GO(  ){
+			
+
+			AfficherMapDocumentImg();
+							
+				for (var i = 0; i < map.length; i++){
+										
+					if (map[i].indexOf("V") != -1) {									
+						if (map[i-1] == undefined){					
+							console.log("Vous etes arrivé");
+							return "Bravo";
+
+						}
+						else if (map[i-1][save] == "O"){	
+							console.log("MORT");
+							return"MORT";
+						}
+						else {
+							var save = map[i].indexOf("V");
+							map[i][save] = "_";
+							map[i -1][save] = "V";
+						}																
+					}					 
+				}						
+				setTimeout(GO,  250);
+
+			}
+			/*
+		function KeyPressHandler(event){
+			switch(event.key){
+				case "q": {
+					if (first_letter == 1 && game == 1) {
+						first_letter = 0;
+						compteur++;
+						console.log("Vous écrivez un 'a'");
+					} else if (compteur == 5 && game == 1) {
+						compteur++;
+						console.log("Vous écrivez 'aspira'");
+					} else if (game == 1) {
+						console.log("Faux, veuillez recommencer depuis le début");
+						compteur = 0;
+					} else {
+						console.log("la partie est terminée");
+					}
+					break;
+				}
+				default:{
+					if (game == 0) {
+						console.log("La partie est terminée");
+					} else {
+						first_letter = 1;
+						console.log("Mauvaise lettre, veuillez recommencer depuis le début");
+						compteur = 0;
+					}
+				}
+			}
+		}
+	*/
+	</script>
+
+
+
+</body>
+</html>

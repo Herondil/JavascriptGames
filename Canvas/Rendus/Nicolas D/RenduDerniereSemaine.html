@@ -1,0 +1,271 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
+	<title>Rendu game</title>
+</head>
+<body>	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script>
+
+	//CANVAS
+	var canvas = document.createElement('CANVAS');
+	canvas.width 	= 1280;
+	canvas.height	=	720;
+	document.body.appendChild(canvas);
+	var ctx = canvas.getContext('2d');
+	var map = [
+	["M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M"],
+	["C"," "," "," "," ","G","C"," ","G"," "," "," "," "," "," "," "," "," "," "," "," "," "," ","C"],
+	["C"," "," "," ","C","C"," "," ","C","S"," "," "," "," "," "," "," "," "," "," "," "," "," ","C"],
+	["C"," "," "," "," "," "," ","B","C","C","G"," ","B"," ","C"," "," "," "," "," "," "," "," ","C"],
+	["C"," "," ","S","S","G","S","C","C","C","C","C","C","S"," "," "," "," "," "," "," ","G"," ","C"],
+	["C"," "," ","C","C","C","C","C"," "," "," "," ","C","C","G","S"," "," "," "," "," ","S"," ","C"],
+	["C"," "," "," "," "," "," "," "," "," "," "," "," ","C","C","C","C"," "," "," "," ","C"," ","C"],
+	["C"," "," "," "," "," ","S"," "," "," "," "," "," "," "," "," ","C","C"," "," "," ","C"," ","C"],
+	["C","P"," ","G","S","G","C","G"," "," "," "," "," "," "," "," "," "," ","G","S"," ","C"," ","E"],
+	["C","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","M","C"]
+	]
+	var largeur_elements = 70;
+	var hauteur_element = 70
+
+	var background = new Image;
+	background.src = 'images/background.png';
+
+	var wall = new Image;
+	wall.src = 'images/grassMid.png';
+
+	var grassCenter = new Image;
+	grassCenter.src = 'images/grassCenter.png';
+
+	var character = new Image;
+	character.src = 'images/Idle.png';
+	
+	var spike = new Image;
+	spike.src = 'images/spikes.png';
+
+	var coin = new Image;
+	coin.src = 'images/coinGold.png';
+
+	var exit = new Image;
+	exit.src = 'images/door_closedMid.png';
+
+	var monster = new Image;
+	monster.src = 'images/blockerMad.png';
+
+	var characterSprite = new Image;
+	characterSprite.src = 'images/CharacterSpriteAvance.png';
+
+	var characterIdle = new Image;
+	characterIdle.src = 'images/CharacterSpriteIdle.png';
+
+	var Type = 'SpriteRun';
+	var	offsetX = 0;
+	var	offsetY = 0;
+	var	score = 0;
+	var	coin_to_take = 10;
+	var	delai = true;
+	var	largeur_sprite_character=116;
+	var	hauteur_sprite_character=125;
+	var	Anim = false;
+	var	posXcoin = 450;
+	var	posYcoin = 330;
+	var	posXsprite = 0;
+	var	posYsprite = 310;
+	var	currentFrameSprite = 0;
+	var	frames = 6;
+	
+
+	function MainLoop(){
+		switch(Type){
+			case "SpriteRun":
+				CallAnimation();
+				if (delai) Delai();
+				DrawIntro();
+				break;
+			case "GameStart":
+				ctx.clearRect(0,0,1280,720);
+				ctx.save();
+				ctx.translate(offsetX, offsetY);
+		        // clear the viewport
+		        ctx.clearRect(-offsetX, -offsetY, 500,500);
+		        ctx.drawImage(background,0,800,3072,1536,0,0,3072,1536);
+		        DrawMap();
+		        ctx.font = "30px Arial";
+		        ctx.fillText("Coin :"+" "+score,50-offsetX,50);
+		        ctx.fillText("You need :"+" "+coin_to_take + " coins to go",250-offsetX,50);
+		        ctx.restore();
+	        break;
+	        case "FinDePartie":
+	        	ctx.clearRect(0,0,1280,720);
+	        	ctx.drawImage(background,0,800,3072,1536,0,0,3072,1536);
+				DrawIdleSprite();
+				ctx.font = "30px Arial";
+				ctx.fillText("FIN DE PARTIE, VOUS POUVEZ F5 POUR RECOMMENCER",440,360)
+	    }
+	}
+
+	setInterval(MainLoop,100);
+
+	function DrawSprite(){
+		width=74.8;
+		height=130;
+		ctx.drawImage(characterSprite,
+			width*currentFrameSprite,
+			0,
+			width,
+			height,
+			posXsprite,
+			posYsprite,
+			width,
+			height
+			);
+		if (currentFrameSprite == frames) {
+			currentFrameSprite = 0;
+		}else{
+			currentFrameSprite++;
+		}
+	}
+
+	function DrawIdleSprite(){
+		width=88.9;
+		height=130;
+		ctx.drawImage(characterIdle,
+			width*currentFrameSprite,
+			0,
+			width,
+			height,
+			440,
+			420,
+			width,
+			height
+			);
+		if (currentFrameSprite >= 5) {
+			currentFrameSprite = 0;
+		}else{
+			currentFrameSprite++;
+		}
+	}
+	function DrawIntro(){
+		ctx.fillStyle="#010101";
+		ctx.globalAlpha=1;
+		ctx.fillRect(0,0,canvas.width,canvas.height);
+		ctx.drawImage(background,0,900,3072,1536,0,0,3072,1536);
+		ctx.drawImage(coin,posXcoin,posYcoin,130,130)
+		DrawSprite();
+	}
+
+	function CallAnimation(){
+		if (Anim == true){
+			AnimMovement();
+		}	
+	}
+	
+	function Delai(){
+		AnimMovement();
+		setTimeout(function(){Anim=false;Type="GameStart";},6000);
+	}
+
+	function AnimMovement(){
+			posXsprite+=25.2;
+			posXcoin+=27;
+	}
+
+	function DrawMap(){
+		for (var j = 0; j < map.length; j++) {
+			for (var i = 0; i<map[j].length; i++) {
+				if (map[j][i]=="M") {
+					ctx.drawImage(wall,i*largeur_elements,j*hauteur_element,70,70);
+				}else if (map[j][i]=="P") {
+					ctx.drawImage(character,i*largeur_elements,j*hauteur_element,70,70);
+				}else if (map[j][i]=="C") {
+					ctx.drawImage(grassCenter,i*largeur_elements,j*hauteur_element,70,70);
+				}else if (map[j][i]=="S") {
+					ctx.drawImage(spike,i*largeur_elements,j*hauteur_element,70,70);
+				}else if (map[j][i]=="G") {
+					ctx.drawImage(coin,i*largeur_elements,j*hauteur_element,70,70);
+				}else if (map[j][i]=="E") {
+					ctx.drawImage(exit,i*largeur_elements,j*hauteur_element,70,70);
+				}else if (map[j][i]=="B") {
+					ctx.drawImage(monster,i*largeur_elements,j*hauteur_element,70,70);
+				}
+
+			}
+		}
+	}
+
+	var X = 1,
+	Y = 8;
+	$(document).keydown(function(e) {
+		switch(e.which) {
+		        case 81: // left
+		        if (map[Y][X-1] == "S"  || map[Y][X-1] == "B") {
+		        	location.reload();
+		        }
+		        if (map[Y][X-1] == "G") {
+		        	score ++;
+		        	coin_to_take--;
+		        }
+		        if (map[Y][X-1] != "M" && map[Y][X-1] != "C"){
+		        	map[Y][X] = " "; 
+		        	X += -1;
+		        	map[Y][X] = "P";
+		        	offsetX+=50;            
+		        }
+		        break;
+
+		        case 90: // up
+		        if (map[Y-1][X] == "S") {
+		        	location.reload();
+		        }
+		        if (map[Y-1][X] == "G") {
+		        	score ++;
+		        	coin_to_take--;
+		        }
+		        if (map[Y-1][X] != "M"  && map[Y-1][X] != "C") {
+		        	map[Y][X] = " "; 
+		        	Y += -1;
+		        	map[Y][X] = "P";
+		        }
+		        break;
+
+		        case 68: // right
+		        if (map[Y][X+1] == "S"  || map[Y][X+1] == "B") {
+		        	location.reload();
+		        }
+		        if (map[Y][X+1] == "G") {
+		        	score ++;
+		        	coin_to_take--;
+		        }
+		        if (map[Y][X+1] == "E" && coin_to_take == 0) {
+		        	Type="FinDePartie";
+		        }
+		        if (map[Y][X+1] != "M"  && map[Y][X+1] != "C" && map[Y][X+1] != "E"){
+		        	map[Y][X] = " "; 
+		        	X += +1;
+		        	map[Y][X] = "P";
+		        	offsetX-=50;  
+		        }
+		        break;
+
+		        case 83: // down
+		        if (map[Y+1][X] == "S" || map[Y+1][X] == "B") {
+		        	location.reload();
+		        }
+		        if (map[Y+1][X] == "G") {
+		        	score ++;
+		        	coin_to_take--;
+		        }
+		        if (map[Y+1][X] != "M" && map[Y+1][X] != "C"){
+		        	map[Y][X] = " "; 
+		        	Y += +1;
+		        	map[Y][X] = "P";
+		        }
+		        break;
+
+		        default: return;
+		    }
+		});
+	</script>
+</body>
+</html>

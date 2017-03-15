@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Skyrim</title>
+	<meta charset="utf-8">
+</head>
+<body>
+			<script>
+
+			// MAP
+
+			let map = [
+		["I","_","Q","Q","_","Q","Q","_","Q","_","I","O","O","O"],
+		["I","I","_","Q","_","Q","Q","_","Q","_","I","O","O","O"],
+		["I","I","_","_","_","_","Q","Q","Q","_","I","O","O","O"],
+		["I","_","_","_","_","_","_","Q","Q","_","I","O","O","O"],
+		["_","_","_","_","_","_","_","_","_","_","I","I","O","O"],
+		["L","_","_","G","G","G","_","_","_","_","_","I","I","I"],
+		["L","_","_","G","L","G","_","_","_","_","_","Q","_","Q"],
+		["L","L","_","L","L","G","_","_","_","_","_","Q","Q","_"],
+		["M","L","_","L","L","G","_","_","_","_","_","_","Q","L"],
+		["M","L","_","G","G","G","_","_","_","_","_","_","L","M"],
+		["M","L","_","_","_","_","_","_","_","_","_","L","M","M"],
+		["L","_","_","_","_","_","_","_","Q","Q","_","L","M","M"],
+		["_","_","Q","Q","_","_","_","_","_","Q","Q","_","L","M"],
+		["_","_","G","G","G","G","_","_","_","_","_","_","L","M"],
+		["G","G","G","Q","G","G","G","G","_","_","_","A","_","L"],
+		["L","L","Q","Q","Q","_","G","G","G","G","G","_","_","_"],
+		["M","L","_","Q","Q","_","_","_","_","G","G","G","G","_"],
+		["M","L","L","L","L","L","L","L","_","_","_","_","G","_"],
+		["M","M","M","M","M","M","M","M","L","_","_","_","G","_"],
+	
+		];
+
+			// TEXTE INTRO
+
+			console.log("Bonjour jeune aventurier, bienvenue dans le merveilleux et dangereux monde d'Olydri. Vous pouvez utiliser votre carte à tout moment avec Affichemap(map). Afin de commencer votre aventure vous devez choisir un personnage entre Le Voleur (spécialiste des attaques critique et furtive) Le Paladin (valeureux comabattant de la lumière pouvant se guérir et inviquer la foudre Et le moine (Un combattant repoussant les limites de son corps et de son esprit ce qui lui permet de disposer de combos dévastateurs) Pour aide faire aide() Pour choir une classe faire Race(Paladin/Voleur/Moine)")
+
+		
+
+				// FUNCTION AFFICHE MAP
+
+				function AfficheMap(map){
+			//vérifier map
+			if(Array.isArray(map) == false){
+				console.error("crash de la fonction");
+			}else{
+			//afficher les couleurs
+				var Chaine = "";
+				var map_couleur = [];
+				for (var i = 0; i < map.length; i++){
+					for(var j = 0; j < map[i].length; j++){
+						if(map[i][j] == "M"){
+							map_couleur.push("background:#585858 ");
+						}else if(map[i][j] == "_"){
+							map_couleur.push("background: #00ff00");
+						}
+							else if(map[i][j] == "A"){
+							map_couleur.push("background: purple");
+						}
+							else if(map[i][j] == "L"){
+							map_couleur.push("background:#A8A8A8");
+						
+						}else if(map[i][j] == "G"){
+							map_couleur.push("background: lightblue");
+						}
+						else if(map[i][j] == "P"){
+							map_couleur.push("background: #0000ff");
+						}
+						else if(map[i][j] == "O"){
+							map_couleur.push("background: #002fa7");
+						}
+						else if(map[i][j] == "I"){
+							map_couleur.push("background:#4c4cff");
+						}
+						else if(map[i][j] == "Q"){
+							map_couleur.push("background:#009900");
+						}else{
+							console.error("erreur");
+							return 0;
+						}
+						Chaine += '%c   ';
+					}
+					Chaine += '\n';					
+				}
+				console.log(Chaine, ...map_couleur);
+				return "La map a été affichée correctement";
+			}
+			
+		}
+				// TEST STYLE TEXTE
+				var styles = [
+				    'background: linear-gradient(#D33106, #571402)'
+				    , 'border: 1px solid #3E0E02'
+				    , 'color: white'
+				    , 'display: block'
+				    , 'text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3)'
+				    , 'box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 5px 3px -5px rgba(0, 0, 0, 0.5), 0 -13px 5px -10px rgba(255, 255, 255, 0.4) inset'
+				    , 'line-height: 40px'
+				    , 'text-align: center'
+				    , 'font-weight: bold'
+				].join(';');
+			
+
+
+			
+			
+						
+						//FUNCTION AIDE
+
+			 			function aide() {
+			 				console.log('%c   ', 'background: #585858', ": Montagnes pouvant cacher des pépites d'or");
+			 				console.log('%c   ', 'background:  #A8A8A8', ": Ce sont des montagnes infranchissables");
+			 				console.log('%c   ', 'background:  #00ff00', ": Plaines verdoyantes et fertiles");
+			 				console.log('%c   ', 'background:  #009900', ": Forêt potentielement dangereuse pour votre pérénité");
+			 				console.log('%c   ', 'background: lightblue', ": Rivière , vous pouvez remplir votre gourde à cet emplacement");
+			 				
+			 				console.log('%c   ', 'background: #4c4cff', ": Eau peu profonde, vous pouvez pêcher à cet emplacement");
+			 				console.log('%c   ', 'background: #002fa7', ": L'océan, il vous engloutira surement si vous tentez d'y aller");
+			 			}
+						
+						// FUNCTION ATTAQUER
+
+
+
+
+
+
+						function attaquer() {
+							
+							if(pv > 0){							
+								//IZI WIN
+								var izi =  Math.floor(Math.random() * 6 );
+								var force = 10 + izi;
+								pv -= force;
+							
+								
+								console.log("- " + force + " HP")
+									if(pv > izi){
+									console.log("HHHHAAAIII, il me reste " + pv + " point de vie, arreter stp, laisse moi tuer les femmes et les enfants");
+									}
+									if(pv <= 0){
+										console.log("FATALITY \nHHAAAIII ADIEU MONDE CRUEL");
+									}
+								}
+							else{
+								console.log("BRAVO IL EST DEJA MORT");
+							}
+								
+								// LES CLASSES
+							
+						}
+									  var Histoire = 0;
+						            var Niv = 1,
+						                Exp = 0,
+						                PV = 150,
+						                PM = 30,
+						                Force = 10,
+						                Défense = 5,
+						                Magie = 10,
+						                Résistance = 5,
+						                PO = 100;
+						
+						                	var combat = 0
+						            function Race(nom) {
+						                if (nom == "Voleur" && Histoire == 0) {
+						                    PV += 50;
+						                    PM += 20;
+						                    Histoire++;
+						                    combat++;
+						                    console.log("Attention ! Un monstre attque le village, tue le pour nous sauver ! \n"+
+														"Ecris sur \"attaquer()\" pour attaquer \n"+
+														"|  \/  |\n"+
+														"| |\/| |\n"+
+														"| |  | |\n"+
+														"|_|  |_|"
+													);
+						                } else if (nom == "Paladin" && Histoire == 0) {
+						                    Force += 10;
+						                    Magie -= 5;
+						                    Histoire++;
+						                    combat++;
+						                    console.log("Attention ! Un monstre attque le village, tue le pour nous sauver ! \n"+
+														"Ecris sur \"attaquer()\" pour attaquer \n"+
+														"|  \/  |\n"+
+														"| |\/| |\n"+
+														"| |  | |\n"+
+														"|_|  |_|"
+													);
+						                } else if (nom == "Moine" && Histoire == 0) {
+						                    Force -= 5;
+						                    Magie += 10;
+						                    Histoire++;
+						                    combat++;
+						                    console.log("Attention ! Un monstre attque le village, tue le pour nous sauver ! \n"+
+														"Ecris sur \"attaquer()\" pour attaquer \n"+
+														"|  \/  |\n"+
+														"| |\/| |\n"+
+														"| |  | |\n"+
+														"|_|  |_|"
+													);
+						                } else if (nom == "MJ" && Histoire == 0) {
+						                    PV += 850;
+						                    PM += 970;
+						                    Force += 490;
+						                    Magie += 490;
+						                    Défense += 495;
+						                    Résistance += 495;
+						                    Histoire++;
+						                    combat++;
+						                } else {return("Cela est impossible");}
+
+						                return(nom + ", matenant ton destin est de vaincre la Mort elle-même au plus profond de son donjon");
+						                var combat = 0
+
+						            }
+
+
+									// STATS 
+						        
+
+						            function Stats() {
+						                return(
+						                    "Niv : " + Niv + " / " + "Exp : " + Exp + "\n" +
+						                    "PV : " + PV + " / " + "PM : " + PM + "\n" +
+						                    "Force : " + Force + " / " + "Défense : " + Défense + "\n" +
+						                    "Magie : " + Magie + " / " + "Résistance : " + Résistance 
+						                );
+						            };
+								var rempla = "_";
+
+								// DEPLACEMENT
+
+								function Avancer() {
+									for (var i = 0; i < map.length; i++){
+										if (map[i].indexOf("A") == 1) {		
+										}else if(i != 0){
+											var save = map[i].indexOf("A");
+
+											
+											map[i] [save] = rempla;
+											rempla = map[i-1][save];
+											
+											
+											
+											
+											
+																					
+											map[i -1][save] = "A";
+										}else {
+												console.log("Bordure de la map")
+										}
+									}
+									AfficheMap(map);
+								}
+								
+								function Reculer() {
+									for (var i = 0; i < map.length; i++){
+										if (map[i].indexOf("A")== 1) {		
+										}else if(i != 0){
+											var save = map[i].indexOf("A");
+											map[i-1][save] = rempla;
+											
+											map[i +1][save] = "A";
+											break;
+										}else {
+												console.log("Bordure de la map")
+										}
+									}
+									AfficheMap(map);
+								}
+								
+
+								
+
+
+								function AllerGauche() {
+									for (var i = 0; i < map.length; i++){
+										if (map[i].indexOf("A") != 1) {
+											if (map[i].indexOf("A") != -1) {
+												var save = map[i].indexOf("O");
+												if (map[i][save -1]  != " ") {
+
+													avant = map[i][save-1]
+													map[i][save-1] = "_";
+													
+													map[i][save -1] = "A";
+												}else{
+													console.log("Bloquer par la gauche")
+												}	
+											}
+										}else{
+											console.log("Bordure de la map")
+										}
+									}
+									AfficheMap(map);
+								}
+
+									var avant = "_"
+								function AllerDroite() {
+									for (var i = 0; i < map.length; i++){
+										if (map[i].indexOf("A") != 0) {
+											if (map[i].indexOf("A") != -1) {
+												var save = map[i].indexOf("A");
+												if (map[i][save +1]  != " ") {
+													
+													avant = map[i][save];
+
+													map[i][save +1] = rempla;
+												}else{
+													console.log("Bloquer par la droite")
+												}	
+											}
+										}else{
+											console.log("Bordure de la map")
+										}
+									}
+									AfficheMap(map);
+								}
+								
+											
+								
+									 
+						                
+
+								
+											
+											var pv = 100;
+											
+											function attaquer() {
+
+												if (Histoire == 1)  {
+
+
+												
+												if(pv > 0){							
+													//IZI WIN
+													var izi =  Math.floor(Math.random() * 6 );
+													var force = 10 + izi;
+													pv -= force;
+												
+													
+													console.log("- " + force + " HP")
+														if(pv > izi){
+														console.log("HHHHAAAIII, il me reste " + pv + " point de vie, arreter stp, laisse moi tuer les femmes et les enfants");
+														}
+														if(pv <= 0){
+															console.log("FATALITY \nHHAAAIII ADIEU MONDE CRUEL");
+														}
+													}
+												else{
+													console.log("BRAVO IL EST DEJA MORT");
+												}
+													
+													
+												
+											}
+											 }
+										
+			</script>
+
+
+
+</body>
+</html>

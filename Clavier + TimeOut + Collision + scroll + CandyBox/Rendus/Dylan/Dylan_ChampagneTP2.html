@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+		
+			img{
+				display:block;
+				margin:0 auto;
+			}
+			.tuile{
+				display: inline-block;
+				width: 16px;
+				height:16px;
+			}
+			
+			.ligne{
+				height:16px;
+			}
+		</style>
+	</head>
+	<body onkeypress="KeyPressHandler(event)">
+		<script>
+		
+		
+		var map = [
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","E","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","E","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","E","E","E","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","E","E","E","E","E","_","_","_","_","_","_","_","_","M"],
+					["M","E","E","E","E","E","_","_","_","_","_","_","_","_","M"],
+					["M","E","E","E","E","E","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","E","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","E","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","E","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","E","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","E","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","E","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","E","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","E","E","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","E","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","E","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["0","_","_","_","_","_","_","_","_","_","_","_","_","_","0"],
+					["M","_","_","_","_","_","_","_","_","E","E","_","_","_","M"],
+					["0","_","_","_","_","_","_","_","_","_","_","_","_","_","0"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["0","_","_","_","_","_","_","_","_","_","_","_","_","_","0"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["0","_","_","_","_","_","_","_","_","_","_","_","_","_","0"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["0","_","_","_","_","_","_","_","_","_","_","_","_","_","0"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["0","_","_","_","_","_","_","_","_","_","_","_","_","_","0"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["0","_","_","_","_","_","_","_","_","_","_","_","_","_","0"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["0","_","_","_","_","_","_","_","_","_","_","_","_","_","0"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["0","_","_","_","_","_","_","_","_","_","_","_","_","_","0"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["0","_","_","_","_","_","_","_","_","_","_","_","_","_","0"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"],
+					["0","_","_","_","_","_","_","_","_","_","_","_","_","_","0"],
+					["M","_","_","_","_","_","_","_","_","_","_","_","_","_","M"]
+			
+		];
+
+		var y = 0;
+
+		var chrono = 500;
+		
+		var game = setInterval(Jouer, chrono);		
+		
+		// typebalise 	: Le type de balise qui sera créer (div, p, span, ...)
+		// textebalise 	: Le contenu littéral de la nouvelle balise ("texte","<img> ...")
+		// parent 			: l'élément auuel sera rattaché la nouvelle balise
+		// id					: L'attribut "id" de la nouvelle balise	
+		function CreerBalise(typebalise, textebalise, parent, id) {
+			var para 				= document.createElement(typebalise);                      
+			para.innerHTML 	= textebalise;
+			
+			parent.appendChild(para);
+			
+			var att 	= document.createAttribute("id");      
+			att.value 	= id;                         
+			para.setAttributeNode(att);
+		}
+		
+		function AjouterClass(id, classe) {
+			var att 	= document.createAttribute("class");      
+			att.value 	= classe;                         
+			document.getElementById(id).setAttributeNode(att);
+		};
+		
+		function AfficherMapDocumentImg() {
+			CreerBalise("DIV", "", document.body, "containermap");
+
+			if (y > 15) {
+				for(var i = y - 15 ; i <= y ; i++){
+					CreerBalise("DIV", "", document.getElementById("containermap"), "ligne" + i);
+					AjouterClass("ligne"+i , "ligne");
+					for(var j = 0 ; j < map[i].length ; j++) {
+						if(map[i][j] == "M"){
+							CreerBalise("DIV", "<img src='img/mur.png' width=16px height=16px>", document.getElementById("ligne"+i), "map" + j + "ligne" + i);
+
+						} else if (map[i][j] == "0") {
+							CreerBalise("DIV", "<img src='img/mur2.jpg' width=16px height=16px>", document.getElementById("ligne"+i), "map" + j + "ligne" + i);
+
+						} else if (map[i][j] == "S"){
+							CreerBalise("DIV", "<img src='img/Metal.png' width=16px height=16px>", document.getElementById("ligne"+i), "map" + j+ "ligne" + i);
+
+						} else if (map[i][j] == "E") {
+							CreerBalise("DIV", "<img src='img/ennemi.jpg' width=16px height=16px>", document.getElementById("ligne"+i), "map" + j+ "ligne" + i);
+
+						} else if (map[i][j] == "F") {
+							CreerBalise("DIV", "<img src='img/arrivee.jpg' width=16px height=16px>", document.getElementById("ligne"+i), "map" + j+ "ligne" + i);
+
+						} else {
+							CreerBalise("DIV", "<img src='img/ciel.png' width=16px height=16px>", document.getElementById("ligne"+i), "map" + j+ "ligne" + i);
+						}
+						AjouterClass("map"+j + "ligne" + i, "tuile");
+					}
+				}
+			} else {
+				for(var i = 0 ; i < 15 ; i++){
+					CreerBalise("DIV", "", document.getElementById("containermap"), "ligne" + i);
+					AjouterClass("ligne"+i , "ligne");
+					for(var j = 0 ; j < map[i].length ; j++) {
+						if(map[i][j] == "M"){
+							CreerBalise("DIV", "<img src='img/mur.png' width=16px height=16px>", document.getElementById("ligne"+i), "map" + j + "ligne" + i);
+
+						} else if (map[i][j] == "0") {
+							CreerBalise("DIV", "<img src='img/mur2.jpg' width=16px height=16px>", document.getElementById("ligne"+i), "map" + j + "ligne" + i);
+
+						} else if (map[i][j] == "S"){
+							CreerBalise("DIV", "<img src='img/Metal.png' width=16px height=16px>", document.getElementById("ligne"+i), "map" + j+ "ligne" + i);
+
+						} else if (map[i][j] == "E") {
+							CreerBalise("DIV", "<img src='img/ennemi.jpg' width=16px height=16px>", document.getElementById("ligne"+i), "map" + j+ "ligne" + i);
+
+						} else if (map[i][j] == "F") {
+							CreerBalise("DIV", "<img src='img/arrivee.jpg' width=16px height=16px>", document.getElementById("ligne"+i), "map" + j+ "ligne" + i);
+
+						} else {
+							CreerBalise("DIV", "<img src='img/ciel.png' width=16px height=16px>", document.getElementById("ligne"+i), "map" + j+ "ligne" + i);
+						}
+						AjouterClass("map"+j + "ligne" + i, "tuile");
+					}
+				}
+			}
+		}
+		
+		var X = 5;
+		var Y = 76;
+		var start = 0;
+		var fin = 0;
+		var win = 0;
+			
+		function Jouer(){
+			EffacerPerso(X,Y);
+			collision();
+			if (win == 1) {
+				stop();
+				return replay();
+			}
+			if (fin == 1) {
+				return replay();
+			};
+			Y--;
+			y--;
+			DessinerPerso(X,Y);
+			if (start == 0) {
+				for (var i = 0; i < map.length-1; i++){	
+				if(map[i].indexOf("S") != -1){
+					console.log(y);
+					y = i+ 1;
+
+				}
+				};
+				start++;
+			}
+			if(document.getElementsByTagName("DIV").length>0){
+				var div = document.getElementsByTagName("DIV")[0];
+				document.body.removeChild(div);
+			};
+			AfficherMapDocumentImg();
+		};
+		
+		function DessinerPerso(x,y){
+			map[y][x]="S";
+			map[y+1][x]="S";
+			map[y+1][x+1]="S";
+			map[y+1][x-1]="S";
+			map[y+2][x]="S";
+			map[y+3][x]="S";
+			map[y+3][x+1]="S";
+			map[y+3][x-1]="S";
+		};
+		function EffacerPerso(x,y){
+
+			for(var i = 0; i < map.length; i++){
+				for(var j = 0; j< map[i].length; j++){
+
+					if (map[i][j] == "S") {
+						map[i][j] = "_";
+					}
+				}
+			}
+
+		};
+
+		function KeyPressHandler(event){
+
+			switch(event.key){
+
+				case "q":{
+
+					if (map[Y+2][X-2] == "E") {
+						document.write("lol you lose noob");
+						return replay();
+
+					} else if (map[Y][X-2] == "_") {
+						X--;
+						break;
+
+					} else if (map[Y][X-2] == "M") {
+						document.write("lol you lose versus a wall");
+						return replay();
+
+					} else if (map[Y][X-2] == "0") {
+						document.write("lol you lose versus a wall");
+						return replay();
+
+					} else if(map[Y][X-2] == "E"){
+						document.write("lol you lose noob");
+						return replay();
+
+					}
+					for (var i = 0; i < map.length; i++) {
+						for (var j = 0; j < map[i].length; j++) {
+							if (map[i][j] == "E") {
+								if (map[i+1][j] == "S") {
+									document.write("lol you lose noob");
+									return replay();
+
+								} else if (map[i][j-1] == "S") {
+									document.write("lol you lose noob");
+									return replay();
+
+								} else if (map[i][j+1] == "S") {
+									document.write("lol you lose noob");
+									return replay();
+
+								}
+							}
+						}
+					}
+					break;
+						
+						
+				}
+				case "d":{
+
+					if (map[Y+2][X+2] == "E") {
+						document.write("lol you lose noob");
+						return replay();
+
+					} else if (map[Y][X+2] == "_") {
+						X++;
+						break;
+
+					} else if (map[Y][X+2] == "M") {
+						document.write("lol you lose versus a wall");
+						return replay();
+
+					} else if (map[Y][X+2] == "0") {
+						document.write("lol you lose versus a wall");
+						return replay();
+
+					} else if(map[Y][X+2] == "E"){
+						document.write("lol you lose noob");
+						return replay();
+
+					}
+
+					for (var i = 0; i < map.length; i++) {
+						for (var j = 0; j < map[i].length; j++) {
+							if (map[i][j] == "E") {
+								if (map[i+1][j] == "S") {
+									document.write("lol you lose noob");
+									return replay();
+
+								} else if (map[i][j-1] == "S") {
+									document.write("lol you lose noob");
+									return replay();
+
+								} else if (map[i][j+1] == "S") {
+									document.write("lol you lose noob");
+									return replay();
+
+								}
+							}
+						}
+					}
+						break;
+						
+				}
+				default:{
+					console.log("Touche non supportée");
+					console.log(event.key);
+				}
+			}
+		}
+
+		function collision(){
+
+			if(Y == 0){
+				win = 1;
+				document.write("T'as win lol");
+				return replay();
+			}
+
+			if (map[Y-1][X] == "E") {
+				document.write("Collision avec un ennemi");
+				return fin++;
+			} else if (map[Y][X-1] == "E") {
+				document.write("Collision avec un ennemi");
+				return fin++;
+			} else if (map[Y][X+1] == "E") {
+				document.write("Collision avec un ennemi");
+				return fin++;
+			} else if (map[Y+1][X-1] == "E") {
+				document.write("Collision avec un ennemi");
+				return fin++;
+			} else if (map[Y+1][X+1] == "E") {
+				document.write("Collision avec un ennemi");
+				return fin++;
+			}
+
+		}
+
+		function stop(){
+
+			clearInterval(game);
+
+		}
+
+		function replay(){
+			stop();
+			CreerBalise("DIV", "<button onclick='location.reload()'>Rejouer</button>", document.body, "button");	
+
+		}
+
+
+		</script>
+		
+	</body>
+</html>
