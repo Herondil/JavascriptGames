@@ -2,7 +2,7 @@
 
 ##In French :
 
-Voici les corrections et exos du programme, me but est de faire un jeu par semaine !
+Voici les corrections et exos du programme, le but est de faire un jeu par semaine !
 
 
 Pour la première notation :
